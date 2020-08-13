@@ -1,5 +1,10 @@
 import bpy
 import bmesh
+import math
+import random
+
+def centered_random():
+  return 2 * random.random() - 1
 
 def delete_default_cube():
   bpy.data.objects['Cube'].select = True
@@ -29,6 +34,19 @@ def add_document_mesh():
   bm.to_mesh(mesh)  
   bm.free()  # always do this when finished
 
+def move_camera():
+  scene = bpy.context.scene
+  scene.camera.rotation_mode = 'XYZ'
+
+  scene.camera.location.x = 1.485 + centered_random() / 10
+  scene.camera.location.y = 1.05 + centered_random() / 10
+  scene.camera.location.z = 10 + centered_random()
+
+  scene.camera.rotation_euler[0] = centered_random() * math.pi / 36
+  scene.camera.rotation_euler[1] = centered_random() * math.pi / 36
+  scene.camera.rotation_euler[2] = centered_random() * math.pi
+
 delete_default_cube()
 add_document_mesh()
+move_camera()
 save_picture()
