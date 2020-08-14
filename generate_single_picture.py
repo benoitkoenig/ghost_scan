@@ -2,6 +2,7 @@ import bpy
 import bmesh
 import math
 import random
+import sys
 
 def centered_random():
   return 2 * random.random() - 1
@@ -10,8 +11,8 @@ def delete_default_cube():
   bpy.data.objects['Cube'].select = True
   bpy.ops.object.delete()
 
-def save_picture():
-  bpy.context.scene.render.filepath = './image.png'
+def save_picture(output_file):
+  bpy.context.scene.render.filepath = output_file
   bpy.ops.render.render(write_still = True)
 
 def add_document_mesh():
@@ -49,13 +50,12 @@ def add_texture():
   mat.diffuse_intensity = 1
   mat.specular_intensity = 0
   obj.data.materials.append(mat)
-
   tex = bpy.data.textures.new('Texture', 'IMAGE')
-  # tex.image = bpy.data.images.load('./gradient.png')
-  tex.image = bpy.data.images.load('./data/png/pg_0001.pdf-34320200806165449598155-recap.pdf.png')
-
   slot = mat.texture_slots.add()
   slot.texture = tex
+
+def set_texture_image(texture_file):
+  bpy.data.textures['Texture'].image = bpy.data.images.load(texture_file)
 
 def move_camera():
   scene = bpy.context.scene
@@ -69,11 +69,22 @@ def move_camera():
   scene.camera.rotation_euler[1] = centered_random() * math.pi / 36
   scene.camera.rotation_euler[2] = centered_random() * math.pi
 
-delete_default_cube()
-add_document_mesh()
-set_uv()
-add_texture()
-move_camera()
-save_picture()
+def initialize_scene():
+  delete_default_cube()
+  move_camera()
+  add_document_mesh()
+  set_uv()
+  add_texture()
 
-bpy.ops.wm.save_as_mainfile(filepath='./image.blend')
+def main():
+  filename = sys.argv[5]
+
+  initialize_scene()
+
+  set_texture_image('./data/png/%s' % filename)
+  save_picture('./data/pictures_of_printed_documents/actual/%s' % filename)
+
+  set_texture_image('./gradient.png')
+  save_picture('./data/pictures_of_printed_documents/gradient/%s' % filename)
+
+main()
