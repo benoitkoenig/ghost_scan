@@ -95,10 +95,10 @@ def main():
   initialize_scene()
 
   set_texture_image('./data/png/%s' % filename)
-  save_picture('./data/pictures_of_printed_documents/actual/%s' % filename)
+  save_picture('./data/printed_document/%s' % filename)
 
   set_lighting_conditions_for_gradient_picture()
-  set_texture_image('./gradient.png')
-  save_picture('./data/pictures_of_printed_documents/gradient/%s' % filename)
+  set_texture_image('./gradient_map.png')
+  save_picture('./data/printed_gradient_map/%s' % filename)
 
 main()
