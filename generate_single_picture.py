@@ -15,6 +15,19 @@ def save_picture(output_file):
   bpy.context.scene.render.filepath = output_file
   bpy.ops.render.render(write_still = True)
 
+def set_lighting_conditions_for_gradient_picture():
+  bpy.data.lamps[0].energy = 0
+
+  world = bpy.data.worlds['World']
+  world.ambient_color = 0, 0, 0
+  world.horizon_color = 0, 0, 0
+  world.zenith_color = 0, 0, 0
+
+  mat = bpy.data.materials.get("Material")
+  mat.emit = 1
+  mat.ambient = 0
+  mat.translucency = 0
+
 def add_document_mesh():
   verts = [(0, 0, 0), (0, 2.1, 0), (2.97, 2.1, 0), (2.97, 0, 0)]
   mesh = bpy.data.meshes.new('mesh')  # add a new mesh
@@ -84,6 +97,7 @@ def main():
   set_texture_image('./data/png/%s' % filename)
   save_picture('./data/pictures_of_printed_documents/actual/%s' % filename)
 
+  set_lighting_conditions_for_gradient_picture()
   set_texture_image('./gradient.png')
   save_picture('./data/pictures_of_printed_documents/gradient/%s' % filename)
 
