@@ -4,8 +4,8 @@ import os
 import PIL
 import tensorflow as tf
 
-from ghost_scan.get_gradient_map_from_printed_document.constants import h, w
-from ghost_scan.get_gradient_map_from_printed_document.model import preprocess_input
+from .constants import h, w
+from .model import preprocess_input
 
 def getTensorFromFilepathPng(filepath):
   imgRGBA = PIL.Image.open(filepath)

@@ -1,7 +1,7 @@
 from tensorflow.keras.callbacks import CSVLogger, ModelCheckpoint
 
-from ghost_scan.get_gradient_map_from_printed_document.model import model
-from ghost_scan.get_gradient_map_from_printed_document.data_generator import getDataGenerator
+from .model import model
+from .data_generator import getDataGenerator
 
 gen = getDataGenerator()
 
