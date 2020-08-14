@@ -91,14 +91,15 @@ def initialize_scene():
 
 def main():
   filename = sys.argv[5]
+  folderPath = sys.argv[6]
 
   initialize_scene()
 
-  set_texture_image('./data/png/%s' % filename)
-  save_picture('./data/printed_document/%s' % filename)
+  set_texture_image('%s/data/png/%s' % (folderPath, filename))
+  save_picture('%s/data/printed_document/%s' % (folderPath, filename))
 
   set_lighting_conditions_for_gradient_picture()
-  set_texture_image('./gradient_map.png')
-  save_picture('./data/printed_gradient_map/%s' % filename)
+  set_texture_image('%s/generate_data/gradient_map.png' % folderPath)
+  save_picture('%s/data/printed_gradient_map/%s' % (folderPath, filename))
 
 main()
