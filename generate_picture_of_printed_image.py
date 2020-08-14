@@ -24,7 +24,7 @@ def add_document_mesh():
   scene.objects.active = obj  # set as the active object in the scene
   obj.select = True  # select object
 
-  mesh = bpy.context.object.data
+  mesh = obj.data
   bm = bmesh.new()
 
   vertices = [bm.verts.new(v) for v in verts]
@@ -33,6 +33,29 @@ def add_document_mesh():
   # make the bmesh the object's mesh
   bm.to_mesh(mesh)  
   bm.free()  # always do this when finished
+
+def set_uv():
+  obj = bpy.data.objects['MyObject']
+  obj.select = True  # select object
+  bpy.ops.object.mode_set(mode='EDIT')
+  bpy.ops.mesh.select_mode(type="VERT")
+  bpy.ops.mesh.select_all(action = 'SELECT')
+  bpy.ops.uv.unwrap()
+  bpy.ops.object.mode_set(mode='OBJECT')
+
+def add_texture():
+  obj = bpy.data.objects['MyObject']
+  mat = bpy.data.materials.get("Material")
+  mat.diffuse_intensity = 1
+  mat.specular_intensity = 0
+  obj.data.materials.append(mat)
+
+  tex = bpy.data.textures.new('Texture', 'IMAGE')
+  # tex.image = bpy.data.images.load('./gradient.png')
+  tex.image = bpy.data.images.load('./data/png/pg_0001.pdf-34320200806165449598155-recap.pdf.png')
+
+  slot = mat.texture_slots.add()
+  slot.texture = tex
 
 def move_camera():
   scene = bpy.context.scene
@@ -48,5 +71,9 @@ def move_camera():
 
 delete_default_cube()
 add_document_mesh()
+set_uv()
+add_texture()
 move_camera()
 save_picture()
+
+bpy.ops.wm.save_as_mainfile(filepath='./image.blend')
