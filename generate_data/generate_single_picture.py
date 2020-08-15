@@ -78,9 +78,9 @@ def move_camera():
   scene.camera.location.y = 1.05 + centered_random() / 10
   scene.camera.location.z = 10 + centered_random()
 
-  scene.camera.rotation_euler[0] = centered_random() * math.pi / 36
-  scene.camera.rotation_euler[1] = centered_random() * math.pi / 36
-  scene.camera.rotation_euler[2] = centered_random() * math.pi
+  scene.camera.rotation_euler[0] = math.pi * centered_random() / 36
+  scene.camera.rotation_euler[1] = math.pi * centered_random() / 36
+  scene.camera.rotation_euler[2] = math.pi * (centered_random() / 36 - 0.5)
 
 def initialize_scene():
   delete_default_cube()
