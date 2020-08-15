@@ -14,7 +14,7 @@ X = getTensorFromFilepathPng('./data/printed_document/%s' % filename)
 groundTruth = getTensorFromFilepathPng('./data/printed_gradient_map/%s' % filename)
 rawPrediction = model.predict(X, steps=1)
 
-print('Loss: %s' % loss(rawPrediction, groundTruth).numpy())
+print('Loss: %s' % loss(groundTruth, rawPrediction).numpy())
 
 prediction = np.clip(rawPrediction[0], 0, 1)
 
