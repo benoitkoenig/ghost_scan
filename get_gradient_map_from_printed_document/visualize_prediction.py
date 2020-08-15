@@ -3,8 +3,9 @@ import sys
 import tensorflow as tf
 import numpy as np
 
-from .model import getModel, preprocess_input, loss
+from .model import getModel, preprocess_input
 from .data_generator import getTensorFromFilepathPng
+from .loss import loss
 
 filename = sys.argv[1]
 
