@@ -4,7 +4,7 @@ from .model import getModel
 from .data_generator import getDataGenerator
 
 gen = getDataGenerator()
-model = getModel()
+model = getModel(weights=None)
 
 reduceLrCb = tf.keras.callbacks.ReduceLROnPlateau(monitor='loss', factor=0.2, patience=4, min_lr=4e-6)
 loggerCb = tf.keras.callbacks.CSVLogger('./logs/my_model.csv')
