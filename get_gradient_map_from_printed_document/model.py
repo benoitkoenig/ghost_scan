@@ -4,7 +4,7 @@ import tensorflow as tf
 from .constants import h, w
 
 BACKBONE = 'resnet34'
-preprocess_input = sm.backbones.get_preprocessing(BACKBONE)
+preprocess_input = sm.get_preprocessing(BACKBONE)
 optimizer = tf.keras.optimizers.Adam(learning_rate=1e-4)
 
 def loss(gt, pr):
