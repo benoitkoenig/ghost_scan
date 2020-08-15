@@ -5,7 +5,6 @@ import PIL
 import tensorflow as tf
 
 from .constants import h, w
-from .model import preprocess_input
 
 def resize(inputTensor):
   [_, inputH, inputW, _] = inputTensor.shape
@@ -40,4 +39,4 @@ def getDataGenerator():
       continue
     X = getTensorFromFilepathPng('./data/printed_document/%s' % filename)
     Y = getTensorFromFilepathPng('./data/printed_gradient_map/%s' % filename)
-    yield preprocess_input(X), Y
+    yield X, Y

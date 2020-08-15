@@ -3,7 +3,7 @@ import sys
 import tensorflow as tf
 import numpy as np
 
-from .model import getModel, preprocess_input
+from .model import getModel
 from .data_generator import getTensorFromFilepathPng
 from .loss import loss
 
@@ -12,16 +12,15 @@ filename = sys.argv[1]
 model = getModel()
 model.load_weights('weights/my_model.h5')
 X = getTensorFromFilepathPng('./data/printed_document/%s' % filename)
-preprocessedX = preprocess_input(X)
 groundTruth = getTensorFromFilepathPng('./data/printed_gradient_map/%s' % filename)
-rawPrediction = model.predict(preprocessedX, steps=1)
+rawPrediction = model.predict(X, steps=1)
 
 print('Loss: %s' % loss(rawPrediction, groundTruth).numpy())
 
 prediction = np.clip(rawPrediction[0], 0, 1)
 
 fig, axs = plt.subplots(2, 3, figsize=(50, 50))
-axs[0, 0].imshow(preprocessedX.numpy()[0])
+axs[0, 0].imshow(X.numpy()[0])
 axs[0, 1].imshow(prediction)
 axs[0, 2].imshow(groundTruth.numpy()[0])
 
