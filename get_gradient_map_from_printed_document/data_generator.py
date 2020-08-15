@@ -39,4 +39,4 @@ def getDataGenerator():
       continue
     X = getTensorFromFilepathPng('./data/printed_document/%s' % filename)
     Y = getTensorFromFilepathPng('./data/printed_gradient_map/%s' % filename)
-    yield X, Y
+    yield X, Y, [None]
