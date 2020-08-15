@@ -102,4 +102,5 @@ def main():
   set_texture_image('%s/generate_data/gradient_map.png' % folderPath)
   save_picture('%s/data/printed_gradient_map/%s' % (folderPath, filename))
 
-main()
+if __name__ == '__main__':
+  main()
