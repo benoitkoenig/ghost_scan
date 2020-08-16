@@ -25,8 +25,10 @@ for filename in os.listdir('./data/printed_gradient_map'):
 
   squareDistanceMatrices = [(green - c[0]) ** 2 + (blue - c[1]) ** 2 for c in coords]
   positions = [np.unravel_index(np.argmin(s, axis=None), s.shape) for s in squareDistanceMatrices]
-  positions = np.array(positions)[:, 0:2].tolist()
+  positions = np.array(positions)[:, 0:2] / (data.shape[0], data.shape[1])
+  positions = positions.tolist()
   allPositions.append([filename, positions])
+  print(filename)
 
 with open('./data/printed_document_cartography.csv', 'w') as csvFile:
   csvWriter = csv.writer(csvFile, delimiter=',')
