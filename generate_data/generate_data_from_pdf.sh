@@ -10,3 +10,6 @@ rm -r ./tmp
 
 # Second: generate pictures of printed documents, as well as the exact same picture of the gradient
 ls $dir/../data/png/*.png | rev | cut -d '/' -f 1 | rev | xargs -L1 -I {} blender -b -P $dir/generate_single_picture.py -- {} "$dir/.."
+
+# Third, generate the printed document without its background
+python3 $dir/generate_documents_without_background.py
