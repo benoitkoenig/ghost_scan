@@ -9,7 +9,7 @@ from .loss import loss
 
 filename = sys.argv[1]
 
-model = getModel('weights/my_model.h5')
+model = getModel('weights/get_gradient_map_from_printed_document.h5')
 X = getTensorFromFilepathPng('./data/printed_document/%s' % filename)
 groundTruth = getTensorFromFilepathPng('./data/printed_gradient_map/%s' % filename)
 rawPrediction = model.predict(X, steps=1)
