@@ -10,7 +10,7 @@ from .model import getModel
 filename = sys.argv[1]
 
 model = getModel('weights/remove_background.h5')
-X = getTensorFromFilepathPng('./data/printed_document/%s' % filename)
+X = getTensorFromFilepathPng('./data/printed_document/%s' % filename, h, w)
 groundTruth = getGroundTruth(filename)
 prediction = model.predict(X, steps=1)
 

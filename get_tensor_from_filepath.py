@@ -22,10 +22,11 @@ def resize(inputTensor, height, width):
 
   return resizedTensor
 
-def getTensorFromFilepathPng(filepath, height, width):
-  imgRGBA = PIL.Image.open(filepath)
-  imgRGB = imgRGBA.convert('RGB')
-  data = np.asarray(imgRGB) / 255
+def getTensorFromFilepathPng(filepath, height, width, keepAlphaChannel=False):
+  img = PIL.Image.open(filepath)
+  if (keepAlphaChannel == False):
+    img = img.convert('RGB')
+  data = np.asarray(img) / 255
   tensor = tf.convert_to_tensor([data])
   resizedTensor = resize(tensor, height, width)
   return resizedTensor
