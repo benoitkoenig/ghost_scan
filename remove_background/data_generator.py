@@ -5,7 +5,7 @@ from ghost_scan.get_tensor_from_filepath import getTensorFromFilepathPng
 from .constants import h, w
 
 def getGroundTruth(filename):
-  transparentImageTensor = getTensorFromFilepathPng('./data/printed_document_with_transparent_background/%s' % filename, h, w, keepAlphaChannel=True)
+  transparentImageTensor = getTensorFromFilepathPng('./data/printed_document_without_background/%s' % filename, h, w, keepAlphaChannel=True)
   [_, _, _, alphaChannel] = tf.split(transparentImageTensor, 4, axis=3)
   return alphaChannel
 

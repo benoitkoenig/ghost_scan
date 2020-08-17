@@ -18,7 +18,7 @@ for filename in os.listdir('%s/../data/printed_document' % dirpath):
   newImgUnreshaped = rgbaMask * img
   [height, width, _] = newImgUnreshaped.shape
   newImg = newImgUnreshaped.reshape((height, width * 4))
-  with open('%s/../data/printed_document_with_transparent_background/%s' % (dirpath, filename), 'wb') as f:
+  with open('%s/../data/printed_document_without_background/%s' % (dirpath, filename), 'wb') as f:
     w = png.Writer(width, height, greyscale=False, alpha=True)
     w.write(f, newImg)
   print(filename)
