@@ -14,9 +14,8 @@ def getFilesData():
   return rows
 
 def getTensorFromFilepathPng(filepath):
-  imgRGBA = PIL.Image.open(filepath)
-  imgRGB = imgRGBA.convert('RGB')
-  data = np.asarray(imgRGB) / 255
+  img = PIL.Image.open(filepath)
+  data = np.asarray(img) / 255
   tensor = tf.convert_to_tensor([data])
   return tensor
 
@@ -49,13 +48,13 @@ def getDataGenerator():
   files = getFilesData()
   random.shuffle(files)
   for [filename, positions] in files:
-    unresizedX = getTensorFromFilepathPng('./data/printed_document/%s' % filename)
+    unresizedX = getTensorFromFilepathPng('./data/printed_document_without_background/%s' % filename)
     X, Y = resize(unresizedX, np.array(eval(positions)))
     yield X, Y
 
 def getSingleEntry(filename):
   files = getFilesData()
   [[_, positions]] = [f for f in getFilesData() if f[0] == filename]
-  unresizedX = getTensorFromFilepathPng('./data/printed_document/%s' % filename)
+  unresizedX = getTensorFromFilepathPng('./data/printed_document_without_background/%s' % filename)
   X, Y = resize(unresizedX, np.array(eval(positions)))
   return X, Y
