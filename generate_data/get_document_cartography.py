@@ -9,11 +9,13 @@ coords = [
   (256, 0), (256, 128), (256, 256),
 ]
 
+dirpath = os.path.dirname(os.path.realpath(__file__))
+
 allPositions = []
-for filename in os.listdir('./data/printed_gradient_map'):
+for filename in os.listdir('%s/../data/printed_gradient_map' % dirpath):
   if filename[-4:] != '.png':
     continue
-  imgRGBA = Image.open('./data/printed_gradient_map/%s' % filename)
+  imgRGBA = Image.open('%s/../data/printed_gradient_map/%s' % (dirpath, filename))
   imgRGB = imgRGBA.convert('RGB')
   data = np.asarray(imgRGB, dtype=np.int32)
   [red, green, blue] = np.dsplit(data, 3)
@@ -30,7 +32,7 @@ for filename in os.listdir('./data/printed_gradient_map'):
   allPositions.append([filename, positions])
   print(filename)
 
-with open('./data/printed_document_cartography.csv', 'w') as csvFile:
+with open('%s/../data/printed_document_cartography.csv' % dirpath, 'w') as csvFile:
   csvWriter = csv.writer(csvFile, delimiter=',')
   csvWriter.writerow(['filename', coords])
   for [filename, positions] in allPositions:
