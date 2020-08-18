@@ -11,7 +11,7 @@ def getModel():
   model.add(Conv2D(128, 5, 3))
   model.add(Conv2D(128, 5, 3))
   model.add(Flatten(name='flatten'))
-  model.add(Dense(256, activation='relu', name='relu1'))
+  model.add(Dense(256, activation='linear', name='relu1'))
   model.add(Dense(numberOfPoints * 2, activation='linear', name='predictions'))
 
   optimizer = Adam(learning_rate=1e-5)

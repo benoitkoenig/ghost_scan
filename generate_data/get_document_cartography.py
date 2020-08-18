@@ -3,11 +3,7 @@ import numpy as np
 import os
 from PIL import Image
 
-coords = [
-  (0, 0), (0, 128), (0, 256),
-  (128, 0), (128, 128), (128, 256),
-  (256, 0), (256, 128), (256, 256),
-]
+coords = [(0, 0), (0, 256), (256, 0), (256, 256)]
 
 dirpath = os.path.dirname(os.path.realpath(__file__))
 
@@ -24,7 +20,6 @@ for filename in os.listdir('%s/../data/printed_gradient_map' % dirpath):
   green = red * green + (1 - red) * 1000
   blue = red * blue + (1 - red) * 1000
 
-
   squareDistanceMatrices = [(green - c[0]) ** 2 + (blue - c[1]) ** 2 for c in coords]
   positions = [np.unravel_index(np.argmin(s, axis=None), s.shape) for s in squareDistanceMatrices]
   positions = np.array(positions)[:, 0:2]
@@ -37,3 +32,5 @@ with open('%s/../data/printed_document_cartography.csv' % dirpath, 'w') as csvFi
   csvWriter.writerow(['filename', coords])
   for [filename, positions] in allPositions:
     csvWriter.writerow([filename, positions])
+
+print('Done generating documents cartography')

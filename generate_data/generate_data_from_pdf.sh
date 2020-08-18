@@ -14,5 +14,5 @@ ls $dir/../data/png/*.png | rev | cut -d '/' -f 1 | rev | xargs -L1 -I {} blende
 # Third, generate the printed document without its background
 python3 $dir/generate_documents_without_background.py
 
-# Fourth, generate the cartography document, as a cv
+# Fourth, generate the cartography document, as a csv
 python3 $dir/generate_document_cartography.py

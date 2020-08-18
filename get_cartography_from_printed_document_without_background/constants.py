@@ -1,3 +1,3 @@
 h = 256
 w = 256
-numberOfPoints = 9
+numberOfPoints = 4
