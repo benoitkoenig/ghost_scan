@@ -57,6 +57,15 @@ def set_uv():
   bpy.ops.uv.unwrap()
   bpy.ops.object.mode_set(mode='OBJECT')
 
+  obj.data.uv_layers.active.data[0].uv.x = 1
+  obj.data.uv_layers.active.data[0].uv.y = 0
+  obj.data.uv_layers.active.data[1].uv.x = 0
+  obj.data.uv_layers.active.data[1].uv.y = 0
+  obj.data.uv_layers.active.data[2].uv.x = 0
+  obj.data.uv_layers.active.data[2].uv.y = 1
+  obj.data.uv_layers.active.data[3].uv.x = 1
+  obj.data.uv_layers.active.data[3].uv.y = 1
+
 def add_texture():
   obj = bpy.data.objects['MyObject']
   mat = bpy.data.materials.get("Material")
