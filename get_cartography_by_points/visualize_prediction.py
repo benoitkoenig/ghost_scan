@@ -13,13 +13,14 @@ model = getModel()
 model.load_weights('./weights/get_cartography_by_points')
 X, groundTruth = getSingleEntry(filename)
 pred = model.predict(X, steps=1)
+
 print('Loss: %s' % tf.keras.losses.MeanSquaredError()(groundTruth, pred).numpy())
 
-groundTruthY = np.array([groundTruth[0][2*i] for i in range(numberOfPoints)]) * h
-groundTruthX = np.array([groundTruth[0][2*i+1] for i in range(numberOfPoints)]) * w
+groundTruthY = np.array([groundTruth[0][2*i] for i in range(numberOfPoints)]) * (h - 1)
+groundTruthX = np.array([groundTruth[0][2*i+1] for i in range(numberOfPoints)]) * (w - 1)
 
-predY = np.array([pred[0][2*i] for i in range(numberOfPoints)]) * h
-predX = np.array([pred[0][2*i+1] for i in range(numberOfPoints)]) * w
+predY = np.array([pred[0][2*i] for i in range(numberOfPoints)]) * (h - 1)
+predX = np.array([pred[0][2*i+1] for i in range(numberOfPoints)]) * (w - 1)
 
 fig, ax = plt.subplots(1, 1, figsize=(50, 50))
 ax.imshow(X.numpy()[0])
