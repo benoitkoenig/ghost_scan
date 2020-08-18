@@ -3,15 +3,16 @@ import sys
 import tensorflow as tf
 import numpy as np
 
-from .model import getModel
 from .data_generator import getTensorFromFilepathPng
+from .constants import h, w
 from .loss import loss
+from .model import getModel
 
 filename = sys.argv[1]
 
 model = getModel('weights/get_gradient_map_from_printed_document.h5')
-X = getTensorFromFilepathPng('./data/printed_document/%s' % filename)
-groundTruth = getTensorFromFilepathPng('./data/printed_gradient_map/%s' % filename)
+X = getTensorFromFilepathPng('./data/printed_document_without_background/%s' % filename, h, w, keepAlphaChannel=True)
+groundTruth = getTensorFromFilepathPng('./data/printed_gradient_map/%s' % filename, h, w)
 rawPrediction = model.predict(X, steps=1)
 
 print('Loss: %s' % loss(groundTruth, rawPrediction).numpy())
