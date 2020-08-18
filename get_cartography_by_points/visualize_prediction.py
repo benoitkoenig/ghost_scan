@@ -10,7 +10,7 @@ from .model import getModel
 filename = sys.argv[1]
 
 model = getModel()
-model.load_weights('./weights/get_cartography_from_printed_document_without_background')
+model.load_weights('./weights/get_cartography_by_points')
 X, groundTruth = getSingleEntry(filename)
 pred = model.predict(X, steps=1)
 print('Loss: %s' % tf.keras.losses.MeanSquaredError()(groundTruth, pred).numpy())

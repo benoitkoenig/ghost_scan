@@ -10,7 +10,7 @@ from .model import getModel
 
 filename = sys.argv[1]
 
-model = getModel('weights/get_gradient_map_from_printed_document_without_background.h5')
+model = getModel('weights/get_cartography_by_gradient.h5')
 X = getTensorFromFilepathPng('./data/printed_document_without_background/%s' % filename, h, w, keepAlphaChannel=True)
 groundTruth = getTensorFromFilepathPng('./data/printed_gradient_map/%s' % filename, h, w)
 rawPrediction = model.predict(X, steps=1)
