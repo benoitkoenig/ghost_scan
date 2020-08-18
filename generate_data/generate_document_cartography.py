@@ -32,5 +32,3 @@ with open('%s/../data/printed_document_cartography.csv' % dirpath, 'w') as csvFi
   csvWriter.writerow(['filename', coords])
   for [filename, positions] in allPositions:
     csvWriter.writerow([filename, positions])
-
-print('Done generating documents cartography')

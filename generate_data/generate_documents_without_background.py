@@ -22,5 +22,3 @@ for filename in os.listdir('%s/../data/printed_document' % dirpath):
     w = png.Writer(width, height, greyscale=False, alpha=True)
     w.write(f, newImg)
   print(filename)
-
-print('Done generating documents without background')
