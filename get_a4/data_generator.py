@@ -27,4 +27,4 @@ def getSingleEntry(filename):
   rawX = getTensorFromFilepathPng('./data/printed_document_without_background/%s' % filename, keepAlphaChannel=True)
   X = preprocess(rawX, eval(positions))
   Y = getTensorFromFilepathPng('./data/png/%s' % filename, height=h, width=w)
-  return X, Y
+  return X, Y, rawX
