@@ -29,7 +29,7 @@ def preprocess(inputTensor):
 
 def preprocessPositions(inputPositions, coords):
   [y1, x1, y2, x2] = coords
-  positions = np.array(inputPositions, dtype=np.float64)
+  positions = np.array(inputPositions, dtype=np.float32)
   positions[:, 0] = (positions[:, 0] - y1) / (y2 - y1)
   positions[:, 1] = (positions[:, 1] - x1) / (x2 - x1)
   Y = tf.convert_to_tensor([positions.flatten()])  
