@@ -2,7 +2,7 @@ import math
 import numpy as np
 import tensorflow as tf
 
-from .constants import h, w
+from .constants import h, w, numberOfPoints
 
 def getPaddingSize(inputArray, axis):
   "Get the padding size formed by areas of zero along the given axis"
@@ -20,15 +20,24 @@ def getRelevantAreaCoords(inputData):
 
   return (y1, x1, y2, x2)
 
-def preprocessForTraining(inputTensor, inputPositions):
+def preprocess(inputTensor):
   (y1, x1, y2, x2) = getRelevantAreaCoords(inputTensor.numpy())
   croppedImage = tf.image.crop_to_bounding_box(inputTensor, y1, x1, y2 - y1 + 1, x2 - x1 + 1)
   X = tf.image.resize(croppedImage, (h, w))
 
-  (_, inputHeight, inputWidth, _) = inputTensor.shape
+  return X, [y1, x1, y2, x2]
+
+def preprocessPositions(inputPositions, coords):
+  [y1, x1, y2, x2] = coords
   positions = np.array(inputPositions, dtype=np.float64)
   positions[:, 0] = (positions[:, 0] - y1) / (y2 - y1)
   positions[:, 1] = (positions[:, 1] - x1) / (x2 - x1)
-  Y = tf.convert_to_tensor([positions.flatten()])
+  Y = tf.convert_to_tensor([positions.flatten()])  
+  return Y
 
-  return X, Y
+def postprocessPositions(preds, coords):
+  [y1, x1, y2, x2] = coords
+  positions = np.reshape(np.copy(preds[0]), (numberOfPoints, 2))
+  positions[:, 0] = (positions[:, 0] * (y2 - y1)) + y1
+  positions[:, 1] = (positions[:, 1] * (x2 - x1)) + x1
+  return positions

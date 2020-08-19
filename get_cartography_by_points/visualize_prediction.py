@@ -6,24 +6,27 @@ import numpy as np
 from .constants import h, w, numberOfPoints
 from .data_generator import getSingleEntry
 from .model import getModel
+from .preprocess import postprocessPositions
 
 filename = sys.argv[1]
 
 model = getModel()
 model.load_weights('./weights/get_cartography_by_points')
-X, groundTruth = getSingleEntry(filename)
-pred = model.predict(X, steps=1)
+originalImage, originalPositions, X, Y, coords = getSingleEntry(filename)
+rawPreds = model.predict(X, steps=1)
+preds = postprocessPositions(rawPreds, coords)
 
-print('Loss: %s' % tf.keras.losses.MeanSquaredError()(groundTruth, pred).numpy())
+print('Loss: %s' % tf.keras.losses.MeanSquaredError()(Y, rawPreds).numpy())
 
-groundTruthY = np.array([groundTruth[0][2*i] for i in range(numberOfPoints)]) * (h - 1)
-groundTruthX = np.array([groundTruth[0][2*i+1] for i in range(numberOfPoints)]) * (w - 1)
+originalPositions = np.array(originalPositions)
+fig, ax = plt.subplots(1, 2, figsize=(50, 50))
+ax[0].imshow(originalImage.numpy()[0])
+ax[0].plot(originalPositions[:, 1], originalPositions[:, 0], marker='o')
+ax[0].plot(preds[:, 1], preds[:, 0], marker='x')
 
-predY = np.array([pred[0][2*i] for i in range(numberOfPoints)]) * (h - 1)
-predX = np.array([pred[0][2*i+1] for i in range(numberOfPoints)]) * (w - 1)
-
-fig, ax = plt.subplots(1, 1, figsize=(50, 50))
-ax.imshow(X.numpy()[0])
-ax.plot(groundTruthX, groundTruthY, marker='o')
-ax.plot(predX, predY, marker='x')
+Y = np.reshape(Y.numpy(), (numberOfPoints, 2))
+rawPreds = np.reshape(rawPreds, (numberOfPoints, 2))
+ax[1].imshow(X.numpy()[0])
+ax[1].plot(Y[:, 1] * w, Y[:, 0] * h, marker='o')
+ax[1].plot(rawPreds[:, 1] * w, rawPreds[:, 0] * h, marker='x')
 plt.show()
