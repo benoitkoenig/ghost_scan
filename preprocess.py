@@ -2,14 +2,8 @@ import math
 import tensorflow as tf
 
 def resize(inputTensor, height, width):
-  [_, inputH, inputW, _] = inputTensor.shape
-  if (inputH > height) | (inputW > width):
-    factor = min(height / inputH, width / inputW)
-    newH = int(inputH * factor)
-    newW = int(inputW * factor)
-    downsizedTensor = tf.image.resize(inputTensor, (newH, newW))
-  else:
-    downsizedTensor = inputTensor
+  # Todo: try with tf.image.resize_with_pad(inputTensor, (h, w)). Only issue so far: coords are unknown
+  downsizedTensor = tf.image.resize(inputTensor, (height, width), preserve_aspect_ratio=True)
 
   [_, downsizedH, downsizedW, _] = downsizedTensor.shape
   paddingHBefore = (height - downsizedH) // 2
