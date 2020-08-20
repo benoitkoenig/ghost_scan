@@ -1,6 +1,8 @@
+import csv
 import math
 import numpy as np
 import PIL
+import random
 import tensorflow as tf
 
 def resize(inputTensor, height, width):
@@ -31,3 +33,15 @@ def getTensorFromFilepathPng(filepath, height=None, width=None, keepAlphaChannel
   if (height != None) & (width != None):
     tensor = resize(tensor, height, width)
   return tensor
+
+def getFilesData():
+  with open('data/printed_document_cartography.csv') as csvFile:
+    csvReader = csv.reader(csvFile, delimiter=',')
+    rows = [[r[0], eval(r[1])] for r in csvReader][1:]
+  random.shuffle(rows)
+  return rows
+
+def getPositions(filename):
+  matchingFiles = [f for f in getFilesData() if f[0] == filename]
+  assert (len(matchingFiles) != 0), 'File not found'
+  return matchingFiles[0][1]
