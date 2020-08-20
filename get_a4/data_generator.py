@@ -1,3 +1,5 @@
+import tensorflow as tf
+
 from ghost_scan.get_data import getFilesData, getPositions, getTensorFromFilepathPng
 from ghost_scan.preprocess import resize, removeAlphaChannel
 from .constants import h, w
@@ -8,7 +10,7 @@ def getXY(filename, positions):
   X = preprocess(rawX, positions)
   Y = getTensorFromFilepathPng('./data/png/%s' % filename)
   Y = removeAlphaChannel(Y)
-  Y, _ = resize(Y, h, w)
+  Y = tf.image.resize(Y, (h, w), method='area')
   return X, Y
 
 def getDataGenerator():
