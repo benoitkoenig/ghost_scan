@@ -1,7 +1,7 @@
 import csv
 import random
 
-from ghost_scan.get_tensor_from_filepath import getTensorFromFilepathPng
+from ghost_scan.getData import getTensorFromFilepathPng
 from .preprocess import preprocess, preprocessPositions
 
 def getFilesData():

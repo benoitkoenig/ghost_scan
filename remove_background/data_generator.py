@@ -1,7 +1,7 @@
 import os
 import tensorflow as tf
 
-from ghost_scan.get_tensor_from_filepath import getTensorFromFilepathPng
+from ghost_scan.getData import getTensorFromFilepathPng
 from .constants import h, w
 
 def getGroundTruth(filename):
