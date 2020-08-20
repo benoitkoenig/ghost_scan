@@ -1,4 +1,4 @@
-from ghost_scan.getData import getFilesData, getPositions, getTensorFromFilepathPng
+from ghost_scan.get_data import getFilesData, getPositions, getTensorFromFilepathPng
 from .constants import h, w
 from .preprocess import preprocess
 

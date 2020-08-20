@@ -3,7 +3,7 @@ import numpy as np
 import sys
 import tensorflow as tf
 
-from ghost_scan.getData import getPositions
+from ghost_scan.get_data import getPositions
 from .data_generator import getXY
 from .model import getModel
 

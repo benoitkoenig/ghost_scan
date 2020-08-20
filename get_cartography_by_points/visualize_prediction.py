@@ -4,7 +4,7 @@ import tensorflow as tf
 import numpy as np
 
 from ghost_scan.constants import numberOfPoints
-from ghost_scan.getData import getPositions
+from ghost_scan.get_data import getPositions
 from .constants import h, w
 from .data_generator import getXY
 from .model import getModel

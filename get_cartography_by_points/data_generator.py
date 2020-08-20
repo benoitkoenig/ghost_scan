@@ -1,4 +1,4 @@
-from ghost_scan.getData import getFilesData, getPositions, getTensorFromFilepathPng
+from ghost_scan.get_data import getFilesData, getTensorFromFilepathPng
 from .preprocess import preprocess, preprocessPositions
 
 def getXY(filename, positions):
