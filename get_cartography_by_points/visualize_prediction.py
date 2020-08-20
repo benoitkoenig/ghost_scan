@@ -4,8 +4,9 @@ import tensorflow as tf
 import numpy as np
 
 from ghost_scan.constants import numberOfPoints
+from ghost_scan.getData import getPositions
 from .constants import h, w
-from .data_generator import getSingleEntry
+from .data_generator import getXY
 from .model import getModel
 from .preprocess import postprocessPositions
 
@@ -13,13 +14,15 @@ filename = sys.argv[1]
 
 model = getModel()
 model.load_weights('./weights/get_cartography_by_points')
-originalImage, originalPositions, X, Y, coords = getSingleEntry(filename)
+
+positions = getPositions(filename)
+X, Y, originalImage, coords = getXY(filename, positions)
 rawPreds = model.predict(X, steps=1)
 preds = postprocessPositions(rawPreds, coords)
 
 print('Loss: %s' % tf.keras.losses.MeanSquaredError()(Y, rawPreds).numpy())
 
-originalPositions = np.array(originalPositions)
+originalPositions = np.array(positions)
 fig, ax = plt.subplots(1, 2, figsize=(50, 50))
 ax[0].imshow(originalImage.numpy()[0])
 ax[0].plot(originalPositions[:, 1], originalPositions[:, 0], marker='o')

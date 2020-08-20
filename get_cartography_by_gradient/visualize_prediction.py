@@ -3,7 +3,7 @@ import sys
 import tensorflow as tf
 import numpy as np
 
-from .data_generator import getTensorFromFilepathPng
+from .data_generator import getXY
 from .constants import h, w
 from .loss import loss
 from .model import getModel
@@ -11,8 +11,7 @@ from .model import getModel
 filename = sys.argv[1]
 
 model = getModel('weights/get_cartography_by_gradient.h5')
-X = getTensorFromFilepathPng('./data/printed_document_without_background/%s' % filename, h, w, keepAlphaChannel=True)
-groundTruth = getTensorFromFilepathPng('./data/printed_gradient_map/%s' % filename, h, w)
+X, groundTruth = getXY(filename)
 rawPrediction = model.predict(X, steps=1)
 
 print('Loss: %s' % loss(groundTruth, rawPrediction).numpy())

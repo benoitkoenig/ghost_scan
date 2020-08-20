@@ -4,15 +4,14 @@ import tensorflow as tf
 import numpy as np
 
 from .constants import h, w
-from .data_generator import getTensorFromFilepathPng, getGroundTruth
+from .data_generator import getXY
 from .model import getModel
 
 filename = sys.argv[1]
 
 model = getModel()
 model.load_weights('weights/remove_background')
-X = getTensorFromFilepathPng('./data/printed_document/%s' % filename, h, w)
-groundTruth = getGroundTruth(filename)
+X, groundTruth = getXY(filename)
 prediction = model.predict(X, steps=1)
 
 fig, axs = plt.subplots(1, 3, figsize=(50, 50))
