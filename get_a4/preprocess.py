@@ -20,12 +20,13 @@ def calculatePosition(inputPositions, destinationY, destinationX):
 
 def getXChannels(positions, y, x, inputData):
   originY, originX, deviationY, deviationX = calculatePosition(positions, y, x)
-  pixelData = inputData[originY - 1: originY + 2, originX - 1: originX + 2, :]
+  pixelData = inputData[originY: originY + 3, originX: originX + 3, :] # We dont start at originY - 1 because it is compensated by the padding of 1
   channels = np.concatenate([pixelData.flatten(), [deviationY, deviationX]])
   return channels
 
 def preprocess(inputTensor, inputPositions):
   inputData = inputTensor.numpy()[0]
+  data = np.pad(inputData, [(1, 1), (1, 1), (0, 0)])
   positions = np.array(inputPositions)
   outputData = [[getXChannels(positions, destinationY / h, destinationX / w, inputData) for destinationX in range(w)] for destinationY in range(h)]
   X = tf.convert_to_tensor([outputData])

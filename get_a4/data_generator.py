@@ -4,7 +4,6 @@ from .constants import h, w
 from .preprocess import preprocess
 
 def getXY(filename, positions):
-  print(filename)
   rawX = getTensorFromFilepathPng('./data/printed_document_without_background/%s' % filename)
   X = preprocess(rawX, positions)
   Y = getTensorFromFilepathPng('./data/png/%s' % filename)
