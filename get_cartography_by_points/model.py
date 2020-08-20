@@ -3,7 +3,8 @@ from tensorflow.keras import Sequential
 from tensorflow.keras.optimizers import Adam
 from tensorflow.keras.losses import MeanSquaredError
 
-from .constants import h, w, numberOfPoints
+from ghost_scan.constants import numberOfPoints
+from .constants import h, w
 
 def getModel():
   model = Sequential()

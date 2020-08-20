@@ -3,7 +3,8 @@ import sys
 import tensorflow as tf
 import numpy as np
 
-from .constants import h, w, numberOfPoints
+from ghost_scan.constants import numberOfPoints
+from .constants import h, w
 from .data_generator import getSingleEntry
 from .model import getModel
 from .preprocess import postprocessPositions

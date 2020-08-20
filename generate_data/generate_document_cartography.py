@@ -3,7 +3,10 @@ import numpy as np
 import os
 from PIL import Image
 
+from ghost_scan.constants import numberOfPoints
+
 coords = [(0, 0), (0, 256), (256, 0), (256, 256)]
+assert len(coords) == numberOfPoints
 
 dirpath = os.path.dirname(os.path.realpath(__file__))
 

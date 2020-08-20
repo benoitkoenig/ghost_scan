@@ -2,7 +2,8 @@ import math
 import numpy as np
 import tensorflow as tf
 
-from .constants import h, w, numberOfPoints
+from ghost_scan.constants import numberOfPoints
+from .constants import h, w
 
 def getPaddingSize(inputArray, axis):
   "Get the padding size formed by areas of zero along the given axis"
