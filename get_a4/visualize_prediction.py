@@ -9,10 +9,9 @@ from .model import getModel
 
 filename = sys.argv[1]
 
-model = getModel()
-model.load_weights('./weights/get_a4')
 positions = getPositions(filename)
 X, Y, rawX = getXY(filename, positions)
+model = getModel(weights='./weights/get_a4')
 pred = model.predict(X, steps=1)
 
 print('Loss: %s' % tf.keras.losses.MeanSquaredError()(Y, pred).numpy())

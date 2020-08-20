@@ -9,9 +9,8 @@ from .model import getModel
 
 filename = sys.argv[1]
 
-model = getModel()
-model.load_weights('weights/remove_background')
 X, groundTruth = getXY(filename)
+model = getModel(weights='weights/remove_background')
 prediction = model.predict(X, steps=1)
 
 fig, axs = plt.subplots(1, 3, figsize=(50, 50))

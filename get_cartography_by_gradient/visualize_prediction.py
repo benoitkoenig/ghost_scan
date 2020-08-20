@@ -10,32 +10,31 @@ from .model import getModel
 
 filename = sys.argv[1]
 
-model = getModel('weights/get_cartography_by_gradient.h5')
 X, groundTruth = getXY(filename)
-rawPrediction = model.predict(X, steps=1)
+model = getModel('weights/get_cartography_by_gradient.h5')
+rawPreds = model.predict(X, steps=1)
+preds = np.clip(rawPreds[0], 0, 1)
 
-print('Loss: %s' % loss(groundTruth, rawPrediction).numpy())
-
-prediction = np.clip(rawPrediction[0], 0, 1)
+print('Loss: %s' % loss(groundTruth, rawPreds).numpy())
 
 fig, axs = plt.subplots(2, 3, figsize=(50, 50))
 axs[0, 0].imshow(X.numpy()[0])
-axs[0, 1].imshow(prediction)
+axs[0, 1].imshow(preds)
 axs[0, 2].imshow(groundTruth.numpy()[0])
 
-predictionRed = np.copy(prediction)
-predictionRed[:, :, 1] = 0
-predictionRed[:, :, 2] = 0
+predsRed = np.copy(preds)
+predsRed[:, :, 1] = 0
+predsRed[:, :, 2] = 0
 
-predictionGreen = np.copy(prediction)
-predictionGreen[:, :, 0] = 0
-predictionGreen[:, :, 2] = 0
+predsGreen = np.copy(preds)
+predsGreen[:, :, 0] = 0
+predsGreen[:, :, 2] = 0
 
-predictionBlue = np.copy(prediction)
-predictionBlue[:, :, 0] = 0
-predictionBlue[:, :, 1] = 0
+predsBlue = np.copy(preds)
+predsBlue[:, :, 0] = 0
+predsBlue[:, :, 1] = 0
 
-axs[1, 0].imshow(predictionRed)
-axs[1, 1].imshow(predictionGreen)
-axs[1, 2].imshow(predictionBlue)
+axs[1, 0].imshow(predsRed)
+axs[1, 1].imshow(predsGreen)
+axs[1, 2].imshow(predsBlue)
 plt.show()

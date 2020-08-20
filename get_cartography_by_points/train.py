@@ -4,7 +4,7 @@ from .model import getModel
 from .data_generator import getDataGenerator
 
 gen = getDataGenerator()
-model = getModel()
+model = getModel(weights=None)
 
 loggerCb = tf.keras.callbacks.CSVLogger('./logs/get_cartography_by_points.csv')
 

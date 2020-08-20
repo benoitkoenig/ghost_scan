@@ -12,11 +12,9 @@ from .preprocess import postprocessPositions
 
 filename = sys.argv[1]
 
-model = getModel()
-model.load_weights('./weights/get_cartography_by_points')
-
 positions = getPositions(filename)
 X, Y, originalImage, coords = getXY(filename, positions)
+model = getModel(weights='./weights/get_cartography_by_points')
 rawPreds = model.predict(X, steps=1)
 preds = postprocessPositions(rawPreds, coords)
 

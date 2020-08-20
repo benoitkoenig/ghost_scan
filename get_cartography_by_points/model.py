@@ -6,7 +6,7 @@ from tensorflow.keras.losses import MeanSquaredError
 from ghost_scan.constants import numberOfPoints
 from .constants import h, w
 
-def getModel():
+def getModel(weights=None):
   model = Sequential()
   model.add(InputLayer(input_shape=(h, w, 4)))
   model.add(Conv2D(128, 3, 2))
@@ -24,4 +24,7 @@ def getModel():
   optimizer = Adam(learning_rate=1e-5)
 
   model.compile(optimizer=optimizer, loss=MeanSquaredError())
+
+  if (weights != None):
+    model.load_weights(weights)
   return model
