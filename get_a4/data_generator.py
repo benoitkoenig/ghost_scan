@@ -9,9 +9,9 @@ def getXY(filename, positions):
   Y = getTensorFromFilepathPng('./data/png/%s' % filename)
   Y = removeAlphaChannel(Y)
   Y, _ = resize(Y, h, w)
-  return X, Y, rawX
+  return X, Y
 
 def getDataGenerator():
   for [filename, positions] in getFilesData():
-    X, Y, _ = getXY(filename, positions)
+    X, Y = getXY(filename, positions)
     yield X, Y
