@@ -2,7 +2,7 @@ from ghost_scan.get_data import getFilesData, getTensorFromFilepathPng
 from .preprocess import preprocess, preprocessPositions
 
 def getXY(filename, positions):
-  rawX = getTensorFromFilepathPng('./data/printed_document_without_background/%s' % filename, keepAlphaChannel=True)
+  rawX = getTensorFromFilepathPng('./data/printed_document_without_background/%s' % filename)
   X, coords = preprocess(rawX)
   Y = preprocessPositions(positions, coords)
   return X, Y, rawX, coords
