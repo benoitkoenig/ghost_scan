@@ -9,5 +9,5 @@ echo '[Done] Generating printed documents and corresponding printed gradient map
 python3 $dir/generate_documents_without_background.py
 echo '[Done] Generating documents without background'
 
-python3 $dir/generate_document_cartography.py
-echo '[Done] Generating documents cartography points'
+python3 $dir/generate_document_carto.py
+echo '[Done] Generating documents carto points'

@@ -5,7 +5,7 @@ import random
 import tensorflow as tf
 
 def getFilesData():
-  with open('data/printed_document_cartography.csv') as csvFile:
+  with open('data/printed_document_carto.csv') as csvFile:
     csvReader = csv.reader(csvFile, delimiter=',')
     rows = [[r[0], eval(r[1])] for r in csvReader][1:]
   random.shuffle(rows)

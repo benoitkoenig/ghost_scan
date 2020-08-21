@@ -14,14 +14,14 @@ Removing the background is done by segmentation
 - Training: `python -m get_gradient_map_from_printed_document.train.py`
 - Checking: `python -m ghost_scan.get_gradient_map_from_printed_document.visualize_prediction {filename}.png`
 
-## Get cartography by gradient
+## Get carto by gradient
 
-Getting cartography by creating the printed gradient map from the printed document
-- Training: `python -m get_cartography_by_gradient.train.py`
-- Checking: `python -m get_cartography_by_gradient.visualize_prediction {filename}.png`
+Getting carto by creating the printed gradient map from the printed document
+- Training: `python -m get_carto_by_gradient.train.py`
+- Checking: `python -m get_carto_by_gradient.visualize_prediction {filename}.png`
 
-## Get cartography by points
+## Get carto by points
 
-Getting cartography by estimating the positions of pre-defined coordinates
-- Training: `python -m get_cartography_by_points.train.py`
-- Checking: `python -m get_cartography_by_points.visualize_prediction {filename}.png`
+Getting carto by estimating the positions of pre-defined coordinates
+- Training: `python -m get_carto_by_points.train.py`
+- Checking: `python -m get_carto_by_points.visualize_prediction {filename}.png`

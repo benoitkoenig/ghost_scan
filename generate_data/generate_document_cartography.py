@@ -30,7 +30,7 @@ for filename in os.listdir('%s/../data/printed_gradient_map' % dirpath):
   allPositions.append([filename, positions])
   print(filename)
 
-with open('%s/../data/printed_document_cartography.csv' % dirpath, 'w') as csvFile:
+with open('%s/../data/printed_document_carto.csv' % dirpath, 'w') as csvFile:
   csvWriter = csv.writer(csvFile, delimiter=',')
   csvWriter.writerow(['filename', coords])
   for [filename, positions] in allPositions:
