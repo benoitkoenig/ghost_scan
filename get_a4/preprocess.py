@@ -6,12 +6,12 @@ from .constants import h, w, inputChannels
 
 def calculatePosition(inputPositions, destinationY, destinationX):
   if (destinationX + destinationY < 1):
-    vectorY = inputPositions[2] - inputPositions[0]
-    vectorX = inputPositions[1] - inputPositions[0]
+    vectorY = inputPositions[1] - inputPositions[0]
+    vectorX = inputPositions[2] - inputPositions[0]
     [originY, originX] = inputPositions[0] + (destinationY * vectorY + destinationX * vectorX)
   else:
-    vectorY = inputPositions[1] - inputPositions[3]
-    vectorX = inputPositions[2] - inputPositions[3]
+    vectorY = inputPositions[2] - inputPositions[3]
+    vectorX = inputPositions[1] - inputPositions[3]
     [originY, originX] = inputPositions[3] + ((1 - destinationY) * vectorY + (1 - destinationX) * vectorX)
 
   originYInt = int(round(originY))
