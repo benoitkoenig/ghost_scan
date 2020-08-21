@@ -17,7 +17,7 @@ preds = model.predict(X, steps=1)
 mask = (X.numpy()[:, :, :, 3] == 1)
 maskedPreds = np.stack([mask, mask, mask, mask], axis=-1) * preds
 
-print('Loss: %s' % loss(groundTruth, preds).numpy())
+print('Loss: %s' % tf.reduce_mean(loss(groundTruth, preds)).numpy())
 print('MeanSquareError: %s' % meanSquareError(groundTruth, preds).numpy())
 
 fig, axs = plt.subplots(2, 3, figsize=(50, 50))
