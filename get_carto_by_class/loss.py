@@ -14,9 +14,7 @@ def getGtForHighestPrediction(gt, pr):
 
 def loss(gt, pr):
   mask = tf.cast(gt != 0, dtype=pr.dtype)
-  # gtForHighestPrediction = getGtForHighestPrediction(gt, mask * pr) # shape=(numberOfPoints)
-  # adjustedGt = tf.stop_gradient(gt - gtForHighestPrediction)
-  adjustedGt = tf.stop_gradient(gt - 0.8)
-  loss = - mask * adjustedGt * pr
-  meanLoss = tf.math.reduce_sum(loss) / tf.math.reduce_sum(mask)
+  gtForHighestPrediction = getGtForHighestPrediction(gt, mask * pr) # shape=(numberOfPoints)
+  adjustedGt = tf.stop_gradient(gt - gtForHighestPrediction)
+  loss = mask * adjustedGt * (1 - pr) ** 2
   return loss
