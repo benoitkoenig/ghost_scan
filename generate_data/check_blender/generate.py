@@ -1,6 +1,6 @@
 import os
 
-from ghost_scan.generate_data.generate_single_picture import initialize_scene, set_texture_image, save_picture, set_lighting_conditions_for_gradient_picture
+from ghost_scan.generate_data.generate_blender_pictures.main import initialize_scene, set_texture_image, save_picture, set_lighting_conditions_for_gradient_picture
 
 dirpath = os.path.dirname(__file__)
 
