@@ -1,5 +1,6 @@
 import bpy
 import bmesh
+import mathutils
 
 def add_document_mesh():
   verts = [(0, 0, 0), (0, 2.1, 0), (2.97, 2.1, 0), (2.97, 0, 0)]
@@ -30,14 +31,10 @@ def set_uv():
   bpy.ops.uv.unwrap()
   bpy.ops.object.mode_set(mode='OBJECT')
 
-  obj.data.uv_layers.active.data[0].uv.x = 1
-  obj.data.uv_layers.active.data[0].uv.y = 0
-  obj.data.uv_layers.active.data[1].uv.x = 0
-  obj.data.uv_layers.active.data[1].uv.y = 0
-  obj.data.uv_layers.active.data[2].uv.x = 0
-  obj.data.uv_layers.active.data[2].uv.y = 1
-  obj.data.uv_layers.active.data[3].uv.x = 1
-  obj.data.uv_layers.active.data[3].uv.y = 1
+  obj.data.uv_layers.active.data[0].uv = mathutils.Vector([1, 0])
+  obj.data.uv_layers.active.data[1].uv = mathutils.Vector([0, 0])
+  obj.data.uv_layers.active.data[2].uv = mathutils.Vector([0, 1])
+  obj.data.uv_layers.active.data[3].uv = mathutils.Vector([1, 1])
 
 def add_texture():
   obj = bpy.data.objects['MyObject']
