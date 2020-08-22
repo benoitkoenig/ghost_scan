@@ -11,7 +11,7 @@ filename = sys.argv[1]
 
 positions = getPositions(filename)
 X, Y = getXY(filename, positions)
-model = getModel(weights='./weights/get_a4')
+model = getModel(weights='./weights/get_a4_with_fine_tuning')
 pred = model.predict(X, steps=1)
 
 print('Loss: %s' % tf.keras.losses.MeanSquaredError()(Y, pred).numpy())
