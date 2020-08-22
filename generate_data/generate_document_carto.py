@@ -1,7 +1,7 @@
 import csv
+import cv2
 import numpy as np
 import os
-from PIL import Image
 
 from ghost_scan.constants import coords
 
@@ -11,16 +11,16 @@ allPositions = []
 for filename in os.listdir('%s/../data/printed_gradient_map' % dirpath):
   if filename[-4:] != '.png':
     continue
-  imgRGBA = Image.open('%s/../data/printed_gradient_map/%s' % (dirpath, filename))
-  imgRGB = imgRGBA.convert('RGB')
-  data = np.asarray(imgRGB, dtype=np.int32)
-  [red, green, blue] = np.dsplit(data, 3)
 
-  red = (red == 255).astype(red.dtype)
-  green = red * green + (1 - red) * 1000
-  blue = red * blue + (1 - red) * 1000
+  data = np.array(cv2.imread('%s/../data/printed_gradient_map/%s' % (dirpath, filename), cv2.IMREAD_UNCHANGED), dtype=np.float32) / 65535
 
-  squareDistanceMatrices = [(green - c[0]) ** 2 + (blue - c[1]) ** 2 for c in coords]
+  [blue, green, red, _] = np.dsplit(data, 4)
+
+  blue = (blue == 1).astype(blue.dtype)
+  green = blue * green + (1 - blue) * 100
+  red = blue * red + (1 - blue) * 100
+
+  squareDistanceMatrices = [(green - c[0]) ** 2 + (red - c[1]) ** 2 for c in coords]
   positions = [np.unravel_index(np.argmin(s, axis=None), s.shape) for s in squareDistanceMatrices]
   positions = np.array(positions)[:, 0:2]
   positions = positions.tolist()

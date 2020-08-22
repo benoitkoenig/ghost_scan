@@ -4,7 +4,7 @@ from ghost_scan.constants import coords, numberOfPoints
 from .constants import h, w
 
 pointsGridsShape = tf.ones((1, h, w, numberOfPoints, 2), dtype=tf.float32)
-pointsGridMutiplier = tf.convert_to_tensor(coords, dtype = tf.float32) / 255
+pointsGridMutiplier = tf.convert_to_tensor(coords, dtype = tf.float32)
 pointsGrid = pointsGridsShape * pointsGridMutiplier
 # pointsGrid is of shape (1, h, w, numberOfPoints, 2) and contains the array coords on each pixel
 

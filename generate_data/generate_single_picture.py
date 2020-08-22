@@ -11,6 +11,11 @@ def delete_default_cube():
   bpy.data.objects['Cube'].select = True
   bpy.ops.object.delete()
 
+def use16bit():
+  scene = bpy.data.scenes[0]
+  scene.render.image_settings.color_depth = '16'
+  scene.render.image_settings.file_format = 'PNG'
+
 def save_picture(output_file):
   bpy.context.scene.render.filepath = output_file
   bpy.ops.render.render(write_still = True)
@@ -97,6 +102,7 @@ def initialize_scene():
   add_document_mesh()
   set_uv()
   add_texture()
+  use16bit()
 
 def main():
   filename = sys.argv[5]

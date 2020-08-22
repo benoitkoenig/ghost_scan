@@ -1,6 +1,6 @@
 import csv
+import cv2
 import numpy as np
-import PIL
 import random
 import tensorflow as tf
 
@@ -17,7 +17,6 @@ def getPositions(filename):
   return matchingFiles[0][1]
 
 def getTensorFromFilepathPng(filepath):
-  img = PIL.Image.open(filepath)
-  data = np.asarray(img) / 255
+  data = np.array(cv2.imread(filepath, cv2.IMREAD_UNCHANGED), dtype=np.float32) / 65535
   tensor = tf.convert_to_tensor([data])
   return tensor
