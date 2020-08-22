@@ -20,7 +20,7 @@ for filename in os.listdir('%s/../data/printed_gradient_map' % dirpath):
   green = red * green + (1 - red) * 1000
   blue = red * blue + (1 - red) * 1000
 
-  squareDistanceMatrices = [(blue - c[0]) ** 2 + (green - c[1]) ** 2 for c in coords]
+  squareDistanceMatrices = [(green - c[0]) ** 2 + (blue - c[1]) ** 2 for c in coords]
   positions = [np.unravel_index(np.argmin(s, axis=None), s.shape) for s in squareDistanceMatrices]
   positions = np.array(positions)[:, 0:2]
   positions = positions.tolist()

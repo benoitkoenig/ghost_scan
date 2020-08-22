@@ -4,12 +4,12 @@ from .constants import h, w
 
 def calculatePosition(positions, destinationY, destinationX):
   if (destinationX + destinationY < 1):
-    vectorY = positions[1] - positions[0]
-    vectorX = positions[2] - positions[0]
+    vectorY = positions[2] - positions[0]
+    vectorX = positions[1] - positions[0]
     [originY, originX] = positions[0] + (destinationY * vectorY + destinationX * vectorX)
   else:
-    vectorY = positions[2] - positions[3]
-    vectorX = positions[1] - positions[3]
+    vectorY = positions[1] - positions[3]
+    vectorX = positions[2] - positions[3]
     [originY, originX] = positions[3] + ((1 - destinationY) * vectorY + (1 - destinationX) * vectorX)
 
   return int(round(originY)), int(round(originX))
