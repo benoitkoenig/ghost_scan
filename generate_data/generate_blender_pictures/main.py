@@ -1,26 +1,14 @@
-import bpy
-import bmesh
-import math
-import random
+import os
 import sys
 
-from .initialize_scene import initialize_scene
-from .create_mesh import create_document, create_background
-from .prepare_gradient_picture import prepare_gradient_picture
-from .save_picture import save_picture
+from .generate_both_pictures import generate_both_pictures
 
-def main():
-  filename = sys.argv[5]
-  folderPath = sys.argv[6]
+filename = sys.argv[5]
 
-  initialize_scene()
-  create_document('%s/data/png/%s' % (folderPath, filename))
-  create_background()
+dirname = os.path.dirname(__file__)
 
-  save_picture('%s/data/printed_document/%s' % (folderPath, filename))
-
-  prepare_gradient_picture()
-  save_picture('%s/data/printed_gradient_map/%s' % (folderPath, filename))
-
-if __name__ == '__main__':
-  main()
+generate_both_pictures(
+  inputPath='%s/../../data/png/%s' % (dirname, filename),
+  outputDocumentPath='%s/../../data/printed_document/%s' % (dirname, filename),
+  outputGradientPath='%s/../../data/printed_gradient_map/%s' % (dirname, filename),
+)
