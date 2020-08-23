@@ -1,6 +1,5 @@
 import bpy
 import bmesh
-import mathutils
 import os
 import random
 
