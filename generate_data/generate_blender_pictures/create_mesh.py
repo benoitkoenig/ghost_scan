@@ -51,10 +51,11 @@ def add_texture(name):
 def set_texture_image(name, texture_file):
   bpy.data.textures['Texture%s' % name].image = bpy.data.images.load(texture_file)
 
-def create_document():
+def create_document(filepath):
   add_mesh('Document', [(-1.485, -1.05, 0.01), (-1.485, 1.05, 0.01), (1.485, 1.05, 0.01), (1.485, -1.05, 0.01)])
   set_uv('Document')
   add_texture('Document')
+  set_texture_image('Document', filepath)
 
 def create_background(dirpath):
   add_mesh('Background', [(-5, -5, 0), (-5, 5, 0), (5, 5, 0), (5, -5, 0)])
