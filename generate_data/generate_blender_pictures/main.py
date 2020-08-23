@@ -1,7 +1,7 @@
 import os
 import sys
 
-from .generate_both_pictures import generate_both_pictures
+from ghost_scan.generate_data.generate_blender_pictures.generate_both_pictures import generate_both_pictures
 
 filename = sys.argv[5]
 
