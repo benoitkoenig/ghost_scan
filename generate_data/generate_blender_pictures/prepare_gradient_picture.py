@@ -8,7 +8,7 @@ def set_lighting_conditions_for_gradient_picture():
   world.horizon_color = 0, 0, 0
   world.zenith_color = 0, 0, 0
 
-  mat = bpy.data.materials.get("Material")
+  mat = bpy.data.materials.get('Material')
   mat.emit = 1
   mat.ambient = 0
   mat.translucency = 0

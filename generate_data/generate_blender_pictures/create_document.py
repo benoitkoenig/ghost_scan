@@ -19,14 +19,14 @@ def add_document_mesh():
   bm.faces.new(vertices)
 
   # make the bmesh the object's mesh
-  bm.to_mesh(mesh)  
-  bm.free()  # always do this when finished
+  bm.to_mesh(mesh)
+  bm.free() # always do this when finished
 
 def set_uv():
   obj = bpy.data.objects['MyObject']
   obj.select = True  # select object
   bpy.ops.object.mode_set(mode='EDIT')
-  bpy.ops.mesh.select_mode(type="VERT")
+  bpy.ops.mesh.select_mode(type='VERT')
   bpy.ops.mesh.select_all(action = 'SELECT')
   bpy.ops.uv.unwrap()
   bpy.ops.object.mode_set(mode='OBJECT')
@@ -38,7 +38,7 @@ def set_uv():
 
 def add_texture():
   obj = bpy.data.objects['MyObject']
-  mat = bpy.data.materials.get("Material")
+  mat = bpy.data.materials.get('Material')
   mat.diffuse_intensity = 1
   mat.specular_intensity = 0
   obj.data.materials.append(mat)

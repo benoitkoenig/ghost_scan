@@ -6,7 +6,7 @@ from ghost_scan.constants import numberOfPoints
 from .constants import h, w
 
 def getPaddingSize(inputArray, axis):
-  "Get the padding size formed by areas of zero along the given axis"
+  'Get the padding size formed by areas of zero along the given axis'
   sumAlongAxis = np.sum(inputArray, axis)
   relevantElements = np.argwhere(sumAlongAxis != 0)
 
@@ -33,7 +33,7 @@ def preprocessPositions(inputPositions, coords):
   positions = np.array(inputPositions, dtype=np.float32)
   positions[:, 0] = (positions[:, 0] - y1) / (y2 - y1)
   positions[:, 1] = (positions[:, 1] - x1) / (x2 - x1)
-  Y = tf.convert_to_tensor([positions.flatten()])  
+  Y = tf.convert_to_tensor([positions.flatten()])
   return Y
 
 def postprocessPositions(preds, coords):

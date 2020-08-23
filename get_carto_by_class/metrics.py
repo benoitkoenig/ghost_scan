@@ -20,7 +20,7 @@ def meanSquareError(gt, pr):
   # Then, get the gt of all best predictions
   gtForHighestPrediction = getGtForHighestPrediction(gt, mask * pr)
   assert(gtForHighestPrediction.shape == (numberOfPoints))
-  
+
   # Finally, get the meanSquareDistance
   squareDistances = - tf.math.log(gtForHighestPrediction)
   meanSquareDistance = tf.math.reduce_mean(squareDistances)
