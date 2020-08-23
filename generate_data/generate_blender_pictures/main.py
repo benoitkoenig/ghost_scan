@@ -16,11 +16,11 @@ def main():
   initialize_scene()
   create_document()
 
-  set_texture_image('%s/data/png/%s' % (folderPath, filename))
+  set_texture_image('Document', '%s/data/png/%s' % (folderPath, filename))
   save_picture('%s/data/printed_document/%s' % (folderPath, filename))
 
   prepare_gradient_picture()
-  set_texture_image('%s/generate_data/gradient_map.png' % folderPath)
+  set_texture_image('Document', '%s/generate_data/gradient_map.png' % folderPath)
   save_picture('%s/data/printed_gradient_map/%s' % (folderPath, filename))
 
 if __name__ == '__main__':

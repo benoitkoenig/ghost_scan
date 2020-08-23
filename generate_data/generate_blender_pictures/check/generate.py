@@ -12,11 +12,11 @@ def check():
   initialize_scene()
   create_document()
 
-  set_texture_image('%s/input.png' % dirpath)
+  set_texture_image('Document', '%s/input.png' % dirpath)
   save_picture('%s/printed_document.png' % dirpath)
 
   prepare_gradient_picture()
-  set_texture_image('%s/../../gradient_map.png' % dirpath)
+  set_texture_image('Document', '%s/../../gradient_map.png' % dirpath)
   save_picture('%s/printed_gradient_map.png' % dirpath)
 
 try:
