@@ -7,7 +7,7 @@ gen = getDataGenerator()
 model = getModel(weights=None)
 
 reduceLrCb = tf.keras.callbacks.ReduceLROnPlateau(monitor='loss', factor=0.2, patience=4, min_lr=4e-6)
-loggerCb = tf.keras.callbacks.CSVLogger('./logs/remove_background.csv')
+loggerCb = tf.keras.callbacks.CSVLogger('./scan/logs/get_carto_by_gradient.csv')
 
 model.fit(gen, steps_per_epoch=10, epochs=40, callbacks=[reduceLrCb, loggerCb])
-model.save_weights('./weights/remove_background', overwrite=True)
+model.save_weights('./scan/weights/get_carto_by_gradient.h5/weights', overwrite=True)

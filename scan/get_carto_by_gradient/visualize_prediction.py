@@ -11,7 +11,7 @@ from .model import getModel
 filename = sys.argv[1]
 
 X, groundTruth = getXY(filename)
-model = getModel('weights/get_carto_by_gradient.h5')
+model = getModel('./scan/weights/get_carto_by_gradient/weights')
 rawPreds = model.predict(X, steps=1)
 preds = np.clip(rawPreds[0], 0, 1)
 

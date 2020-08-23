@@ -1,5 +1,5 @@
-from ghost_scan.get_data import getFilesData, getTensorFromFilepathPng
-from ghost_scan.preprocess import resize, removeAlphaChannel
+from ghost_scan.scan.get_data import getFilesData, getTensorFromFilepathPng
+from ghost_scan.scan.preprocess import resize, removeAlphaChannel
 from .constants import h, w
 from .preprocessY import preprocessY
 

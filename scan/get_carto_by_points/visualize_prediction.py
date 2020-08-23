@@ -4,7 +4,7 @@ import tensorflow as tf
 import numpy as np
 
 from ghost_scan.constants import numberOfPoints
-from ghost_scan.get_data import getPositions
+from ghost_scan.scan.get_data import getPositions
 from .constants import h, w
 from .data_generator import getXY
 from .model import getModel
@@ -14,7 +14,7 @@ filename = sys.argv[1]
 
 positions = getPositions(filename)
 X, Y, originalImage, coords = getXY(filename, positions)
-model = getModel(weights='./weights/get_carto_by_points')
+model = getModel(weights='./scan/weights/get_carto_by_points/weights')
 rawPreds = model.predict(X, steps=1)
 preds = postprocessPositions(rawPreds, coords)
 

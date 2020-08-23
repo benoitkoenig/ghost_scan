@@ -1,7 +1,7 @@
 import tensorflow as tf
 
-from ghost_scan.get_data import getFilesData, getPositions, getTensorFromFilepathPng
-from ghost_scan.preprocess import resize, removeAlphaChannel
+from ghost_scan.scan.get_data import getFilesData, getPositions, getTensorFromFilepathPng
+from ghost_scan.scan.preprocess import resize, removeAlphaChannel
 from .constants import h, w
 from .preprocess import preprocess
 

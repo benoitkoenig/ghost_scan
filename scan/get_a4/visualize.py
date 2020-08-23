@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import sys
 
-from ghost_scan.get_data import getPositions, getTensorFromFilepathPng
+from ghost_scan.scan.get_data import getPositions, getTensorFromFilepathPng
 from .get_a4 import getA4
 
 filename = sys.argv[1]

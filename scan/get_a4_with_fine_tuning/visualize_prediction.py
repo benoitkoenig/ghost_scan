@@ -3,7 +3,7 @@ import numpy as np
 import sys
 import tensorflow as tf
 
-from ghost_scan.get_data import getPositions
+from ghost_scan.scan.get_data import getPositions
 from .data_generator import getXY
 from .model import getModel
 
@@ -11,7 +11,7 @@ filename = sys.argv[1]
 
 positions = getPositions(filename)
 X, Y = getXY(filename, positions)
-model = getModel(weights='./weights/get_a4_with_fine_tuning')
+model = getModel(weights='./scan/weights/get_a4_with_fine_tuning/weights')
 pred = model.predict(X, steps=1)
 
 print('Loss: %s' % tf.keras.losses.MeanSquaredError()(Y, pred).numpy())
