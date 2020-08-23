@@ -51,7 +51,8 @@ def set_texture_image(name, texture_file):
   bpy.data.textures['Texture%s' % name].image = bpy.data.images.load(texture_file)
 
 def create_document(filepath):
-  add_mesh('Document', [(-1.485, -1.05, 0.01), (-1.485, 1.05, 0.01), (1.485, 1.05, 0.01), (1.485, -1.05, 0.01)])
+  z = 0.01 + random.random()
+  add_mesh('Document', [(-1.485, -1.05, z), (-1.485, 1.05, z), (1.485, 1.05, z), (1.485, -1.05, z)])
   set_uv('Document')
   add_texture('Document')
   set_texture_image('Document', filepath)
@@ -60,6 +61,7 @@ def create_background():
   add_mesh('Background', [(-5, -5, 0), (-5, 5, 0), (5, 5, 0), (5, -5, 0)])
   set_uv('Background')
   add_texture('Background')
+  bpy.data.materials.get('MatBackground').emit = 0.2 * random.random() # To avoid shadows being all-black
 
   dirname = os.path.dirname(__file__)
   filename = random.choice([f for f in os.listdir('%s/../../data/backgrounds/' % dirname) if (f[-4:] == '.jpg')])
