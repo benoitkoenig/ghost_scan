@@ -5,7 +5,7 @@ import random
 import sys
 
 from .initialize_scene import initialize_scene
-from .create_document import create_document, set_texture_image
+from .create_mesh import create_document, create_background, set_texture_image
 from .prepare_gradient_picture import prepare_gradient_picture
 from .save_picture import save_picture
 
@@ -15,6 +15,7 @@ def main():
 
   initialize_scene()
   create_document()
+  create_background(dirpath)
 
   set_texture_image('Document', '%s/data/png/%s' % (folderPath, filename))
   save_picture('%s/data/printed_document/%s' % (folderPath, filename))

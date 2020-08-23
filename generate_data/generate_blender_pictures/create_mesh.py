@@ -1,6 +1,8 @@
 import bpy
 import bmesh
 import mathutils
+import os
+import random
 
 def add_mesh(name, verts):
   mesh = bpy.data.meshes.new('mesh')  # add a new mesh
@@ -38,7 +40,7 @@ def set_uv(name):
 
 def add_texture(name):
   obj = bpy.data.objects[name]
-  mat = bpy.data.materials.get('Material')
+  mat = bpy.data.materials.new(name='Mat%s' % name)
   mat.diffuse_intensity = 1
   mat.specular_intensity = 0
   obj.data.materials.append(mat)
@@ -50,6 +52,14 @@ def set_texture_image(name, texture_file):
   bpy.data.textures['Texture%s' % name].image = bpy.data.images.load(texture_file)
 
 def create_document():
-  add_mesh('Document', [(-1.485, -1.05, 0), (-1.485, 1.05, 0), (1.485, 1.05, 0), (1.485, -1.05, 0)])
+  add_mesh('Document', [(-1.485, -1.05, 0.01), (-1.485, 1.05, 0.01), (1.485, 1.05, 0.01), (1.485, -1.05, 0.01)])
   set_uv('Document')
   add_texture('Document')
+
+def create_background(dirpath):
+  add_mesh('Background', [(-5, -5, 0), (-5, 5, 0), (5, 5, 0), (5, -5, 0)])
+  set_uv('Background')
+  add_texture('Background')
+
+  filename = random.choice([f for f in os.listdir('%s/../../data/backgrounds/' % dirpath) if (f[-4:] == '.jpg')])
+  set_texture_image('Background', '%s/../../data/backgrounds/%s' % (dirpath, filename))
