@@ -57,10 +57,11 @@ def create_document(filepath):
   add_texture('Document')
   set_texture_image('Document', filepath)
 
-def create_background(dirpath):
+def create_background():
   add_mesh('Background', [(-5, -5, 0), (-5, 5, 0), (5, 5, 0), (5, -5, 0)])
   set_uv('Background')
   add_texture('Background')
 
-  filename = random.choice([f for f in os.listdir('%s/../../data/backgrounds/' % dirpath) if (f[-4:] == '.jpg')])
-  set_texture_image('Background', '%s/../../data/backgrounds/%s' % (dirpath, filename))
+  dirname = os.path.dirname(__file__)
+  filename = random.choice([f for f in os.listdir('%s/../../data/backgrounds/' % dirname) if (f[-4:] == '.jpg')])
+  set_texture_image('Background', '%s/../../data/backgrounds/%s' % (dirname, filename))

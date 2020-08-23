@@ -11,11 +11,11 @@ dirpath = os.path.dirname(__file__)
 def check():
   initialize_scene()
   create_document('%s/input.png' % dirpath)
-  create_background('%s/..' % dirpath)
+  create_background()
 
   save_picture('%s/printed_document.png' % dirpath)
 
-  prepare_gradient_picture('%s/../../..' % dirpath)
+  prepare_gradient_picture()
   save_picture('%s/printed_gradient_map.png' % dirpath)
 
 try:

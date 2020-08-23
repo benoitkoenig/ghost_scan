@@ -15,11 +15,11 @@ def main():
 
   initialize_scene()
   create_document('%s/data/png/%s' % (folderPath, filename))
-  create_background(folderPath)
+  create_background()
 
   save_picture('%s/data/printed_document/%s' % (folderPath, filename))
 
-  prepare_gradient_picture(folderPath)
+  prepare_gradient_picture()
   save_picture('%s/data/printed_gradient_map/%s' % (folderPath, filename))
 
 if __name__ == '__main__':

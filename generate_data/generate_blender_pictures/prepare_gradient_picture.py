@@ -1,4 +1,5 @@
 import bpy
+import os
 
 from .create_mesh import set_texture_image
 
@@ -15,6 +16,6 @@ def set_lighting_conditions_for_gradient_picture():
   mat.ambient = 0
   mat.translucency = 0
 
-def prepare_gradient_picture(folderPath):
+def prepare_gradient_picture():
   set_lighting_conditions_for_gradient_picture()
-  set_texture_image('Document', '%s/generate_data/gradient_map.png' % folderPath)
+  set_texture_image('Document', '%s/../gradient_map.png' % os.path.dirname(__file__))
