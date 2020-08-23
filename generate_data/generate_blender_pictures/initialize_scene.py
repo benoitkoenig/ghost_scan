@@ -1,5 +1,6 @@
 import bpy
 import math
+import mathutils
 import random
 
 def centered_random():
@@ -11,15 +12,12 @@ def delete_default_cube():
 
 def move_camera():
   scene = bpy.context.scene
-  scene.camera.rotation_mode = 'XYZ'
 
-  scene.camera.location.x = 1.485 + centered_random() / 10
-  scene.camera.location.y = 1.05 + centered_random() / 10
-  scene.camera.location.z = 10 + centered_random()
+  v3d = [area for area in bpy.context.window.screen.areas if area.type == 'VIEW_3D'][0]
+  v3d.spaces[0].pivot_point = 'CURSOR'
 
-  scene.camera.rotation_euler[0] = math.pi * centered_random() / 36
-  scene.camera.rotation_euler[1] = math.pi * centered_random() / 36
-  scene.camera.rotation_euler[2] = math.pi * (centered_random() / 36 - 0.5)
+  scene.camera.location = mathutils.Vector([centered_random(), centered_random(), 10 + centered_random()])
+  scene.camera.rotation_euler = mathutils.Vector([math.pi * centered_random() / 36, math.pi * centered_random() / 36, math.pi * (centered_random() / 36 - 0.5)])
 
 def set_render_params():
   scene = bpy.data.scenes[0]

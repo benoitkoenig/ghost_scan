@@ -3,7 +3,7 @@ import bmesh
 import mathutils
 
 def add_document_mesh():
-  verts = [(0, 0, 0), (0, 2.1, 0), (2.97, 2.1, 0), (2.97, 0, 0)]
+  verts = [(-1.485, -1.05, 0), (-1.485, 1.05, 0), (1.485, 1.05, 0), (1.485, -1.05, 0)]
   mesh = bpy.data.meshes.new('mesh')  # add a new mesh
   obj = bpy.data.objects.new('MyObject', mesh)  # add a new object using the mesh
 
