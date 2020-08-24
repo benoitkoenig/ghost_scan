@@ -8,7 +8,6 @@ gen = getDataGenerator()
 validationData = getValidationData()
 model = getModel(weights=None)
 
-reduceLrCb = tf.keras.callbacks.ReduceLROnPlateau(monitor='val_loss', factor=0.2, patience=5, min_lr=1e-6)
 loggerCb = tf.keras.callbacks.CSVLogger('./scan/logs/remove_background.csv')
 
 model.fit(
@@ -16,6 +15,6 @@ model.fit(
   validation_data=validationData,
   epochs=epochs,
   steps_per_epoch=steps_per_epoch,
-  callbacks=[reduceLrCb, loggerCb]
+  callbacks=[loggerCb]
 )
 model.save_weights('./scan/weights/remove_background/weights', overwrite=True)
