@@ -6,7 +6,7 @@ import numpy as np
 from ghost_scan.constants import numberOfPoints
 from ghost_scan.scan.get_data import getPositions
 from .constants import h, w
-from .data_generator import getXY
+from .get_data import getXY
 from .model import getModel
 from .preprocess import postprocessPositions
 

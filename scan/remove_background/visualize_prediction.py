@@ -4,7 +4,7 @@ import tensorflow as tf
 import numpy as np
 
 from .constants import h, w
-from .data_generator import getXY
+from .get_data import getXY
 from .model import getModel
 
 filename = sys.argv[1]

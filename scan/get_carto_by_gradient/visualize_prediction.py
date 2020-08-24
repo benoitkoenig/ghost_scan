@@ -3,7 +3,7 @@ import sys
 import tensorflow as tf
 import numpy as np
 
-from .data_generator import getXY
+from .get_data import getXY
 from .constants import h, w
 from .loss import loss
 from .model import getModel

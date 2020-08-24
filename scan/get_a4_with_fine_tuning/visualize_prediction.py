@@ -4,7 +4,7 @@ import sys
 import tensorflow as tf
 
 from ghost_scan.scan.get_data import getPositions
-from .data_generator import getXY
+from .get_data import getXY
 from .model import getModel
 
 filename = sys.argv[1]

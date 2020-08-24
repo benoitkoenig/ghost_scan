@@ -2,7 +2,7 @@ import tensorflow as tf
 
 from ghost_scan.constants import filesCount
 from .model import getModel
-from .data_generator import getDataGenerator
+from .get_data import getDataGenerator
 
 gen = getDataGenerator()
 model = getModel(weights=None)
