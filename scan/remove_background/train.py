@@ -8,7 +8,7 @@ gen = getDataGenerator()
 validationData = getValidationData()
 model = getModel(weights=None)
 
-reduceLrCb = tf.keras.callbacks.ReduceLROnPlateau(monitor='val_loss', factor=0.2, patience=5, min_lr=4e-6)
+reduceLrCb = tf.keras.callbacks.ReduceLROnPlateau(monitor='val_loss', factor=0.2, patience=5, min_lr=1e-6)
 loggerCb = tf.keras.callbacks.CSVLogger('./scan/logs/remove_background.csv')
 
 model.fit(
