@@ -10,38 +10,38 @@ def delete_default_cube():
   bpy.data.objects['Cube'].select = True
   bpy.ops.object.delete()
 
-def move_camera():
-  camera = bpy.context.scene.camera
+def position_around_origin(obj, distance, deltaDistance, deltaAngle1, deltaAngle2):
+  obj.location = [0, 0, 0]
+  obj.rotation_euler = [deltaAngle1 * centered_random(), deltaAngle1 * centered_random(), - math.pi / 2 + deltaAngle1 * centered_random()]
 
-  camera.location = [0, 0, 0]
-  camera.rotation_euler = [math.pi * centered_random() / 6, math.pi * centered_random() / 6, math.pi * (centered_random() / 12 - 0.5)]
-
-  distance = 5 + 3 * centered_random()
   distz = mathutils.Vector((0, 0, distance))
-  rotationMAT = camera.rotation_euler.to_matrix()
+  rotationMAT = obj.rotation_euler.to_matrix()
   rotationMAT.invert()
   zVector = distz * rotationMAT
-  camera.location += zVector
+  obj.location += zVector
 
-  camera.location += mathutils.Vector([centered_random() for _ in range(3)]) / distance
-  camera.rotation_euler.x += math.pi / 36 * centered_random()
-  camera.rotation_euler.y += math.pi / 36 * centered_random()
-  camera.rotation_euler.z += math.pi / 36 * centered_random()
+  obj.location += mathutils.Vector([centered_random() for _ in range(3)]) * deltaDistance
+  obj.rotation_euler.x += centered_random() * deltaAngle2
+  obj.rotation_euler.y += centered_random() * deltaAngle2
+  obj.rotation_euler.z += centered_random() * deltaAngle2
+
+def move_camera():
+  camera = bpy.context.scene.camera
+  distance = 2 + 6 * random.random()
+  position_around_origin(camera, distance, 1 / distance, math.pi / 6, math.pi / 36)
 
 def set_random_lightning():
   dataLamp = bpy.data.lamps[0]
   dataLamp.color = [1 - 0.5 * random.random() for _ in range(3)]
   dataLamp.distance = 20
-  dataLamp.type = random.choice(['POINT', 'SUN', 'SPOT', 'HEMI', 'AREA'])
-  if (dataLamp.type == 'POINT') | (dataLamp.type == 'SPOT'):
-    dataLamp.energy = 10
+  dataLamp.type = random.choice(['POINT', 'SUN', 'HEMI', 'AREA'])
+  if (dataLamp.type == 'POINT'):
+    dataLamp.energy = 5
   if (dataLamp.type == 'AREA'):
-    dataLamp.energy = 0.5
+    dataLamp.energy = 0.01
 
   objLamp = [o for o in bpy.context.scene.objects if o.type == 'LAMP'][0]
-  objLamp.location = [10 * centered_random(), 10 * centered_random(), 18 + 5 * centered_random()]
-  objLamp.rotation_euler = [math.pi * centered_random() / 36, math.pi * centered_random() / 36, math.pi * (centered_random() / 36 - 0.5)]
-
+  position_around_origin(objLamp, 2 + 6 * random.random(), 1, math.pi / 4, math.pi / 6)
 
 def set_render_params():
   scene = bpy.data.scenes[0]
