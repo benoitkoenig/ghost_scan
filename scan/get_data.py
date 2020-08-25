@@ -16,7 +16,7 @@ def getPositions(filename):
   assert (len(matchingFiles) != 0), 'File not found'
   return matchingFiles[0][1]
 
-def getTensorFromFilepathPng(filepath):
+def loadSingleUnresizedPngTensor(filepath):
   data = np.array(cv2.imread(filepath, cv2.IMREAD_UNCHANGED), dtype=np.float32) / 65535
   tensor = tf.convert_to_tensor([data])
   return tensor

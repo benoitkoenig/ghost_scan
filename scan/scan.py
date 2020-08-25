@@ -1,14 +1,14 @@
 import matplotlib.pyplot as plt
 import sys
 
-from ghost_scan.scan.get_data import getTensorFromFilepathPng
+from ghost_scan.scan.get_data import loadSingleUnresizedPngTensor
 from ghost_scan.scan.remove_background.predict import predict as predictImageWithoutBackground
 from ghost_scan.scan.get_carto_by_class.predict import predict as predictPositions
 from ghost_scan.scan.get_a4.get_a4 import getA4
 
 filename = sys.argv[1]
 
-inputImage = getTensorFromFilepathPng('./data/printed_document/%s' % filename)
+inputImage = loadSingleUnresizedPngTensor('./data/printed_document/%s' % filename)
 imageWithoutBackground = predictImageWithoutBackground(inputImage)
 positions = predictPositions(imageWithoutBackground)
 documentA4 = getA4(imageWithoutBackground[0], positions)

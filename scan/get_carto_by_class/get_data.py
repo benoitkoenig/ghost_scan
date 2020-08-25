@@ -1,12 +1,12 @@
-from ghost_scan.scan.get_data import getFilesData, getTensorFromFilepathPng, loadPngTensors
+from ghost_scan.scan.get_data import getFilesData, loadSingleUnresizedPngTensor, loadPngTensors
 from ghost_scan.scan.preprocess import resize
 from .constants import h, w
 from .preprocessY import preprocessY
 
 def getFullData(filename):
-  rawX = getTensorFromFilepathPng('./data/printed_document_without_background/%s' % filename)
+  rawX = loadSingleUnresizedPngTensor('./data/printed_document_without_background/%s' % filename)
   X, coords = resize(rawX, h, w)
-  Y = getTensorFromFilepathPng('./data/printed_gradient_map/%s' % filename)
+  Y = loadSingleUnresizedPngTensor('./data/printed_gradient_map/%s' % filename)
   Y = Y[:, :, :, 0:3]
   Y, _ = resize(Y, h, w)
   Y = preprocessY(Y)
