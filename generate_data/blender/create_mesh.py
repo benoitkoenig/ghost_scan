@@ -41,7 +41,8 @@ def add_texture(name):
   obj = bpy.data.objects[name]
   mat = bpy.data.materials.new(name='Mat%s' % name)
   mat.diffuse_intensity = 1
-  mat.specular_intensity = 0
+  mat.specular_intensity = 0.1 * random.random()
+  mat.specular_hardness = 50 * random.random()
   obj.data.materials.append(mat)
   tex = bpy.data.textures.new('Texture%s' % name, 'IMAGE')
   slot = mat.texture_slots.add()
