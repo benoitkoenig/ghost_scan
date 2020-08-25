@@ -3,7 +3,7 @@ import sys
 import tensorflow as tf
 import numpy as np
 
-from .get_data import getXY
+from .get_data import getFullData
 from .constants import h, w
 from .loss import loss
 from .metrics import meanSquareError
@@ -12,7 +12,7 @@ from .postprocess import postprocess
 
 filename = sys.argv[1]
 
-X, groundTruth, rawX, coords = getXY(filename)
+X, groundTruth, rawX, coords = getFullData(filename)
 model = getModel('./scan/weights/get_carto_by_class/weights')
 preds = model.predict(X, steps=1)
 mask = (X.numpy()[:, :, :, 3] == 1)
