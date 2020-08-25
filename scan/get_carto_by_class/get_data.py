@@ -1,4 +1,4 @@
-from ghost_scan.scan.get_data import getFilesData, loadSingleUnresizedPngTensor, loadPngTensors
+from ghost_scan.scan.get_data import getFilenames, loadSingleUnresizedPngTensor, loadPngTensors
 from ghost_scan.scan.resize_with_coords import resizeWithCoords
 from .constants import h, w
 from .preprocessY import preprocessY
@@ -18,6 +18,6 @@ def getXY(filenames):
   return X, Y
 
 def getDataGenerator():
-  for [filename, _] in getFilesData():
+  for filename in getFilenames():
     X, Y = getXY([filename])
     yield X, Y

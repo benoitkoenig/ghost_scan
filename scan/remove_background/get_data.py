@@ -1,6 +1,6 @@
 import tensorflow as tf
 
-from ghost_scan.scan.get_data import getFilesData, loadPngTensors
+from ghost_scan.scan.get_data import getFilenames, loadPngTensors
 from .constants import h, w, validationSize, batchSize
 
 def getXY(filenames):
@@ -8,7 +8,7 @@ def getXY(filenames):
   Y = loadPngTensors(['./data/printed_document_without_background/%s' % f for f in filenames], h, w)[:, :, :, 3]
   return X, Y
 
-allFilenames = [f[0] for f in getFilesData()]
+allFilenames = getFilenames()
 validationSet = allFilenames[:validationSize]
 trainSet = allFilenames[validationSize:]
 

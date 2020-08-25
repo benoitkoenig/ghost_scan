@@ -4,17 +4,23 @@ import numpy as np
 import random
 import tensorflow as tf
 
-def getFilesData():
-  with open('data/printed_document_carto.csv') as csvFile:
-    csvReader = csv.reader(csvFile, delimiter=',')
-    rows = [[r[0], eval(r[1])] for r in csvReader][1:]
-  random.shuffle(rows)
-  return rows
+from ghost_scan.constants import filenames
 
+def getFilenames():
+  filenamesCopy = [f for f in filenames]
+  random.shuffle(filenamesCopy)
+  return filenamesCopy
+
+positionsRows = None
 def getPositions(filename):
-  matchingFiles = [f for f in getFilesData() if f[0] == filename]
+  global positionsRows
+  if positionsRows == None:
+    with open('data/printed_document_carto.csv') as csvFile:
+      csvReader = csv.reader(csvFile, delimiter=',')
+      positionsRows = [[r[0], r[1]] for r in csvReader][1:]
+  matchingFiles = [r[1] for r in positionsRows if r[0] == filename]
   assert (len(matchingFiles) != 0), 'File not found'
-  return matchingFiles[0][1]
+  return eval(matchingFiles[0])
 
 def loadSingleUnresizedPngTensor(filepath):
   data = np.array(cv2.imread(filepath, cv2.IMREAD_UNCHANGED), dtype=np.float32) / 65535
