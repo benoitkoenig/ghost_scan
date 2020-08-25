@@ -1,8 +1,7 @@
 import math
 import tensorflow as tf
 
-def resize(inputTensor, height, width):
-  # Todo: try with tf.image.resize_with_pad(inputTensor, (h, w)). Only issue so far: coords are unknown
+def resizeWithCoords(inputTensor, height, width):
   downsizedTensor = tf.image.resize(inputTensor, (height, width), preserve_aspect_ratio=True)
 
   [_, downsizedH, downsizedW, _] = downsizedTensor.shape
