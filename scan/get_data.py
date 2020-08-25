@@ -20,3 +20,10 @@ def getTensorFromFilepathPng(filepath):
   data = np.array(cv2.imread(filepath, cv2.IMREAD_UNCHANGED), dtype=np.float32) / 65535
   tensor = tf.convert_to_tensor([data])
   return tensor
+
+def loadPngTensors(filepaths, height, width):
+  data = [np.array(cv2.imread(f, cv2.IMREAD_UNCHANGED), dtype=np.float32) / 65535 for f in filepaths]
+  tensors = [tf.convert_to_tensor(d) for d in data]
+  resizedTensors = [tf.image.resize_with_pad(t, height, width) for t in tensors]
+  tensor = tf.stack(resizedTensors)
+  return tensor

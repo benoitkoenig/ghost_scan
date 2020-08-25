@@ -9,7 +9,7 @@ from .model import getModel
 
 filename = sys.argv[1]
 
-X, groundTruth = getXY(filename)
+X, groundTruth = getXY([filename])
 model = getModel(weights='./scan/weights/remove_background/weights')
 prediction = model.predict(X, steps=1)
 
