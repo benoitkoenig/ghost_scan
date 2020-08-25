@@ -1,5 +1,6 @@
 import bpy
 import math
+import mathutils
 import random
 
 def centered_random():
@@ -10,13 +11,22 @@ def delete_default_cube():
   bpy.ops.object.delete()
 
 def move_camera():
-  scene = bpy.context.scene
+  camera = bpy.context.scene.camera
 
-  v3d = [area for area in bpy.context.window.screen.areas if area.type == 'VIEW_3D'][0]
-  v3d.spaces[0].pivot_point = 'CURSOR'
+  camera.location = [0, 0, 0]
+  camera.rotation_euler = [math.pi * centered_random() / 6, math.pi * centered_random() / 6, math.pi * (centered_random() / 12 - 0.5)]
 
-  scene.camera.location = [centered_random(), centered_random(), 10 + centered_random()]
-  scene.camera.rotation_euler = [math.pi * centered_random() / 36, math.pi * centered_random() / 36, math.pi * (centered_random() / 36 - 0.5)]
+  distance = 5 + 3 * centered_random()
+  distz = mathutils.Vector((0, 0, distance))
+  rotationMAT = camera.rotation_euler.to_matrix()
+  rotationMAT.invert()
+  zVector = distz * rotationMAT
+  camera.location += zVector
+
+  camera.location += mathutils.Vector([centered_random() for _ in range(3)]) / distance
+  camera.rotation_euler.x += math.pi / 36 * centered_random()
+  camera.rotation_euler.y += math.pi / 36 * centered_random()
+  camera.rotation_euler.z += math.pi / 36 * centered_random()
 
 def set_random_lightning():
   dataLamp = bpy.data.lamps[0]
