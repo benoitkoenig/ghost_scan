@@ -13,6 +13,3 @@ def resize(inputTensor, height, width):
   resizedTensor = tf.pad(downsizedTensor, [(0, 0), (paddingHBefore, paddingHAfter), (paddingWBefore, paddingWAfter), (0, 0)])
 
   return resizedTensor, [paddingHBefore, paddingWBefore, height - paddingHAfter, width - paddingWAfter]
-
-def removeAlphaChannel(tensor):
-  return tensor[:, :, :, 0:3]

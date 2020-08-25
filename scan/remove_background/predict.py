@@ -1,12 +1,12 @@
 import tensorflow as tf
 
-from ghost_scan.scan.preprocess import resize, removeAlphaChannel
+from ghost_scan.scan.preprocess import resize
 
 from .model import getModel
 from .constants import h, w
 
 def predict(inputTensor):
-  X = removeAlphaChannel(inputTensor)
+  X = inputTensor[:, :, :, 0:3]
   X, [y1, x1, y2, x2] = resize(X, h, w)
   model = getModel(weights='./scan/weights/remove_background/weights')
   preds = model.predict(X, steps=1)
