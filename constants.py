@@ -1,9 +1,8 @@
-import csv
+import os
 
 coords = [(0, 0), (0, 1), (1, 0), (1, 1)]
 numberOfPoints = len(coords)
 
-with open('data/printed_document_carto.csv') as csvFile:
-  csvReader = csv.reader(csvFile, delimiter=',')
-  rows = [0 for r in csvReader][1:]
-filesCount = len(rows)
+dirpath = os.path.dirname(os.path.realpath(__file__))
+filenames = [f for f in os.listdir('%s/data/printed_gradient_map' % dirpath) if (f[-4:] == '.png')]
+filesCount = len(filenames)
