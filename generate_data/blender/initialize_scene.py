@@ -6,8 +6,10 @@ import random
 def centered_random():
   return 2 * random.random() - 1
 
-def delete_default_cube():
+def delete_default():
   bpy.data.objects['Cube'].select = True
+  bpy.ops.object.delete()
+  bpy.data.objects['Lamp'].select = True
   bpy.ops.object.delete()
 
 def position_around_origin(obj, distance, deltaDistance, deltaAngle1, deltaAngle2):
@@ -30,18 +32,20 @@ def move_camera():
   distance = 2 + 6 * random.random()
   position_around_origin(camera, distance, 1 / distance, math.pi / 6, math.pi / 36)
 
-def set_random_lightning():
-  dataLamp = bpy.data.lamps[0]
+def add_random_lightning():
+  dataLamp = bpy.data.lamps.new(name='Lamp', type=random.choice(['POINT', 'SUN', 'HEMI', 'AREA']))
+  objLamp = bpy.data.objects.new(name='Lamp', object_data=dataLamp)
+  bpy.context.scene.objects.link(objLamp)
   dataLamp.color = [1 - 0.5 * random.random() for _ in range(3)]
   dataLamp.distance = 20
-  dataLamp.type = random.choice(['POINT', 'SUN', 'HEMI', 'AREA'])
   if (dataLamp.type == 'POINT'):
     dataLamp.energy = 5
   if (dataLamp.type == 'AREA'):
     dataLamp.energy = 0.01
-
-  objLamp = [o for o in bpy.context.scene.objects if o.type == 'LAMP'][0]
   position_around_origin(objLamp, 2 + 6 * random.random(), 1, math.pi / 4, math.pi / 6)
+
+  if (random.random() < 0.1):
+    add_random_lightning()
 
 def set_render_params():
   scene = bpy.data.scenes[0]
@@ -51,7 +55,7 @@ def set_render_params():
   bpy.context.scene.render.resolution_y = 600 + int(200 * centered_random())
 
 def initialize_scene():
-  delete_default_cube()
+  delete_default()
   move_camera()
-  set_random_lightning()
+  add_random_lightning()
   set_render_params()
