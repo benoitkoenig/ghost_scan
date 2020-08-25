@@ -31,6 +31,7 @@ def move_camera():
   camera = bpy.context.scene.camera
   distance = 2 + 6 * random.random()
   position_around_origin(camera, distance, 1 / distance, math.pi / 6, math.pi / 36)
+  bpy.data.cameras['Camera'].lens = 20 + 3 * distance * random.random()
 
 def add_random_lightning():
   dataLamp = bpy.data.lamps.new(name='Lamp', type=random.choice(['POINT', 'SUN', 'HEMI', 'AREA']))
