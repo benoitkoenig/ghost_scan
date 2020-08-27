@@ -37,9 +37,9 @@ def getA4(inputData, inputPositions):
   flatOriginIndices = (originX + data.shape[1] * originY).flatten()
   flatData = np.reshape(data, (-1, 3))
 
-  flatDestinationChannel0 = np.take(flatData[:, 0], flatOriginIndices)
-  flatDestinationChannel1 = np.take(flatData[:, 1], flatOriginIndices)
-  flatDestinationChannel2 = np.take(flatData[:, 2], flatOriginIndices)
+  flatDestinationChannel0 = np.take(flatData[:, 0], flatOriginIndices, mode='wrap')
+  flatDestinationChannel1 = np.take(flatData[:, 1], flatOriginIndices, mode='wrap')
+  flatDestinationChannel2 = np.take(flatData[:, 2], flatOriginIndices, mode='wrap')
   flatDestination = np.stack([flatDestinationChannel0, flatDestinationChannel1, flatDestinationChannel2], axis=-1)
   destination = np.reshape(flatDestination, (h, w, 3))
 
