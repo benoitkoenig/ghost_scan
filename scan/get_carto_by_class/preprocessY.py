@@ -11,9 +11,9 @@ pointsGrid = pointsGridsShape * pointsGridMutiplier
 def preprocessY(inputY):
   'Returns, for each pixel, an array of len numberOfPoints. Each value is the gaussian of the distance between the pixel and the point'
   mask = inputY[:, :, :, 0] == 1
-  mask = tf.reshape(tf.repeat(mask, numberOfPoints, axis=-1), (1, h, w, numberOfPoints))
+  mask = tf.reshape(tf.repeat(mask, numberOfPoints, axis=-1), (-1, h, w, numberOfPoints))
 
-  stackedChannels = tf.reshape(inputY[:, :, :, 1:3], (1, h, w, 1, 2))
+  stackedChannels = tf.reshape(inputY[:, :, :, 1:3], (-1, h, w, 1, 2))
   stackedChannels = tf.repeat(stackedChannels, numberOfPoints, axis=-2)
 
   squareDistances = tf.math.reduce_sum((stackedChannels - pointsGrid) ** 2, axis=-1)

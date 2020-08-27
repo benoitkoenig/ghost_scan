@@ -1,14 +1,20 @@
 import tensorflow as tf
 
-from ghost_scan.constants import filesCount
+from .constants import epochs, steps_per_epoch
 from .model import getModel
-from .get_data import getDataGenerator
+from .get_data import getDataGenerator, getValidationData
 
 gen = getDataGenerator()
+validationData = getValidationData()
 model = getModel(weights=None)
 
 loggerCb = tf.keras.callbacks.CSVLogger('./scan/logs/get_carto_by_class.csv')
 
-steps_per_epoch = 10
-model.fit(gen, steps_per_epoch=steps_per_epoch, epochs=filesCount // steps_per_epoch, callbacks=[loggerCb])
+model.fit(
+  gen,
+  validation_data=validationData,
+  epochs=epochs,
+  steps_per_epoch=steps_per_epoch,
+  callbacks=[loggerCb]
+)
 model.save_weights('./scan/weights/get_carto_by_class/weights', overwrite=True)

@@ -1,5 +1,3 @@
-import tensorflow as tf
-
 from ghost_scan.scan.get_data import getFilenames, loadPngTensors
 from .constants import h, w, validationSize, batchSize
 
