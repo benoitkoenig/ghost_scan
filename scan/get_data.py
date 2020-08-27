@@ -23,12 +23,14 @@ def getPositions(filename):
   return eval(matchingFiles[0])
 
 def loadSingleUnresizedPngTensor(filepath):
-  data = np.array(cv2.imread(filepath, cv2.IMREAD_UNCHANGED), dtype=np.float32) / 65535
+  data = np.array(cv2.imread(filepath, cv2.IMREAD_UNCHANGED))
+  data = data.astype(np.float32) / (65535 if data.dtype == 'uint16' else 255)
   tensor = tf.convert_to_tensor([data])
   return tensor
 
 def loadPngTensors(filepaths, height, width):
-  data = [np.array(cv2.imread(f, cv2.IMREAD_UNCHANGED), dtype=np.float32) / 65535 for f in filepaths]
+  data = [np.array(cv2.imread(f, cv2.IMREAD_UNCHANGED)) for f in filepaths]
+  data = [d.astype(np.float32) / (65535 if d.dtype == 'uint16' else 255) for d in data]
   tensors = [tf.convert_to_tensor(d) for d in data]
   resizedTensors = [tf.image.resize_with_pad(t, height, width) for t in tensors]
   tensor = tf.stack(resizedTensors)
