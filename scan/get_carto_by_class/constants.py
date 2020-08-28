@@ -1,7 +1,7 @@
 from ghost_scan.constants import filesCount
 
-h = 256
-w = 256
+h = 128
+w = 128
 
 validationSize = 100
 batchSize = 10
