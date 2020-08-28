@@ -2,26 +2,20 @@
 
 GhostScan is a project to scan a document with the best quality possible from a picture
 
-# Data generation
-- To generate the data from pdf documents in data/pdf: `./generate_data/main.sh`
-- To check the data generation on a single example: `./generate_data/check_blender/check.sh`
+## Installation
 
-# Running and testing deep learning models
+Use `install.sh`
 
-## Remove the background
+## Data generation
+To generate data, you need pdf files and background images. You need to manually add pdf files (a4 format for all pages) in the folder data/pdf. As for backgrounds, you can download them from unsplash.com using the script `generate_data/download_backgrounds.sh`. Once this is done, you can simply run `generate_data/main.sh` and let the script do the rest<br />
+In case you want to edit blender's files generations, you can check your script with `generate_data/blender/check/check.sh`
 
-Removing the background is done by segmentation
-- Training: `python -m get_gradient_map_from_printed_document.train.py`
-- Checking: `python -m ghost_scan.get_gradient_map_from_printed_document.visualize_prediction {filename}.png`
+## Training models
 
-## Get carto by gradient
+You can train all models by doing `python -m scan.{folder_name}.train` and visualize the result with `python -m scan.{folder_name}.visualize {filename.png}`
+Currently, only two models are used: `remove_background` and `get_carto_by_class`.<br />`get_carto_by_gradient` is hopefully expected to take `get_carto_by_class` role at some point, but currently does not yield good enough results
 
-Getting carto by creating the printed gradient map from the printed document
-- Training: `python -m get_carto_by_gradient.train.py`
-- Checking: `python -m get_carto_by_gradient.visualize_prediction {filename}.png`
+## Scan an image
 
-## Get carto by points
-
-Getting carto by estimating the positions of pre-defined coordinates
-- Training: `python -m get_carto_by_points.train.py`
-- Checking: `python -m get_carto_by_points.visualize_prediction {filename}.png`
+To scan an image from the training set with your trained models, use `python -m scan.scan {filename.png}`<br />
+To actually scan an image outside of the training set, put it in `data/validation_data/printed_document/` and run `python -m scan.scan -v {filename.png|jpg}`
