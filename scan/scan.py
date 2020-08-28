@@ -15,7 +15,7 @@ else:
   inputImage = loadSingleUnresizedPngTensor('./data/printed_document/%s' % filename)
 imageWithoutBackground = predictImageWithoutBackground(inputImage)
 positions = predictPositions(imageWithoutBackground)
-documentA4 = getA4(imageWithoutBackground[0], positions)
+documentA4 = getA4(inputImage.numpy()[0], positions)
 
 fig, ax = plt.subplots(1, 1, figsize=(50, 50))
 ax.imshow(documentA4)
