@@ -6,9 +6,13 @@ from ghost_scan.scan.remove_background.predict import predict as predictImageWit
 from ghost_scan.scan.get_carto_by_class.predict import predict as predictPositions
 from ghost_scan.scan.get_a4.get_a4 import getA4
 
-filename = sys.argv[1]
+filename = [f for f in sys.argv if ((f[-3:] != '.py') & (f != '-v') & (f != '--validation'))][0]
+isValidationData = ('-v' in sys.argv) | ('--validation' in sys.argv)
 
-inputImage = loadSingleUnresizedPngTensor('./data/printed_document/%s' % filename)
+if isValidationData:
+  inputImage = loadSingleUnresizedPngTensor('./data/validation_data/printed_document/%s' % filename)
+else:
+  inputImage = loadSingleUnresizedPngTensor('./data/printed_document/%s' % filename)
 imageWithoutBackground = predictImageWithoutBackground(inputImage)
 positions = predictPositions(imageWithoutBackground)
 documentA4 = getA4(imageWithoutBackground[0], positions)
