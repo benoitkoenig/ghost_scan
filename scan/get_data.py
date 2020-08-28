@@ -26,6 +26,8 @@ def loadSingleUnresizedPngTensor(filepath):
   data = np.array(cv2.imread(filepath, cv2.IMREAD_UNCHANGED))
   data = data.astype(np.float32) / (65535 if data.dtype == 'uint16' else 255)
   tensor = tf.convert_to_tensor([data])
+  if (tensor.shape[3] == 3):
+    tensor = tf.pad(tensor, [(0, 0), (0, 0), (0, 0), (0, 1)], constant_values=1)
   return tensor
 
 def loadPngTensors(filepaths, height, width):
