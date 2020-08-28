@@ -17,4 +17,9 @@ def prepare_gradient_picture():
   matBackground.ambient = 0
   matBackground.translucency = 0
 
+  tex = bpy.data.textures['TextureDocument']
+  tex.factor_red = 1
+  tex.factor_green = 1
+  tex.factor_blue = 1
+
   set_texture_image('Document', '%s/../gradient_map.png' % os.path.dirname(__file__))
