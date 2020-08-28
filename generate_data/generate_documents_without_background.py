@@ -1,14 +1,12 @@
 import numpy as np
-import os
 import cv2
 import png
 
-dirpath = os.path.dirname(os.path.realpath(__file__))
-filenames = [f for f in os.listdir('%s/../data/printed_gradient_map' % dirpath) if (f[-4:] == '.png')]
+from ghost_scan.constants import dirpath, filenames
 
 for index, filename in enumerate(filenames):
-  rawImg = np.array(cv2.imread('%s/../data/printed_document/%s' % (dirpath, filename), cv2.IMREAD_UNCHANGED))
-  rawGrad = np.array(cv2.imread('%s/../data/printed_gradient_map/%s' % (dirpath, filename), cv2.IMREAD_UNCHANGED))
+  rawImg = np.array(cv2.imread('%s/data/printed_document/%s' % (dirpath, filename), cv2.IMREAD_UNCHANGED))
+  rawGrad = np.array(cv2.imread('%s/data/printed_gradient_map/%s' % (dirpath, filename), cv2.IMREAD_UNCHANGED))
   img = np.asarray(rawImg)
   grad = np.asarray(rawGrad)
   [blue, _, _, _] = np.dsplit(grad, 4)
@@ -17,7 +15,7 @@ for index, filename in enumerate(filenames):
   newImgUnreshaped = rgbaMask * img
   [height, width, _] = newImgUnreshaped.shape
   newImg = newImgUnreshaped.reshape((height, width * 4))
-  with open('%s/../data/printed_document_without_background/%s' % (dirpath, filename), 'wb') as f:
+  with open('%s/data/printed_document_without_background/%s' % (dirpath, filename), 'wb') as f:
     w = png.Writer(width, height, greyscale=False, alpha=True, bitdepth=16)
     w.write(f, newImg)
   print('%s/%s' % (index + 1, len(filenames)), end='\r')
