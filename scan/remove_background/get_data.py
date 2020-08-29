@@ -1,5 +1,6 @@
 from ghost_scan.scan.get_data import getFilenames, loadPngTensors
 from .constants import h, w, validationSize, batchSize
+from .preprocess import preprocessTrainingOnly
 
 def getXY(filenames):
   X = loadPngTensors(['./data/printed_document/%s' % f for f in filenames], h, w)[:, :, :, 0:3]
@@ -20,4 +21,5 @@ def getDataGenerator():
     batch = filesLeft[:batchSize]
     filesLeft = filesLeft[batchSize:]
     X, Y = getXY(batch)
+    X = preprocessTrainingOnly(X)
     yield X, Y
