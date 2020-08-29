@@ -10,7 +10,7 @@ from .model import getModel
 
 filename = sys.argv[1]
 
-X, groundTruth = getXY(filename)
+X, groundTruth = getXY([filename])
 model = getModel('./scan/weights/get_carto_by_gradient/weights')
 rawPreds = model.predict(X, steps=1)
 preds = np.clip(rawPreds[0], 0, 1)
@@ -23,16 +23,14 @@ axs[0, 1].imshow(preds)
 axs[0, 2].imshow(groundTruth.numpy()[0])
 
 predsRed = np.copy(preds)
-predsRed[:, :, 1] = 0
-predsRed[:, :, 2] = 0
+predsRed[:, :, 1:] = 0
 
 predsGreen = np.copy(preds)
 predsGreen[:, :, 0] = 0
 predsGreen[:, :, 2] = 0
 
 predsBlue = np.copy(preds)
-predsBlue[:, :, 0] = 0
-predsBlue[:, :, 1] = 0
+predsBlue[:, :, :2] = 0
 
 axs[1, 0].imshow(predsRed)
 axs[1, 1].imshow(predsGreen)
