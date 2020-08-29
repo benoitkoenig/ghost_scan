@@ -39,6 +39,7 @@ def set_uv(name):
 
 def add_texture(name):
   obj = bpy.data.objects[name]
+  bpy.ops.object.shade_smooth()
   mat = bpy.data.materials.new(name='Mat%s' % name)
   mat.diffuse_intensity = 1
   mat.specular_intensity = 0.1 * random.random()
@@ -56,8 +57,7 @@ def set_texture_image(name, texture_file):
   bpy.data.textures['Texture%s' % name].image = bpy.data.images.load(texture_file)
 
 def create_document(filepath):
-  z = 0.01 + random.random()
-  add_mesh('Document', [(-1.485, -1.05, z), (-1.485, 1.05, z), (1.485, 1.05, z), (1.485, -1.05, z)])
+  add_mesh('Document', [(-1.485, -1.05, 0.01), (-1.485, 1.05, 0.01), (1.485, 1.05, 0.01), (1.485, -1.05, 0.01)])
   set_uv('Document')
   add_texture('Document')
   set_texture_image('Document', filepath)

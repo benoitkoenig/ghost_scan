@@ -1,3 +1,4 @@
+import bpy
 import os
 
 from ghost_scan.generate_data.blender.generate_both_pictures import generate_both_pictures
@@ -8,6 +9,7 @@ generate_both_pictures(
   outputDocumentPath='%s/printed_document.png' % dirpath,
   outputGradientPath='%s/printed_gradient_map.png' % dirpath,
 )
+bpy.ops.wm.save_as_mainfile(filepath='%s/scene.blend' % dirpath)
 
 # This file is called in blender context. Importing matplotlib after doing the blender stuff works well - importing it at the beginning of the file results in issues
 import matplotlib.pyplot as plt
