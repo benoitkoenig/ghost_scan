@@ -3,15 +3,12 @@ import math
 import mathutils
 import random
 
-def centered_random():
-  return 2 * random.random() - 1
-
 def delete_default():
   bpy.ops.wm.read_factory_settings(use_empty=True)
 
 def position_around_origin(obj, distance, deltaDistance, deltaAngle1, deltaAngle2):
   obj.location = [0, 0, 0]
-  obj.rotation_euler = [deltaAngle1 * centered_random(), deltaAngle1 * centered_random(), - math.pi / 2 + deltaAngle1 * centered_random()]
+  obj.rotation_euler = [deltaAngle1 * random.uniform(-1, 1), deltaAngle1 * random.uniform(-1, 1), - math.pi / 2 + deltaAngle1 * random.uniform(-1, 1)]
 
   distz = mathutils.Vector((0, 0, distance))
   rotationMAT = obj.rotation_euler.to_matrix()
@@ -19,10 +16,10 @@ def position_around_origin(obj, distance, deltaDistance, deltaAngle1, deltaAngle
   zVector = distz * rotationMAT
   obj.location += zVector
 
-  obj.location += mathutils.Vector([centered_random() for _ in range(3)]) * deltaDistance
-  obj.rotation_euler.x += centered_random() * deltaAngle2
-  obj.rotation_euler.y += centered_random() * deltaAngle2
-  obj.rotation_euler.z += centered_random() * deltaAngle2
+  obj.location += mathutils.Vector([random.uniform(-1, 1) for _ in range(3)]) * deltaDistance
+  obj.rotation_euler.x += random.uniform(-1, 1) * deltaAngle2
+  obj.rotation_euler.y += random.uniform(-1, 1) * deltaAngle2
+  obj.rotation_euler.z += random.uniform(-1, 1) * deltaAngle2
 
 def add_camera():
   dataCamera = bpy.data.cameras.new(name='Camera')
@@ -51,8 +48,8 @@ def set_render_params():
   scene = bpy.data.scenes[0]
   scene.render.image_settings.color_depth = '16'
   scene.render.image_settings.file_format = 'PNG'
-  bpy.context.scene.render.resolution_x = 600 + int(200 * centered_random())
-  bpy.context.scene.render.resolution_y = 600 + int(200 * centered_random())
+  bpy.context.scene.render.resolution_x = 600 + int(200 * random.uniform(-1, 1))
+  bpy.context.scene.render.resolution_y = 600 + int(200 * random.uniform(-1, 1))
 
 def initialize_scene():
   delete_default()
