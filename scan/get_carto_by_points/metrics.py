@@ -11,7 +11,7 @@ def getGtForHighestPrediction(gt, pr):
   gtForHighestPrediction = tf.linalg.diag_part(allGtChannelsOfEachHighestPrediction)
   return gtForHighestPrediction
 
-def distance(gt, pr):
+def bestPredDistance(gt, pr):
   # Note: The two first parts are copy/paste from loss.py. I keep them seperated for now
 
   # First, get the mask. It is where all gaussian distances are zeros

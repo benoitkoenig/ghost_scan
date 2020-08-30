@@ -7,7 +7,7 @@ from ghost_scan.constants import numberOfPoints
 from .get_data import getFullData
 from .constants import h, w
 from .loss import loss
-from .metrics import meanSquareError
+from .metrics import bestPredDistance
 from .model import getModel
 from .postprocess import postprocess
 
@@ -19,10 +19,10 @@ preds = model.predict(X, steps=1)
 mask = (X.numpy()[:, :, :, 3] == 1)
 mask = np.repeat(np.expand_dims(mask, axis=-1), numberOfPoints, axis=-1)
 maskedPreds = mask * preds
-positions = postprocess(maskedPreds, coords, rawX.shape[1:3])
+positions = postprocess(maskedPreds[0], coords, rawX.shape[1:3])
 
 print('Loss: %s' % tf.reduce_mean(loss(groundTruth, preds)).numpy())
-print('MeanSquareError: %s' % meanSquareError(groundTruth, preds).numpy())
+print('Best pred distance: %s' % bestPredDistance(groundTruth, preds).numpy())
 
 fig, axs = plt.subplots(2, 3, figsize=(50, 50))
 axs[0, 0].imshow(rawX.numpy()[0])

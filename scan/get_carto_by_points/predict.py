@@ -13,5 +13,5 @@ def predict(inputTensor):
   model = getModel(weights='./scan/weights/get_carto_by_points/weights')
   preds = model.predict(X, steps=1)
   maskedPreds = mask * preds
-  positions = postprocess(maskedPreds, coordsData, inputTensor.shape[1:3])
+  positions = postprocess(maskedPreds[0], coordsData, inputTensor.shape[1:3])
   return positions
