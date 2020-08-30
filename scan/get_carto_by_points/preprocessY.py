@@ -17,7 +17,8 @@ def preprocessY(inputY):
   stackedChannels = tf.repeat(stackedChannels, numberOfPoints, axis=-2)
 
   squareDistances = tf.math.reduce_sum((stackedChannels - pointsGrid) ** 2, axis=-1)
+  distances = tf.math.sqrt(squareDistances)
 
-  Y = tf.math.exp(-squareDistances) # Gaussian of the distance: 1 for points that are close, down to zero for the further points
+  Y = tf.math.exp(-distances) # Gaussian of the rrot square of the distance
   Y = tf.cast(mask, dtype=Y.dtype) * Y
   return Y

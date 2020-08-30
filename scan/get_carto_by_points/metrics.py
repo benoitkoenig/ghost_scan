@@ -11,7 +11,7 @@ def getGtForHighestPrediction(gt, pr):
   gtForHighestPrediction = tf.linalg.diag_part(allGtChannelsOfEachHighestPrediction)
   return gtForHighestPrediction
 
-def meanSquareError(gt, pr):
+def distance(gt, pr):
   # Note: The two first parts are copy/paste from loss.py. I keep them seperated for now
 
   # First, get the mask. It is where all gaussian distances are zeros
@@ -22,7 +22,7 @@ def meanSquareError(gt, pr):
   assert(gtForHighestPrediction.shape == (numberOfPoints))
 
   # Finally, get the meanSquareDistance
-  squareDistances = - tf.math.log(gtForHighestPrediction)
-  meanSquareDistance = tf.math.reduce_mean(squareDistances)
+  distances = - tf.math.log(gtForHighestPrediction)
+  meanSquareDistance = tf.math.reduce_mean(distances)
 
   return meanSquareDistance
