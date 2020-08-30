@@ -1,35 +1,15 @@
 import numpy as np
+from scipy.interpolate import griddata
 
+from ghost_scan.constants import coords
 from .constants import h as destinationHeight, w as destinationWidth
 
-def getOrigin(positions, height=destinationHeight, width=destinationWidth):
-  'Returns origin Y, originX, of shape (destinationHeight, destinationWidth), the coordinates of the pixels in the origin data'
-  [gridY, gridX] = np.mgrid[0:height, 0:width]
-  gridY = gridY / height
-  gridX = gridX / width
-  doubleGridY = np.stack([gridY, gridY], axis=-1)
-  doubleGridX = np.stack([gridX, gridX], axis=-1)
+def getA4(originData, positions):
+  a4PixelsGrid = np.transpose(np.mgrid[0:destinationHeight, 0:destinationWidth], [1, 2, 0]) / [destinationHeight, destinationWidth]
+  origin = griddata(coords, positions, a4PixelsGrid, method='cubic')
+  origin = np.round(origin).astype(np.int64)
+  [originY, originX] = np.transpose(origin, [2, 0, 1])
 
-  mask1 = (doubleGridY + doubleGridX) < 1
-  origin1 = positions[0]
-  vectorY1 = positions[2] - positions[0]
-  vectorX1 = positions[1] - positions[0]
-
-  mask2 = 1 - mask1
-  origin2 = positions[3]
-  vectorY2 = positions[1] - positions[3]
-  vectorX2 = positions[2] - positions[3]
-
-  output1 = origin1 + doubleGridY * vectorY1 + doubleGridX * vectorX1
-  output2 = origin2 + (1 - doubleGridY) * vectorY2 + (1 - doubleGridX) * vectorX2
-
-  originPositions = np.round(mask1 * output1 + mask2 * output2).astype(np.int64)
-  [originY, originX] = np.moveaxis(originPositions, 2, 0)
-  return originY, originX
-
-def getA4(originData, inputPositions):
-  # In this function, origin is the data from the printed document, destination is the a4-format png
-  originY, originX = getOrigin(np.array(inputPositions))
   assert (originY.shape == (destinationHeight, destinationWidth)) & (originX.shape == (destinationHeight, destinationWidth))
 
   originWidth = originData.shape[1]
