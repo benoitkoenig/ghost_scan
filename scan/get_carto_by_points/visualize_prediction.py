@@ -13,7 +13,7 @@ from .postprocess import postprocess
 filename = sys.argv[1]
 
 X, groundTruth, rawX, coords = getFullData(filename)
-model = getModel('./scan/weights/get_carto_by_class/weights')
+model = getModel('./scan/weights/get_carto_by_points/weights')
 preds = model.predict(X, steps=1)
 mask = (X.numpy()[:, :, :, 3] == 1)
 maskedPreds = np.stack([mask, mask, mask, mask], axis=-1) * preds

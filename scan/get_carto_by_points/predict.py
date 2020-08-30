@@ -9,7 +9,7 @@ def predict(inputTensor):
   X, coordsData = resizeWithCoords(inputTensor, h, w)
   mask = (X[:, :, :, 3] == 1).numpy()
   mask = np.stack([mask, mask, mask, mask], axis=-1)
-  model = getModel(weights='./scan/weights/get_carto_by_class/weights')
+  model = getModel(weights='./scan/weights/get_carto_by_points/weights')
   preds = model.predict(X, steps=1)
   maskedPreds = mask * preds
   positions = postprocess(maskedPreds, coordsData, inputTensor.shape[1:3])

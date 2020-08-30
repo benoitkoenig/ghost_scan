@@ -4,7 +4,7 @@ import numpy as np
 import sys
 
 if len(sys.argv) != 2:
-  print('Usage: python -m scan.visualize_logs [remove_background|get_carto_by_class]')
+  print('Usage: python -m scan.visualize_logs [remove_background|get_carto_by_points]')
   exit(1)
 filename = sys.argv[1]
 
