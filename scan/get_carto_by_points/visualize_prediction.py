@@ -3,7 +3,7 @@ import sys
 import tensorflow as tf
 import numpy as np
 
-from ghost_scan.constants import numberOfPoints
+from ghost_scan.constants import dirpath, numberOfPoints
 from .get_data import getFullData
 from .constants import h, w
 from .loss import loss
@@ -14,7 +14,7 @@ from .postprocess import postprocess
 filename = sys.argv[1]
 
 X, groundTruth, rawX, coords = getFullData(filename)
-model = getModel('./scan/weights/get_carto_by_points/weights')
+model = getModel('%s/scan/weights/get_carto_by_points/weights' % dirpath)
 preds = model.predict(X, steps=1)
 mask = (X.numpy()[:, :, :, 3] == 1)
 mask = np.repeat(np.expand_dims(mask, axis=-1), numberOfPoints, axis=-1)

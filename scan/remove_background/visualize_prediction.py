@@ -3,6 +3,7 @@ import sys
 import tensorflow as tf
 import numpy as np
 
+from ghost_scan.constants import dirpath
 from .constants import h, w
 from .get_data import getXY
 from .model import getModel
@@ -10,7 +11,7 @@ from .model import getModel
 filename = sys.argv[1]
 
 X, groundTruth = getXY([filename])
-model = getModel(weights='./scan/weights/remove_background/weights')
+model = getModel(weights='%s/scan/weights/remove_background/weights' % dirpath)
 prediction = model.predict(X, steps=1)
 
 fig, axs = plt.subplots(1, 3, figsize=(50, 50))

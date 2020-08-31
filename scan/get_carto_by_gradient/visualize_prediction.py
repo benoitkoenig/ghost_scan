@@ -3,6 +3,7 @@ import sys
 import tensorflow as tf
 import numpy as np
 
+from ghost_scan.constants import dirpath
 from .get_data import getXY
 from .constants import h, w
 from .loss import loss
@@ -11,7 +12,7 @@ from .model import getModel
 filename = sys.argv[1]
 
 X, groundTruth = getXY([filename])
-model = getModel('./scan/weights/get_carto_by_gradient/weights')
+model = getModel('%s/scan/weights/get_carto_by_gradient/weights' % dirpath)
 rawPreds = model.predict(X, steps=1)
 preds = np.clip(rawPreds[0], 0, 1)
 
