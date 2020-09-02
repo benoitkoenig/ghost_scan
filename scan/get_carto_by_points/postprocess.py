@@ -6,7 +6,8 @@ from .constants import h, w
 def getRawPositions(preds):
   [height, width, _] = preds.shape
 
-  pr = (preds > 0.1).astype(preds.dtype) * preds
+  prMaxPerChannel = np.amax(preds, axis=(0, 1))
+  pr = (preds > prMaxPerChannel / 2) * preds
   pr = np.expand_dims(pr, axis=-1)
   pr = np.repeat(pr, 2, axis=-1)
   pr = np.reshape(pr, (height * width, numberOfPoints, 2))
