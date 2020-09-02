@@ -5,7 +5,7 @@ from .preprocess import preprocessTrainingOnly
 
 def getXY(filenames):
   X = loadPngTensors(['./data/printed_document/%s' % f for f in filenames], h, w)[:, :, :, 0:3]
-  Y = loadPngTensors(['./data/printed_document_without_background/%s' % f for f in filenames], h, w)[:, :, :, 3]
+  Y = loadPngTensors(['./data/printed_document_without_background/%s' % f for f in filenames], h, w)[:, :, :, 3:4]
   return X, Y
 
 allFilenames = getFilenames()
