@@ -3,9 +3,8 @@ import sys
 import tensorflow as tf
 import numpy as np
 
-from ghost_scan.constants import dirpath, numberOfPoints
+from ghost_scan.constants import h, w, dirpath, numberOfPoints
 from .get_data import getFullData
-from .constants import h, w
 from .loss import loss
 from .metrics import bestPredDistance
 from .model import getModel

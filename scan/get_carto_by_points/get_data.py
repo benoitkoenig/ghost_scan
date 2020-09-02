@@ -1,6 +1,7 @@
 from ghost_scan.scan.get_data import getFilenames, loadSingleUnresizedPngTensor, loadPngTensors
 from ghost_scan.scan.resize_with_coords import resizeWithCoords
-from .constants import h, w, validationSize, batchSize
+from ghost_scan.constants import h, w
+from .constants import validationSize, batchSize
 from .preprocessY import preprocessY
 
 def getXY(filenames):

@@ -1,7 +1,6 @@
 import numpy as np
 
-from ghost_scan.constants import numberOfPoints
-from .constants import h, w
+from ghost_scan.constants import h, w, numberOfPoints
 
 def getRawPositions(preds):
   [height, width, _] = preds.shape

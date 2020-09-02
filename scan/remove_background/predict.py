@@ -1,9 +1,8 @@
 import tensorflow as tf
 
-from ghost_scan.constants import dirpath
+from ghost_scan.constants import h, w, dirpath
 from ghost_scan.scan.resize_with_coords import resizeWithCoords
 from .model import getModel
-from .constants import h, w
 
 class RemoveBackground():
   def __init__(self):

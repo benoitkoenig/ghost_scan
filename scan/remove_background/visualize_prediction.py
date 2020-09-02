@@ -3,8 +3,7 @@ import sys
 import tensorflow as tf
 import numpy as np
 
-from ghost_scan.constants import dirpath
-from .constants import h, w
+from ghost_scan.constants import h, w, dirpath
 from .get_data import getXY
 from .model import getModel
 

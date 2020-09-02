@@ -12,3 +12,6 @@ numberOfPoints = len(coords)
 dirpath = os.path.dirname(os.path.realpath(__file__))
 filenames = [f for f in os.listdir('%s/data/png' % dirpath) if (f[-4:] == '.png')]
 filesCount = len(filenames)
+
+h = 256
+w = 256

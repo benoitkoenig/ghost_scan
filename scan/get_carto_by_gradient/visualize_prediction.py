@@ -5,7 +5,7 @@ import numpy as np
 
 from ghost_scan.constants import dirpath
 from .get_data import getXY
-from .constants import h, w
+from ghost_scan.constants import h, w
 from .loss import loss
 from .model import getModel
 

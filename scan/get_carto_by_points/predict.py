@@ -1,8 +1,7 @@
 import numpy as np
 
-from ghost_scan.constants import dirpath, numberOfPoints
+from ghost_scan.constants import h, w, dirpath, numberOfPoints
 from ghost_scan.scan.resize_with_coords import resizeWithCoords
-from .constants import h, w
 from .model import getModel
 from .postprocess import postprocess
 

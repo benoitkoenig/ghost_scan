@@ -1,5 +1,6 @@
 from ghost_scan.scan.get_data import getFilenames, loadPngTensors
-from .constants import h, w, validationSize, batchSize
+from ghost_scan.constants import h, w
+from .constants import validationSize, batchSize
 
 def getXY(filenames):
   X = loadPngTensors(['./data/printed_document_without_background/%s' % f for f in filenames], h, w)

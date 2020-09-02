@@ -1,8 +1,7 @@
 import segmentation_models as sm
 import tensorflow as tf
 
-from ghost_scan.constants import numberOfPoints
-from .constants import h, w
+from ghost_scan.constants import h, w, numberOfPoints
 from .loss import loss
 from .metrics import bestPredDistance
 

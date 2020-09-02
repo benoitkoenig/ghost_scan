@@ -1,7 +1,7 @@
 import segmentation_models as sm
 import tensorflow as tf
 
-from .constants import h, w
+from ghost_scan.constants import h, w
 from .loss import loss
 
 def getModel(weights=None):
