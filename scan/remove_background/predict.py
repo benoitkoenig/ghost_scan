@@ -9,12 +9,7 @@ class RemoveBackground():
     self.model = getModel(weights='%s/scan/weights/remove_background/weights' % dirpath)
 
   def predict(self, inputTensor):
-    X = inputTensor[:, :, :, 0:3]
-    X, [y1, x1, y2, x2] = resizeWithCoords(X, h, w)
-    preds = self.model.predict(X, steps=1)
-    mask = tf.image.crop_to_bounding_box(preds, y1, x1, y2 - y1, x2 - x1)
-    mask = tf.image.resize(mask, inputTensor.shape[1:3])
-    mask = mask > 0.5
-    mask = tf.cast(mask, inputTensor.dtype)
-    output = mask * inputTensor
-    return output
+    X, coords = resizeWithCoords(inputTensor, h, w)
+    preds = self.model.predict(X[:, :, :, 0:3], steps=1)
+    output = (preds > 0.5) * X
+    return output, coords

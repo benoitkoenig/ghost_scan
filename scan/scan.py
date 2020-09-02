@@ -9,7 +9,7 @@ getCartoByPoints = GetCartoByPoints()
 
 def scan(inputData):
   inputImage = np.array(inputData)
-  imageWithoutBackground = removeBackground.predict(inputImage)
-  positions = getCartoByPoints.predict(imageWithoutBackground)
+  imageWithoutBackground, coords = removeBackground.predict(inputImage)
+  positions = getCartoByPoints.predict(imageWithoutBackground, coords, inputImage.shape)
   documentA4 = getA4(inputImage[0], positions)
   return documentA4
