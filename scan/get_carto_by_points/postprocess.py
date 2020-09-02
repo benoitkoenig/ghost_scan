@@ -7,7 +7,7 @@ def getRawPositions(preds):
   [height, width, _] = preds.shape
 
   prMaxPerChannel = np.amax(preds, axis=(0, 1))
-  pr = (preds > prMaxPerChannel / 2) * preds
+  pr = (preds > prMaxPerChannel / 10) * preds
   pr = np.expand_dims(pr, axis=-1)
   pr = np.repeat(pr, 2, axis=-1)
   pr = np.reshape(pr, (height * width, numberOfPoints, 2))
