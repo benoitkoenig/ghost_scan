@@ -13,7 +13,13 @@ def gradientLoss(gt, pr):
   return gradientLoss
 
 def segmentationLoss(gt, pr):
-  segmentationLoss = tf.math.reduce_mean((gt - pr) ** 2)
+  mask = tf.cast(gt == 1, dtype=pr.dtype)
+  mse = tf.math.reduce_mean((gt - pr) ** 2)
+
+  segmentationLoss1 = tf.math.reduce_sum(mask * mse) / tf.math.reduce_sum(mask)
+  segmentationLoss0 = tf.math.reduce_sum((1 - mask) * mse) / tf.math.reduce_sum(1 - mask)
+
+  segmentationLoss = (segmentationLoss0 + segmentationLoss1) / 2
   return segmentationLoss
 
 def loss(gt, pr):
