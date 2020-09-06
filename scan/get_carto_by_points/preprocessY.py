@@ -18,6 +18,6 @@ def preprocessY(inputY):
   squareDistances = tf.math.reduce_sum((stackedChannels - pointsGrid) ** 2, axis=-1)
   distances = tf.math.sqrt(squareDistances)
 
-  Y = tf.math.exp(-distances) # Gaussian of the rrot square of the distance
+  Y = tf.math.exp(-distances) # Gaussian of the root square of the distance
   Y = tf.cast(mask, dtype=Y.dtype) * Y
   return Y
