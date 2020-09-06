@@ -7,7 +7,7 @@ GhostScan is a project to scan a document with the best quality possible from a 
 Use `install.sh`
 
 ## Data generation
-To generate data, you need pdf files and background images. You need to manually add pdf files (a4 format for all pages) in the folder data/pdf. As for backgrounds, you can download them from unsplash.com using the script `generate_data/download_backgrounds.sh`. Once this is done, you can simply run `generate_data/main.sh` and let the script do the rest<br />
+To generate data, you need pdf files and background images. You need to manually add pdf files (a4 format for all pages) in the folder data/pdf. As for backgrounds and paper textures, you can download them from unsplash.com using respectively `generate_data/download_backgrounds.sh` and `generate_data/download_paper_textures.sh`. Once this is done, you can simply run `generate_data/main.sh` and let the script do the rest<br />
 In case you want to edit blender's files generations, you can check your script with `generate_data/blender/check/check.sh`
 
 ## Training models
