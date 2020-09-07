@@ -5,7 +5,8 @@ import random
 
 from ghost_scan.constants import dirpath
 
-background_filepaths = ['%s/data/backgrounds/%s' % (dirpath, f) for f in os.listdir('%s/data/backgrounds/' % dirpath) if (f[-4:] == '.jpg')]
+backgrounds_filepaths = ['%s/data/backgrounds/%s' % (dirpath, f) for f in os.listdir('%s/data/backgrounds/' % dirpath) if (f[-4:] == '.jpg')]
+paper_textures_filepaths = ['%s/data/paper_textures/%s' % (dirpath, f) for f in os.listdir('%s/data/paper_textures/' % dirpath) if (f[-4:] == '.jpg')]
 
 def add_mesh(name, verts):
   mesh = bpy.data.meshes.new('mesh')  # add a new mesh
@@ -55,7 +56,7 @@ def add_object(name, verts):
   add_material(name)
   set_uv(name)
 
-def add_texture(name, texture_name, texture_file, apply_random_factor=True):
+def add_texture(name, texture_name, texture_file, apply_random_factor=False, only_normal=False):
   mat = bpy.data.materials['Mat%s' % name]
   tex = bpy.data.textures.new('Texture%s%s' % (name, texture_name), 'IMAGE')
 
@@ -65,13 +66,18 @@ def add_texture(name, texture_name, texture_file, apply_random_factor=True):
     tex.factor_blue = (1 - random.random() ** 2)
   slot = mat.texture_slots.add()
   slot.texture = tex
+  if (only_normal):
+    slot.use_map_color_diffuse = False
+    slot.use_map_normal = True
+    slot.normal_factor = random.random()
   tex.image = bpy.data.images.load(texture_file)
 
 def create_document(filepath):
   add_object('Document', [(-1.485, -1.05, 0.01), (-1.485, 1.05, 0.01), (1.485, 1.05, 0.01), (1.485, -1.05, 0.01)])
-  add_texture('Document', 'Page', filepath)
+  add_texture('Document', 'Page', filepath, apply_random_factor=True)
+  add_texture('Document', 'Paper', random.choice(paper_textures_filepaths), only_normal=True)
 
 def create_background():
   add_object('Background', [(-5, -5, 0), (-5, 5, 0), (5, 5, 0), (5, -5, 0)])
-  add_texture('Background', 'Background', random.choice(background_filepaths))
+  add_texture('Background', 'Background', random.choice(backgrounds_filepaths))
   bpy.data.materials.get('MatBackground').emit = 0.2 * random.random() # To avoid shadows being all-black

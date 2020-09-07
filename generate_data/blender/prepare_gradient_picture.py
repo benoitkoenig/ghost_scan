@@ -19,4 +19,5 @@ def prepare_gradient_picture():
   matBackground.translucency = 0
 
   bpy.data.textures.remove(bpy.data.textures['TextureDocumentPage'])
-  add_texture('Document', 'GradientMap', '%s/generate_data/gradient_map.png' % dirpath, apply_random_factor=False)
+  bpy.data.textures.remove(bpy.data.textures['TextureDocumentPaper'])
+  add_texture('Document', 'GradientMap', '%s/generate_data/gradient_map.png' % dirpath)
