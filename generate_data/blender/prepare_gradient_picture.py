@@ -1,7 +1,8 @@
 import bpy
 import os
 
-from .create_mesh import set_texture_image
+from ghost_scan.constants import dirpath
+from .create_mesh import add_texture
 
 def prepare_gradient_picture():
   for lamp in bpy.data.lamps:
@@ -17,9 +18,5 @@ def prepare_gradient_picture():
   matBackground.ambient = 0
   matBackground.translucency = 0
 
-  tex = bpy.data.textures['TextureDocument']
-  tex.factor_red = 1
-  tex.factor_green = 1
-  tex.factor_blue = 1
-
-  set_texture_image('Document', '%s/../gradient_map.png' % os.path.dirname(__file__))
+  bpy.data.textures.remove(bpy.data.textures['TextureDocumentPage'])
+  add_texture('Document', 'GradientMap', '%s/generate_data/gradient_map.png' % dirpath, apply_random_factor=False)

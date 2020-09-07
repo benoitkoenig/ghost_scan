@@ -3,6 +3,10 @@ import bmesh
 import os
 import random
 
+from ghost_scan.constants import dirpath
+
+background_filepaths = ['%s/data/backgrounds/%s' % (dirpath, f) for f in os.listdir('%s/data/backgrounds/' % dirpath) if (f[-4:] == '.jpg')]
+
 def add_mesh(name, verts):
   mesh = bpy.data.meshes.new('mesh')  # add a new mesh
   obj = bpy.data.objects.new(name, mesh)  # add a new object using the mesh
@@ -37,7 +41,7 @@ def set_uv(name):
   uv_layer.data[2].uv = [0, 1]
   uv_layer.data[3].uv = [1, 1]
 
-def add_texture(name):
+def add_material(name):
   obj = bpy.data.objects[name]
   bpy.ops.object.shade_smooth()
   mat = bpy.data.materials.new(name='Mat%s' % name)
@@ -45,29 +49,29 @@ def add_texture(name):
   mat.specular_intensity = 0.1 * random.random()
   mat.specular_hardness = 50 * random.random()
   obj.data.materials.append(mat)
-  tex = bpy.data.textures.new('Texture%s' % name, 'IMAGE')
 
-  tex.factor_red = (1 - random.random() ** 2)
-  tex.factor_green = (1 - random.random() ** 2)
-  tex.factor_blue = (1 - random.random() ** 2)
+def add_object(name, verts):
+  add_mesh(name, verts)
+  add_material(name)
+  set_uv(name)
+
+def add_texture(name, texture_name, texture_file, apply_random_factor=True):
+  mat = bpy.data.materials['Mat%s' % name]
+  tex = bpy.data.textures.new('Texture%s%s' % (name, texture_name), 'IMAGE')
+
+  if (apply_random_factor):
+    tex.factor_red = (1 - random.random() ** 2)
+    tex.factor_green = (1 - random.random() ** 2)
+    tex.factor_blue = (1 - random.random() ** 2)
   slot = mat.texture_slots.add()
   slot.texture = tex
-
-def set_texture_image(name, texture_file):
-  bpy.data.textures['Texture%s' % name].image = bpy.data.images.load(texture_file)
+  tex.image = bpy.data.images.load(texture_file)
 
 def create_document(filepath):
-  add_mesh('Document', [(-1.485, -1.05, 0.01), (-1.485, 1.05, 0.01), (1.485, 1.05, 0.01), (1.485, -1.05, 0.01)])
-  set_uv('Document')
-  add_texture('Document')
-  set_texture_image('Document', filepath)
+  add_object('Document', [(-1.485, -1.05, 0.01), (-1.485, 1.05, 0.01), (1.485, 1.05, 0.01), (1.485, -1.05, 0.01)])
+  add_texture('Document', 'Page', filepath)
 
 def create_background():
-  add_mesh('Background', [(-5, -5, 0), (-5, 5, 0), (5, 5, 0), (5, -5, 0)])
-  set_uv('Background')
-  add_texture('Background')
+  add_object('Background', [(-5, -5, 0), (-5, 5, 0), (5, 5, 0), (5, -5, 0)])
+  add_texture('Background', 'Background', random.choice(background_filepaths))
   bpy.data.materials.get('MatBackground').emit = 0.2 * random.random() # To avoid shadows being all-black
-
-  dirname = os.path.dirname(__file__)
-  filename = random.choice([f for f in os.listdir('%s/../../data/backgrounds/' % dirname) if (f[-4:] == '.jpg')])
-  set_texture_image('Background', '%s/../../data/backgrounds/%s' % (dirname, filename))
