@@ -5,9 +5,6 @@ case $yn in
 esac
 
 ./install.sh
-./generate_data/download_backgrounds.sh
-./generate_data/download_paper_textures.sh
-./generate_data/generate_a4_png.sh
-./generate_data/regenerate_data.sh
+./generate_data/main.sh
 python3 -m scan.remove_background.train
 python3 -m scan.get_carto_by_points.train
