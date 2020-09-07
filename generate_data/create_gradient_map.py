@@ -4,10 +4,10 @@
 import os
 import png
 
-width = 256 * 16
-height = 256 * 16
+width = 256 * 4
+height = 256 * 4
 
-imgRGB = [[(x * 16, y * 16, 65535) for x in range(width)] for y in range(height)] # imgRGB is of shape (height, width, 3)
+imgRGB = [[(x * 64, y * 64, 65535) for x in range(width)] for y in range(height)] # imgRGB is of shape (height, width, 3)
 img = [[item for sublist in row for item in sublist] for row in imgRGB] # img is the same as imgRGB, except it is of shape (height, width * 3)
 
 with open('%s/gradient_map.png' % os.path.dirname(os.path.realpath(__file__)), 'wb') as f:
