@@ -3,12 +3,14 @@ import matplotlib.pyplot as plt
 import numpy as np
 import sys
 
+from ghost_scan.constants import dirpath
+
 if len(sys.argv) != 2:
   print('Usage: python -m scan.visualize_logs [remove_background|get_carto_by_points]')
   exit(1)
 filename = sys.argv[1]
 
-with open('scan/logs/%s.csv' % filename) as csvFile:
+with open('%s/scan/logs/%s.csv' % (dirpath, filename)) as csvFile:
   csvReader = csv.reader(csvFile, delimiter=',')
   rows = [r for r in csvReader]
 header = rows[0]
