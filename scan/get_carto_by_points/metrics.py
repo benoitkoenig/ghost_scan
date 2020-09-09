@@ -1,26 +1,34 @@
 import tensorflow as tf
 
-from ghost_scan.constants import numberOfPoints
+from ghost_scan.constants import numberOfPoints, h, w
 
 def getGtForHighestPrediction(gt, pr):
-  flattenPixelPreds = tf.reshape(pr, (-1, numberOfPoints))
-  flattenPixelsGt = tf.reshape(gt, (-1, numberOfPoints))
+  flattenPixelPreds = tf.reshape(pr, (-1, h * w, numberOfPoints))
+  flattenPixelsGt = tf.reshape(gt, (-1, h * w, numberOfPoints))
 
-  indexOfEachHighestPrediction = tf.math.argmax(flattenPixelPreds, axis=0) # 1D tensor of len numberOfPoints
-  allGtChannelsOfEachHighestPrediction = tf.gather(flattenPixelsGt, indexOfEachHighestPrediction)
+  indexOfEachHighestPrediction = tf.math.argmax(flattenPixelPreds, axis=1)
+  allGtChannelsOfEachHighestPrediction = tf.gather(flattenPixelsGt, indexOfEachHighestPrediction, axis=1)
   gtForHighestPrediction = tf.linalg.diag_part(allGtChannelsOfEachHighestPrediction)
+  gtForHighestPrediction = tf.transpose(gtForHighestPrediction, [2, 0, 1])
+  gtForHighestPrediction = tf.linalg.diag_part(gtForHighestPrediction)
+  gtForHighestPrediction = tf.transpose(gtForHighestPrediction, [1, 0])
   return gtForHighestPrediction
 
+def getHighestGt(gt):
+  highestGt = tf.math.reduce_max(gt, axis=[1, 2])
+  return highestGt
+
 def bestPredDistance(gt, pr):
-  # First, get the mask. It is where all gt are non-zero
   mask = tf.cast(gt != 0, dtype=pr.dtype)
 
-  # Then, get the gt of all best predictions
+  highestGt = getHighestGt(gt)
   gtForHighestPrediction = getGtForHighestPrediction(gt, mask * pr)
-  assert(gtForHighestPrediction.shape == (numberOfPoints))
+  # highestGt.shape == gtForHighestPrediction.shape == (batchSize, numberOfPoints)
 
-  # Finally, get the meanDistance
-  distances = - tf.math.log(gtForHighestPrediction)
-  meanDistance = tf.math.reduce_mean(distances)
+  bestPredDistances = - tf.math.log(gtForHighestPrediction)
+  optimalDistances = - tf.math.log(highestGt)
 
-  return meanDistance
+  distancesFromOptimal = bestPredDistances - optimalDistances
+  meanDistanceFromOptimal = tf.math.reduce_mean(distancesFromOptimal)
+
+  return meanDistanceFromOptimal
