@@ -8,4 +8,4 @@ def loss(gt, pr):
   mean_per_channel = tf.reduce_sum(maskedPr * gt, axis=[1, 2]) / (tf.reduce_sum(maskedPr, axis=[1, 2]) + 1e-7) # 1e-7 is useful when the document is fully out of the picture, which can occasionnaly happen
   mean_per_image = tf.math.pow(tf.reduce_prod(mean_per_channel, axis=1), 1 / numberOfPoints)
   mean_per_batch = tf.math.reduce_mean(mean_per_channel)
-  return 1 - mean_per_batch
+  return - mean_per_batch

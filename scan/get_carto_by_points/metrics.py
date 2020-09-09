@@ -25,8 +25,8 @@ def bestPredDistance(gt, pr):
   gtForHighestPrediction = getGtForHighestPrediction(gt, mask * pr)
   # highestGt.shape == gtForHighestPrediction.shape == (batchSize, numberOfPoints)
 
-  bestPredDistances = - tf.math.log(gtForHighestPrediction)
-  optimalDistances = - tf.math.log(highestGt)
+  bestPredDistances = tf.math.exp(-gtForHighestPrediction)
+  optimalDistances = tf.math.exp(-highestGt)
 
   distancesFromOptimal = bestPredDistances - optimalDistances
   meanDistanceFromOptimal = tf.math.reduce_mean(distancesFromOptimal)
