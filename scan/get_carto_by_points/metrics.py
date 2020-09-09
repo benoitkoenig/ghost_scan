@@ -19,10 +19,8 @@ def getHighestGt(gt):
   return highestGt
 
 def bestPredDistance(gt, pr):
-  mask = tf.cast(gt != 0, dtype=pr.dtype)
-
   highestGt = getHighestGt(gt)
-  gtForHighestPrediction = getGtForHighestPrediction(gt, mask * pr)
+  gtForHighestPrediction = getGtForHighestPrediction(gt, pr)
   # highestGt.shape == gtForHighestPrediction.shape == (batchSize, numberOfPoints)
 
   bestPredDistances = tf.math.exp(-gtForHighestPrediction)
