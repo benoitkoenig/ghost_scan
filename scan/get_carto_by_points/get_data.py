@@ -2,10 +2,10 @@ from ghost_scan.scan.get_data import getFilenames, loadSingleUnresizedPngTensor,
 from ghost_scan.scan.resize_with_coords import resizeWithCoords
 from ghost_scan.constants import h, w
 from .constants import validationSize, batchSize
-from .preprocessY import preprocessY
+from .preprocess import preprocessX, preprocessY
 
 def getXY(filenames):
-  X = loadPngTensors(['./data/printed_document_without_background/%s' % f for f in filenames], h, w)
+  X = preprocessX(loadPngTensors(['./data/printed_document/%s' % f for f in filenames], h, w)[:, :, :, 0:3])
   Y = preprocessY(loadPngTensors(['./data/printed_gradient_map/%s' % f for f in filenames], h, w)[:, :, :, 0:3])
   return X, Y
 

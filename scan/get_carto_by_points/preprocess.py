@@ -1,6 +1,14 @@
 import tensorflow as tf
 
-from ghost_scan.constants import h, w, coords, numberOfPoints
+from ghost_scan.constants import h, w, coords, numberOfPoints, dirpath
+from ghost_scan.scan.remove_background.model import getModel
+
+model = getModel(weights='%s/scan/weights/remove_background/weights' % dirpath)
+
+def preprocessX(inputX):
+  outputX = model.predict(inputX, steps=1)
+  outputX = tf.convert_to_tensor(outputX)
+  return outputX
 
 pointsGridsShape = tf.ones((1, h, w, numberOfPoints, 2), dtype=tf.float32)
 pointsGridMutiplier = tf.convert_to_tensor(coords, dtype = tf.float32)
