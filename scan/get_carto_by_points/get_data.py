@@ -5,8 +5,12 @@ from .constants import validationSize, batchSize
 from .preprocess import preprocessX, preprocessY
 
 def getXY(filenames):
-  X = preprocessX(loadPngTensors(['./data/printed_document/%s' % f for f in filenames], h, w)[:, :, :, 0:3])
-  Y = preprocessY(loadPngTensors(['./data/printed_gradient_map/%s' % f for f in filenames], h, w)[:, :, :, 0:3])
+  X = loadPngTensors(['./data/printed_document/%s' % f for f in filenames], h, w)
+  X = X[:, :, :, 0:3]
+  X = preprocessX(X)
+  Y = loadPngTensors(['./data/printed_gradient_map/%s' % f for f in filenames], h, w)
+  Y = Y[:, :, :, 0:3]
+  Y = preprocessY(Y)
   return X, Y
 
 allFilenames = getFilenames()
@@ -28,6 +32,8 @@ def getDataGenerator():
 def getFullData(filename):
   rawX = loadSingleUnresizedPngTensor('./data/printed_document_without_background/%s' % filename)
   X, coords = resizeWithCoords(rawX, h, w)
+  X = X[:, :, :, 0:3]
+  X = preprocessX(X)
   Y = loadSingleUnresizedPngTensor('./data/printed_gradient_map/%s' % filename)
   Y = Y[:, :, :, 0:3]
   Y, _ = resizeWithCoords(Y, h, w)

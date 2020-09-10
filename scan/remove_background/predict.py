@@ -9,5 +9,4 @@ class RemoveBackground():
   def predict(self, inputTensor):
     X, coords = resizeWithCoords(inputTensor, h, w)
     preds = self.model.predict(X[:, :, :, 0:3], steps=1)
-    output = (preds > 0.5) * X
-    return output, coords
+    return preds, coords
