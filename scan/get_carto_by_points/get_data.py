@@ -30,7 +30,7 @@ def getDataGenerator():
     yield X, Y
 
 def getFullData(filename):
-  rawX = loadSingleUnresizedPngTensor('./data/printed_document_without_background/%s' % filename)
+  rawX = loadSingleUnresizedPngTensor('./data/printed_document/%s' % filename)
   X, coords = resizeWithCoords(rawX, h, w)
   X = X[:, :, :, 0:3]
   X = preprocessX(X)
