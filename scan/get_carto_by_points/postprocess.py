@@ -2,22 +2,20 @@ import numpy as np
 
 from ghost_scan.constants import h, w, numberOfPoints
 
-def getRawPositions(preds):
-  [height, width, _] = preds.shape
+indexGrid = np.mgrid[0:h, 0:w]
+indexGrid = np.transpose(indexGrid, [1, 2, 0])
+indexGrid = np.expand_dims(indexGrid, axis=2)
+indexGrid = np.repeat(indexGrid, numberOfPoints, axis=-2)
+indexGrid = np.reshape(indexGrid, (h * w, numberOfPoints, 2))
 
+def getRawPositions(preds):
   prMaxPerChannel = np.amax(preds, axis=(0, 1))
   pr = (preds > prMaxPerChannel / 10) * preds
   pr = np.expand_dims(pr, axis=-1)
   pr = np.repeat(pr, 2, axis=-1)
-  pr = np.reshape(pr, (height * width, numberOfPoints, 2))
+  pr = np.reshape(pr, (h * w, numberOfPoints, 2))
 
-  indexGrid = np.mgrid[0:height, 0:width]
-  indexGrid = np.transpose(indexGrid, [1, 2, 0])
-  indexGrid = np.expand_dims(indexGrid, axis=2)
-  indexGrid = np.repeat(indexGrid, numberOfPoints, axis=-2)
-  indexGrid = np.reshape(indexGrid, (height * width, numberOfPoints, 2))
-
-  assert indexGrid.shape == pr.shape # == (height * width, numberOfPoints, 2)
+  assert pr.shape == indexGrid.shape # == (h * w, numberOfPoints, 2)
   indices = np.sum(pr * indexGrid, axis=0) / np.sum(pr, axis=0)
   return indices
 
