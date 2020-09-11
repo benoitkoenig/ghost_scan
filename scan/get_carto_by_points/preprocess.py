@@ -6,8 +6,9 @@ from ghost_scan.scan.remove_background.model import getModel
 model = getModel(weights='%s/scan/weights/remove_background/weights' % dirpath)
 
 def preprocessX(inputX):
-  outputX = model.predict(inputX, steps=1)
-  outputX = tf.convert_to_tensor(outputX)
+  removeBackgroundPreds = model.predict(inputX, steps=1)
+  removeBackgroundPreds = tf.convert_to_tensor(removeBackgroundPreds)
+  outputX = tf.concat([inputX, removeBackgroundPreds], axis=-1)
   return outputX
 
 pointsGridsShape = tf.ones((1, h, w, numberOfPoints, 2), dtype=tf.float32)
