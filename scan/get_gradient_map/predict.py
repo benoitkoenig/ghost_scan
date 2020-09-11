@@ -4,7 +4,7 @@ from .model import getModel
 
 class RemoveBackground():
   def __init__(self):
-    self.model = getModel(weights='%s/scan/weights/remove_background/weights' % dirpath)
+    self.model = getModel(weights='%s/scan/weights/get_gradient_map/weights' % dirpath)
 
   def predict(self, inputTensor):
     X, coords = resizeWithCoords(inputTensor, h, w)
