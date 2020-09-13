@@ -1,6 +1,7 @@
 import matplotlib.pyplot as plt
 import sys
 
+from ghost_scan.constants import dirpath
 from ghost_scan.scan.get_data import loadSingleUnresizedPngTensor
 from ghost_scan.scan.remove_background.predict import RemoveBackground
 from ghost_scan.scan.get_carto_by_points.predict import GetCartoByPoints
@@ -16,9 +17,9 @@ while True:
   if filename == '':
     break
   if isValidationData:
-    inputImage = loadSingleUnresizedPngTensor('./data/validation_data/printed_document/%s' % filename).numpy()
+    inputImage = loadSingleUnresizedPngTensor('%s/data/validation_data/printed_document/%s' % (dirpath, filename)).numpy()
   else:
-    inputImage = loadSingleUnresizedPngTensor('./data/printed_document/%s' % filename).numpy()
+    inputImage = loadSingleUnresizedPngTensor('%s/data/printed_document/%s' % (dirpath, filename)).numpy()
   removeBackgroundPreds, coords = removeBackground.predict(inputImage)
   positions = getCartoByPoints.predict(removeBackgroundPreds, coords, inputImage.shape)
   documentA4 = getA4(inputImage[0], positions)
