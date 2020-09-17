@@ -26,7 +26,7 @@ while True:
 
   fig, axs = plt.subplots(1, 4, figsize=(50, 50))
   axs[0].imshow(inputImage[0])
-  axs[1].imshow(removeBackgroundPreds[0, :, :, 0])
+  axs[1].imshow(removeBackgroundPreds[0, :, :, 3])
   axs[2].imshow(inputImage[0])
   axs[2].plot(positions[:, 1], positions[:, 0], marker='x')
   axs[3].imshow(documentA4)
