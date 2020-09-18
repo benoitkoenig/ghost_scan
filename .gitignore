@@ -1,3 +1,4 @@
 data/training/printed_document_carto.csv
+data/validation/printed_document_carto.csv
 __pycache__
 *.pyc

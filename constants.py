@@ -12,6 +12,8 @@ numberOfPoints = len(coords)
 dirpath = os.path.dirname(os.path.realpath(__file__))
 filenames = [f for f in os.listdir('%s/data/training/png' % dirpath) if (f[-4:] == '.png')]
 filesCount = len(filenames)
+validationFilenames = [f for f in os.listdir('%s/data/validation/png' % dirpath) if (f[-4:] == '.png')]
+validationFilesCount = len(validationFilenames)
 
 h = 256
 w = 256

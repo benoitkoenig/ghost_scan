@@ -2,11 +2,17 @@ import bpy
 import bmesh
 import os
 import random
+import sys
 
 from ghost_scan.constants import dirpath
 
-backgrounds_filepaths = ['%s/data/training/backgrounds/%s' % (dirpath, f) for f in os.listdir('%s/data/training/backgrounds/' % dirpath) if (f[-4:] == '.jpg')]
-paper_textures_filepaths = ['%s/data/training/paper_textures/%s' % (dirpath, f) for f in os.listdir('%s/data/training/paper_textures/' % dirpath) if (f[-4:] == '.jpg')]
+if ('-v' in sys.argv) | ('--validation' in sys.argv):
+  folderpath = '%s/data/validation' % dirpath
+else:
+  folderpath = '%s/data/training' % dirpath
+
+backgrounds_filepaths = ['%s/backgrounds/%s' % (folderpath, f) for f in os.listdir('%s/backgrounds/' % folderpath) if (f[-4:] == '.jpg')]
+paper_textures_filepaths = ['%s/paper_textures/%s' % (folderpath, f) for f in os.listdir('%s/paper_textures/' % folderpath) if (f[-4:] == '.jpg')]
 
 def add_mesh(name, verts):
   mesh = bpy.data.meshes.new('mesh')  # add a new mesh
