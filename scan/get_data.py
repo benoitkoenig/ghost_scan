@@ -4,18 +4,21 @@ import numpy as np
 import random
 import tensorflow as tf
 
-from ghost_scan.constants import filenames
+from ghost_scan.constants import dirpath, filenames, validationFilenames
 
-def getFilenames():
-  filenamesCopy = [f for f in filenames]
+def getFilenames(folder='training'):
+  if (folder == 'validation'):
+    filenamesCopy = [f for f in validationFilenames]
+  else:
+    filenamesCopy = [f for f in filenames]
   random.shuffle(filenamesCopy)
   return filenamesCopy
 
 positionsRows = None
-def getPositions(filename):
+def getPositions(filename, folder='training'):
   global positionsRows
   if positionsRows == None:
-    with open('data/printed_document_carto.csv') as csvFile:
+    with open('%s/data/%s/printed_document_carto.csv' % (dirpath, folder)) as csvFile:
       csvReader = csv.reader(csvFile, delimiter=',')
       positionsRows = [[r[0], r[1]] for r in csvReader][1:]
   matchingFiles = [r[1] for r in positionsRows if r[0] == filename]
