@@ -22,4 +22,4 @@ Currently, only two models are used: `remove_background` and `get_carto_by_point
 ## Scan an image
 
 To actually scan an image, you can use the function "scan" defined in `scan/scan.py`, that takes as input the image data (an array to be converted to numpy array)
-To check the whole scanning process, you can use `python -m scan.check [-v|--validation] {filename.png|jpg}`. You will then be prompted with the filenames you want to check. Use "-v" to pick images in "data/validation_data/printed_document" instead of "data/printed_document"
+To check the whole scanning process, you can use `python -m scan.check [-r|--real] {filename.png|jpg}`. You will then be prompted with the filenames you want to check. Use "-v" to pick images in "data/real/printed_document" instead of "data/printed_document"

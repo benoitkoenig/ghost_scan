@@ -9,7 +9,7 @@ from .get_a4 import getA4
 filename = sys.argv[1]
 
 positions = getPositions(filename)
-imageTensor = loadSingleUnresizedPngTensor('%s/data/printed_document/%s' % (dirpath, filename))
+imageTensor = loadSingleUnresizedPngTensor('%s/data/training/printed_document/%s' % (dirpath, filename))
 a4Image = getA4(imageTensor.numpy()[0], positions)
 
 fig, ax = plt.subplots(1, 1, figsize=(50, 50))

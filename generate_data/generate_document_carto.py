@@ -6,7 +6,7 @@ from ghost_scan.constants import coords, dirpath, filenames
 
 allPositions = []
 for index, filename in enumerate(filenames):
-  data = np.array(cv2.imread('%s/data/printed_gradient_map/%s' % (dirpath, filename), cv2.IMREAD_UNCHANGED), dtype=np.float32) / 65535
+  data = np.array(cv2.imread('%s/data/training/printed_gradient_map/%s' % (dirpath, filename), cv2.IMREAD_UNCHANGED), dtype=np.float32) / 65535
 
   [blue, green, red, _] = np.dsplit(data, 4)
 
@@ -21,7 +21,7 @@ for index, filename in enumerate(filenames):
   allPositions.append([filename, positions])
   print('%s/%s' % (index + 1, len(filenames)), end='\r')
 
-with open('%s/data/printed_document_carto.csv' % dirpath, 'w') as csvFile:
+with open('%s/data/training/printed_document_carto.csv' % dirpath, 'w') as csvFile:
   csvWriter = csv.writer(csvFile, delimiter=',')
   csvWriter.writerow(['filename', coords])
   for [filename, positions] in allPositions:

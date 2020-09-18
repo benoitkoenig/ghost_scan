@@ -5,10 +5,10 @@ from .constants import validationSize, batchSize
 from .preprocess import preprocessX, preprocessY
 
 def getXY(filenames):
-  X = loadPngTensors(['%s/data/printed_document/%s' % (dirpath, f) for f in filenames], h, w)
+  X = loadPngTensors(['%s/data/training/printed_document/%s' % (dirpath, f) for f in filenames], h, w)
   X = X[:, :, :, 0:3]
   X = preprocessX(X)
-  Y = loadPngTensors(['%s/data/printed_gradient_map/%s' % (dirpath, f) for f in filenames], h, w)
+  Y = loadPngTensors(['%s/data/training/printed_gradient_map/%s' % (dirpath, f) for f in filenames], h, w)
   Y = Y[:, :, :, 0:3]
   Y = preprocessY(Y)
   return X, Y
@@ -30,11 +30,11 @@ def getDataGenerator():
     yield X, Y
 
 def getFullData(filename):
-  rawX = loadSingleUnresizedPngTensor('%s/data/printed_document/%s' % (dirpath, filename))
+  rawX = loadSingleUnresizedPngTensor('%s/data/training/printed_document/%s' % (dirpath, filename))
   X, coords = resizeWithCoords(rawX, h, w)
   X = X[:, :, :, 0:3]
   X = preprocessX(X)
-  Y = loadSingleUnresizedPngTensor('%s/data/printed_gradient_map/%s' % (dirpath, filename))
+  Y = loadSingleUnresizedPngTensor('%s/data/training/printed_gradient_map/%s' % (dirpath, filename))
   Y = Y[:, :, :, 0:3]
   Y, _ = resizeWithCoords(Y, h, w)
   Y = preprocessY(Y)
