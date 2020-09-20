@@ -5,7 +5,7 @@ import numpy as np
 
 from ghost_scan.constants import dirpath, numberOfPoints
 from .get_data import getFullData
-from .loss import loss
+from .loss import loss, pixelwiseLoss, truePixelLoss
 from .metrics import bestPredDistance
 from .model import getModel
 from .postprocess import postprocess
@@ -17,7 +17,9 @@ model = getModel('%s/scan/weights/detect_pose/weights' % dirpath)
 preds = model.predict(X, steps=1)
 positions = postprocess(preds[0], coords, rawX.shape[1:3])
 
-print('Loss: %s' % tf.reduce_mean(loss(groundTruth, preds)).numpy())
+print('Loss: %s' % loss(groundTruth, preds).numpy())
+print('Pixelwise loss: %s' % pixelwiseLoss(groundTruth, preds).numpy())
+print('True pixel loss: %s' % truePixelLoss(groundTruth, preds).numpy())
 print('Best pred distance: %s' % bestPredDistance(groundTruth, preds).numpy())
 
 fig, axs = plt.subplots(2, 3, figsize=(50, 50))
