@@ -14,14 +14,14 @@ def getFilenames(folder='training'):
   random.shuffle(filenamesCopy)
   return filenamesCopy
 
-positionsRows = None
+positionsRows = {}
 def getPositions(filename, folder='training'):
   global positionsRows
-  if positionsRows == None:
+  if folder not in positionsRows:
     with open('%s/data/%s/printed_document_carto.csv' % (dirpath, folder)) as csvFile:
       csvReader = csv.reader(csvFile, delimiter=',')
-      positionsRows = [[r[0], r[1]] for r in csvReader][1:]
-  matchingFiles = [r[1] for r in positionsRows if r[0] == filename]
+      positionsRows[folder] = [[r[0], r[1]] for r in csvReader][1:]
+  matchingFiles = [r[1] for r in positionsRows[folder] if r[0] == filename]
   assert (len(matchingFiles) != 0), 'File not found'
   return eval(matchingFiles[0])
 
