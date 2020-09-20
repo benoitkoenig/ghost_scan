@@ -10,7 +10,7 @@ validationData = getValidationData()
 model = getModel(weights=None)
 
 loggerCb = tf.keras.callbacks.CSVLogger('%s/scan/logs/detect_pose.csv' % dirpath)
-lrSchedulerCb = tf.keras.callbacks.LearningRateScheduler(lambda epoch: 2e-4 if epoch < 350 else 2e-5)
+lrSchedulerCb = tf.keras.callbacks.LearningRateScheduler(lambda epoch: 5e-4 if epoch < 550 else 5e-5)
 
 model.fit(
   gen,

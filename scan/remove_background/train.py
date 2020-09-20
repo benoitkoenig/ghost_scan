@@ -10,7 +10,7 @@ validationData = getValidationData()
 model = getModel(weights=None)
 
 loggerCb = tf.keras.callbacks.CSVLogger('%s/scan/logs/remove_background.csv' % dirpath)
-lrSchedulerCb = tf.keras.callbacks.LearningRateScheduler(lambda epoch: 1e-4 if epoch < 350 else 1e-5)
+lrSchedulerCb = tf.keras.callbacks.LearningRateScheduler(lambda epoch: 1e-4 if epoch < 550 else 1e-5)
 
 model.fit(
   gen,
