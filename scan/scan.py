@@ -1,7 +1,7 @@
 import numpy as np
 
 from ghost_scan.scan.remove_background.predict import RemoveBackground
-from ghost_scan.scan.get_carto_by_points.predict import GetCartoByPoints
+from ghost_scan.scan.detect_pose.predict import GetCartoByPoints
 from ghost_scan.scan.get_a4.get_a4 import getA4
 
 removeBackground = RemoveBackground()

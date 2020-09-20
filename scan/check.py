@@ -4,7 +4,7 @@ import sys
 from ghost_scan.constants import dirpath
 from ghost_scan.scan.get_data import loadSingleUnresizedPngTensor
 from ghost_scan.scan.remove_background.predict import RemoveBackground
-from ghost_scan.scan.get_carto_by_points.predict import GetCartoByPoints
+from ghost_scan.scan.detect_pose.predict import GetCartoByPoints
 from ghost_scan.scan.get_a4.get_a4 import getA4
 
 if ('-r' in sys.argv) | ('--real' in sys.argv):

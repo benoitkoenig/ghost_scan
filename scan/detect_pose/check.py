@@ -13,7 +13,7 @@ from .postprocess import postprocess
 filename = sys.argv[1]
 
 X, groundTruth, rawX, coords = getFullData(filename)
-model = getModel('%s/scan/weights/get_carto_by_points/weights' % dirpath)
+model = getModel('%s/scan/weights/detect_pose/weights' % dirpath)
 preds = model.predict(X, steps=1)
 positions = postprocess(preds[0], coords, rawX.shape[1:3])
 

@@ -9,7 +9,7 @@ gen = getDataGenerator()
 validationData = getValidationData()
 model = getModel(weights=None)
 
-loggerCb = tf.keras.callbacks.CSVLogger('%s/scan/logs/get_carto_by_points.csv' % dirpath)
+loggerCb = tf.keras.callbacks.CSVLogger('%s/scan/logs/detect_pose.csv' % dirpath)
 lrSchedulerCb = tf.keras.callbacks.LearningRateScheduler(lambda epoch: 2e-4 if epoch < 350 else 2e-5)
 
 model.fit(
@@ -19,4 +19,4 @@ model.fit(
   steps_per_epoch=steps_per_epoch,
   callbacks=[loggerCb, lrSchedulerCb]
 )
-model.save_weights('%s/scan/weights/get_carto_by_points/weights' % dirpath, overwrite=True)
+model.save_weights('%s/scan/weights/detect_pose/weights' % dirpath, overwrite=True)

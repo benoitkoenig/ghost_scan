@@ -17,7 +17,7 @@ In case you want to edit blender's files generations, you can check your script 
 ## Training models
 
 You can train all models by doing `python -m scan.{folder_name}.train` and visualize the result with `python -m scan.{folder_name}.check {filename.png}`
-Currently, only two models are used: `remove_background` and `get_carto_by_points`.<br />`get_carto_by_gradient` does a similar job as `get_carto_by_points`, though the latter currently yields better results
+Currently, only two models are used: `remove_background` and `detect_pose`.<br />`get_carto_by_gradient` does a similar job as `detect_pose`, though the latter currently yields better results
 
 ## Scan an image
 
