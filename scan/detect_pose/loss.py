@@ -21,4 +21,4 @@ def truePixelLoss(gt, pr):
 
 def loss(gt, pr):
   # pixelwise loss is in -log(distance), truepixelLoss is in (1 - pr) ** 2
-  return pixelwiseLoss(gt, pr) + 0.5 * truePixelLoss(gt, pr) # truePixelLoss weights much fewer than the other
+  return pixelwiseLoss(gt, pr) + 2 * truePixelLoss(gt, pr) # truePixelLoss weights much fewer than the other
