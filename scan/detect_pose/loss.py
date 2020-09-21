@@ -7,13 +7,17 @@ def pixelwiseLoss(gt, pr):
   mean_per_batch = tf.math.reduce_mean(mean_per_channel)
   return - mean_per_batch
 
-def truePixelLoss(gt, pr):
+def getTruePixelMask(gt):
   maxGt = tf.reduce_max(gt, axis=[1, 2])
   maxGt = tf.expand_dims(maxGt, 1)
   maxGt = tf.expand_dims(maxGt, 1)
   maxGt = tf.repeat(maxGt, h, axis=1)
   maxGt = tf.repeat(maxGt, w, axis=2)
-  truePixelMask = tf.cast(gt == maxGt, dtype=pr.dtype)
+  truePixelMask = tf.cast(gt == maxGt, dtype=gt.dtype)
+  return truePixelMask
+
+def truePixelLoss(gt, pr):
+  truePixelMask = getTruePixelMask(gt)
   truePixelPreds = truePixelMask * pr
   truePixelAvgPred = tf.reduce_sum(truePixelPreds) / tf.reduce_sum(truePixelMask)
   truePixelLoss = tf.math.square(1 - truePixelAvgPred)
