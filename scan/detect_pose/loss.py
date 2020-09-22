@@ -2,7 +2,7 @@ import tensorflow as tf
 
 from ghost_scan.constants import numberOfPoints, h, w
 
-def pixelwiseLoss(gt, pr):
+def prAsCoeff(gt, pr):
   mean_per_channel = tf.reduce_sum(pr * gt, axis=[1, 2]) / (tf.reduce_sum(pr, axis=[1, 2]) + 1e-7) # 1e-7 is useful when the document is fully out of the picture, which can occasionnaly happen
   mean_per_batch = tf.math.reduce_mean(mean_per_channel)
   return - mean_per_batch
@@ -16,13 +16,15 @@ def getTruePixelMask(gt):
   truePixelMask = tf.cast(gt == maxGt, dtype=gt.dtype)
   return truePixelMask
 
-def truePixelLoss(gt, pr):
+def bceLoss(gt, pr):
   truePixelMask = getTruePixelMask(gt)
-  truePixelPreds = truePixelMask * pr
-  truePixelAvgPred = tf.reduce_sum(truePixelPreds) / tf.reduce_sum(truePixelMask)
-  truePixelLoss = tf.math.square(1 - truePixelAvgPred)
-  return truePixelLoss
+  loss0 = - (1 - truePixelMask) * tf.math.log(pr + 1e-7)
+  lossMean0 = tf.math.reduce_sum(loss0) / tf.math.reduce_sum(1 - truePixelMask)
+  loss1 = - truePixelMask * tf.math.log(1 - pr + 1e-7)
+  lossMean1 = tf.math.reduce_sum(loss1) / tf.math.reduce_sum(truePixelMask)
+  loss = (lossMean0 + lossMean1) / 2
+  return loss
 
 def loss(gt, pr):
-  # pixelwise loss is in -log(distance), truepixelLoss is in (1 - pr) ** 2
-  return pixelwiseLoss(gt, pr) + 2 * truePixelLoss(gt, pr) # truePixelLoss weights much fewer than the other
+  # prAsCoeff loss is in +log(distance), bceLoss is in -log(pr)
+  return prAsCoeff(gt, pr) + bceLoss(gt, pr)
