@@ -27,4 +27,4 @@ def bceLoss(gt, pr):
 
 def loss(gt, pr):
   # prAsCoeff loss is in +log(distance), bceLoss is in -log(pr)
-  return prAsCoeff(gt, pr) + bceLoss(gt, pr)
+  return prAsCoeff(gt, pr) + 0.2 * bceLoss(gt, pr)
