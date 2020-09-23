@@ -5,4 +5,5 @@ pypng
 scipy
 segmentation_models
 tensorflow
+tensorflowjs
 tensorflow_addons
