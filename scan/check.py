@@ -5,6 +5,7 @@ from ghost_scan.constants import dirpath
 from ghost_scan.scan.get_data import loadSingleUnresizedPngTensor
 from ghost_scan.scan.remove_background.predict import RemoveBackground
 from ghost_scan.scan.detect_pose.predict import GetCartoByPoints
+from ghost_scan.scan.finetune_positions.predict import FinetunePositions
 from ghost_scan.scan.get_a4.get_a4 import getA4
 
 if ('-r' in sys.argv) | ('--real' in sys.argv):
@@ -16,6 +17,7 @@ else:
 
 removeBackground = RemoveBackground()
 getCartoByPoints = GetCartoByPoints()
+finetunePositions = FinetunePositions()
 
 while True:
   filename = input('Filename (empty to leave): ')
@@ -24,7 +26,8 @@ while True:
   inputImage = loadSingleUnresizedPngTensor('%s/printed_document/%s' % (folderPath, filename)).numpy()
   removeBackgroundPreds, coords = removeBackground.predict(inputImage)
   positions = getCartoByPoints.predict(removeBackgroundPreds, coords, inputImage.shape)
-  documentA4 = getA4(inputImage[0], positions)
+  precisePositions = finetunePositions.predict(inputImage, positions)
+  documentA4 = getA4(inputImage[0], precisePositions)
 
   fig, axs = plt.subplots(1, 1, figsize=(50, 50))
   axs.imshow(documentA4)
