@@ -24,7 +24,7 @@ def getModel(weights=None):
   model.add(Dense(1024, activation='relu'))
   model.add(Dense(2 * numberOfPoints, activation='linear'))
 
-  optimizer = tf.keras.optimizers.Adam(learning_rate=1e-4)
+  optimizer = tf.keras.optimizers.Adam(learning_rate=1e-5)
   model.compile(optimizer=optimizer, loss=loss)
   if (weights != None):
     model.load_weights(weights)
