@@ -2,9 +2,9 @@ import numpy as np
 from scipy.interpolate import griddata
 
 from ghost_scan.constants import coords
-from .constants import h as destinationHeight, w as destinationWidth
+from .constants import h as defaultHeight, w as defaultWidth
 
-def getA4(originData, positions):
+def getA4(originData, positions, destinationHeight=defaultHeight, destinationWidth=defaultWidth):
   a4PixelsGrid = np.transpose(np.mgrid[0:destinationHeight, 0:destinationWidth], [1, 2, 0]) / [destinationHeight, destinationWidth]
   origin = griddata(coords, positions, a4PixelsGrid, method='cubic')
   origin = np.round(origin).astype(np.int64)
