@@ -22,6 +22,6 @@ fig, ax = plt.subplots(1, 1, figsize=(50, 50))
 for i in range(len(rows[0]) - 1):
   ax.plot(rows[:, 0], rows[:, i + 1], label=header[i + 1])
 ax.legend()
-plt.ylim(-6, 1)
+plt.ylim(0, 1)
 plt.xlim(0, 682)
 plt.show()
