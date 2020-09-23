@@ -5,7 +5,7 @@ import numpy as np
 
 from ghost_scan.constants import dirpath, numberOfPoints
 from .get_data import getFullData
-from .loss import loss, prAsCoeff, bceLoss, getTruePixelMask
+from .loss import loss, pixelwiseLoss, truePixelLoss, getTruePixelMask
 from .metrics import bestPredDistance
 from .model import getModel
 from .postprocess import postprocess
@@ -19,8 +19,8 @@ preds = model.predict(X, steps=1)
 positions = postprocess(preds[0], coords, rawX.shape[1:3])
 
 print('Loss: %s' % loss(groundTruth, preds).numpy())
-print('PrAsCoeff loss: %s' % prAsCoeff(groundTruth, preds).numpy())
-print('BCE loss: %s' % bceLoss(groundTruth, preds).numpy())
+print('Pixelwise loss: %s' % pixelwiseLoss(groundTruth, preds).numpy())
+print('True pixel loss: %s' % truePixelLoss(groundTruth, preds).numpy())
 print('Best pred distance: %s' % bestPredDistance(groundTruth, preds).numpy())
 
 predsSingleChannel = np.sum(preds[0], axis=-1)
