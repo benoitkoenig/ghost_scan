@@ -14,17 +14,17 @@ coordsNp = np.array(coords)
 def getSingleXY(filename, folder='training'):
   rawX = loadSingleUnresizedPngTensor('%s/data/%s/printed_document/%s' % (dirpath, folder, filename))[0, :, :, 0:3]
   positions = np.array(getPositions(filename, folder))
-  deviations = .1 * np.random.uniform(-1, 1, coordsNp.shape) ** 2 # The square is because we dont want a uniform distribution
+  deviations = np.random.uniform(-.05, .05, coordsNp.shape)
   deviatedCoords = np.clip(coordsNp + deviations, 0, 1)
   deviatedPositions = griddata(coordsNp, positions, deviatedCoords, method='cubic')
   X = getA4(rawX.numpy(), deviatedPositions, h, w)
   Y = np.reshape(deviations, -1)
-  return X, Y
+  return X, Y, positions, rawX, deviatedPositions, deviatedCoords
 
 def getXY(filenames, folder='training'):
   XY = [getSingleXY(filename, folder) for filename in filenames]
-  X = tf.constant([x for (x, _) in XY], dtype=tf.float32)
-  Y = tf.constant([y for (_, y) in XY], dtype=tf.float32)
+  X = tf.constant([x for (x, _, _, _, _, _) in XY], dtype=tf.float32)
+  Y = tf.constant([y for (_, y, _, _, _, _) in XY], dtype=tf.float32)
   return X, Y
 
 def getValidationData():
