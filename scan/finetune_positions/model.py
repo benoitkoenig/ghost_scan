@@ -22,7 +22,7 @@ def getModel(weights=None):
   model.add(Conv2D(256, 3, 2, activation='relu'))
   model.add(Flatten())
   model.add(Dense(1024, activation='relu'))
-  model.add(Dense(2 * numberOfPoints, activation='linear'))
+  model.add(Dense(2 * numberOfPoints, activation='sigmoid'))
 
   optimizer = tf.keras.optimizers.Adam(learning_rate=1e-4)
   model.compile(optimizer=optimizer, loss=loss)
