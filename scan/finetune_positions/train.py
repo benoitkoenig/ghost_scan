@@ -10,13 +10,12 @@ validationData = getValidationData()
 model = getModel(weights=None)
 
 loggerCb = tf.keras.callbacks.CSVLogger('%s/scan/logs/finetune_positions.csv' % dirpath)
-lrSchedulerCb = tf.keras.callbacks.LearningRateScheduler(lambda epoch: 1e-4 if epoch < 550 else 1e-5)
 
 model.fit(
   gen,
   validation_data=validationData,
   epochs=epochs,
   steps_per_epoch=steps_per_epoch,
-  callbacks=[loggerCb, lrSchedulerCb]
+  callbacks=[loggerCb]
 )
 model.save_weights('%s/scan/models/weights/finetune_positions/weights' % dirpath, overwrite=True)
