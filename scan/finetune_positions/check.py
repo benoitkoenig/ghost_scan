@@ -14,7 +14,7 @@ coordsNp = np.array(coords)
 
 filename = sys.argv[1]
 
-X, Y, truePositions, rawX = getSingleXY(filename)
+X, Y, rawX, deviatedPositions = getSingleXY(filename)
 X = tf.constant([X], dtype=tf.float32)
 Y = tf.constant([Y], dtype=tf.float32)
 model = getModel(weights='%s/scan/models/weights/finetune_positions/weights' % dirpath)
@@ -22,20 +22,19 @@ preds = model.predict(X, steps=1)
 
 print('Loss: %s' % loss(Y, tf.convert_to_tensor(preds)).numpy())
 
-inputCoords = np.clip(coordsNp + np.reshape(Y.numpy(), (-1, 2)), 0, 1)
-predsCoords = coordsNp + np.reshape(preds, (-1, 2))
-truePositions = griddata(inputCoords, truePositions, coordsNp, method='cubic')
-inputPositions = griddata(inputCoords, truePositions, inputCoords, method='cubic')
-predsPositions = griddata(inputCoords, truePositions, np.clip(predsCoords, 0, 1), method='cubic')
+coordsToPredict = coordsNp + np.reshape(Y, (-1, 2))
+positionsToPredict = griddata(coordsNp, deviatedPositions, np.clip(coordsToPredict, 0, 1), method='cubic')
+
+coordsPredicted = coordsNp + (np.reshape(preds, (-1, 2)) - 0.5) * 0.1
+positionsPredicted = griddata(coordsNp, deviatedPositions, np.clip(coordsPredicted, 0, 1), method='cubic')
 
 fig, axs = plt.subplots(1, 2, figsize=(50, 50))
-axs[0].imshow(X.numpy()[0])
-axs[0].plot((coordsNp * w)[:, 1], (coordsNp * h)[:, 0], marker='o')
-axs[0].plot((inputCoords * w)[:, 1], (inputCoords * h)[:, 0], marker='x')
-axs[0].plot((predsCoords * w)[:, 1], (predsCoords * h)[:, 0], marker='^')
 
+axs[0].imshow(X.numpy()[0])
+axs[0].plot((coordsToPredict * w)[:, 1], (coordsToPredict * h)[:, 0], marker='o')
+axs[0].plot((coordsPredicted * w)[:, 1], (coordsPredicted * h)[:, 0], marker='x')
 axs[1].imshow(rawX.numpy())
-axs[1].plot(truePositions[:, 1], truePositions[:, 0], marker='o')
-axs[1].plot(inputPositions[:, 1], inputPositions[:, 0], marker='x')
-axs[1].plot(predsPositions[:, 1], predsPositions[:, 0], marker='^')
+axs[1].plot(positionsToPredict[:, 1], positionsToPredict[:, 0], marker='o')
+axs[1].plot(positionsPredicted[:, 1], positionsPredicted[:, 0], marker='x')
+
 plt.show()
