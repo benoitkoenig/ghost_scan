@@ -9,7 +9,7 @@ from .model import getModel
 
 class FinetunePositions:
   def __init__(self):
-    self.model = getModel(weights='%s/scan/weights/finetune_positions/weights' % dirpath)
+    self.model = getModel(weights='%s/scan/models/weights/finetune_positions/weights' % dirpath)
 
   def predict(self, inputImage, inputPositions):
     X = getA4(inputImage, inputPositions, h, w)

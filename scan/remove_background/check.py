@@ -11,7 +11,7 @@ from .model import getModel
 filename = sys.argv[1]
 
 X, groundTruth = getXY([filename])
-model = getModel(weights='%s/scan/weights/remove_background/weights' % dirpath)
+model = getModel(weights='%s/scan/models/weights/remove_background/weights' % dirpath)
 preds = model.predict(X, steps=1)
 
 print('Loss: %s' % loss(groundTruth, tf.convert_to_tensor(preds)).numpy())

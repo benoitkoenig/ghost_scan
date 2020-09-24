@@ -10,7 +10,7 @@ from .model import getModel
 filename = sys.argv[1]
 
 X, Y = getXY([filename])
-model = getModel(weights='%s/scan/weights/remove_background/weights' % dirpath)
+model = getModel(weights='%s/scan/models/weights/remove_background/weights' % dirpath)
 preds = model.predict(X, steps=1)
 
 print('Loss: %s' % loss(Y, tf.convert_to_tensor(preds)).numpy())

@@ -14,7 +14,7 @@ filename = sys.argv[1]
 
 X, groundTruth, rawX, coords = getFullData(filename)
 truePixelMask = getTruePixelMask(groundTruth).numpy()
-model = getModel('%s/scan/weights/detect_pose/weights' % dirpath)
+model = getModel('%s/scan/models/weights/detect_pose/weights' % dirpath)
 preds = model.predict(X, steps=1)
 positions = postprocess(preds[0], coords, rawX.shape[1:3])
 

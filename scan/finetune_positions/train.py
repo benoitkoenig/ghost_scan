@@ -19,4 +19,4 @@ model.fit(
   steps_per_epoch=steps_per_epoch,
   callbacks=[loggerCb, lrSchedulerCb]
 )
-model.save_weights('%s/scan/weights/finetune_positions/weights' % dirpath, overwrite=True)
+model.save_weights('%s/scan/models/weights/finetune_positions/weights' % dirpath, overwrite=True)

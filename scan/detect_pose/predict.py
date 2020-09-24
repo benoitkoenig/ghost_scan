@@ -6,7 +6,7 @@ from .postprocess import postprocess
 
 class GetCartoByPoints:
   def __init__(self):
-    self.model = getModel(weights='%s/scan/weights/detect_pose/weights' % dirpath)
+    self.model = getModel(weights='%s/scan/models/weights/detect_pose/weights' % dirpath)
 
   def predict(self, inputTensor, coords, outputShape):
     preds = self.model.predict(inputTensor, steps=1)
