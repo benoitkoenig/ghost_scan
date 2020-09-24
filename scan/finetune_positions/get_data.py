@@ -18,13 +18,13 @@ def getSingleXY(filename, folder='training'):
   deviatedCoords = np.clip(coordsNp + deviations, 0, 1)
   deviatedPositions = griddata(coordsNp, positions, deviatedCoords, method='cubic')
   X = getA4(rawX.numpy(), deviatedPositions, h, w)
-  Y = np.reshape(deviatedCoords - coordsNp, -1)
+  Y = np.reshape(coordsNp - deviatedCoords, -1)
   return X, Y, positions, rawX
 
 def getXY(filenames, folder='training'):
   XY = [getSingleXY(filename, folder) for filename in filenames]
-  X = tf.constant([x for (x, _, _, _, _, _) in XY], dtype=tf.float32)
-  Y = tf.constant([y for (_, y, _, _, _, _) in XY], dtype=tf.float32)
+  X = tf.constant([x for (x, _, _, _) in XY], dtype=tf.float32)
+  Y = tf.constant([y for (_, y, _, _) in XY], dtype=tf.float32)
   return X, Y
 
 def getValidationData():
