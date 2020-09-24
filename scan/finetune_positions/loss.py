@@ -5,5 +5,5 @@ def loss(gt, pr):
   predDeviations = tf.reshape(pr, (-1, 2))
   baseMse = tf.math.reduce_sum(trueDeviations ** 2, axis=-1)
   mse = tf.math.reduce_sum((trueDeviations - predDeviations) ** 2, axis=-1)
-  loss = tf.reduce_mean((mse + 1e-4) / (baseMse + 1e-4))
+  loss = tf.reduce_mean((mse + 1e-5) / (baseMse + 1e-5))
   return loss
