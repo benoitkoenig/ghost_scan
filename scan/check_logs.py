@@ -6,7 +6,7 @@ import sys
 from ghost_scan.constants import dirpath
 
 if len(sys.argv) != 2:
-  print('Usage: python -m scan.visualize_logs [remove_background|detect_pose]')
+  print('Usage: python -m scan.check_logs [remove_background|detect_pose]')
   exit(1)
 filename = sys.argv[1]
 
