@@ -14,7 +14,7 @@ coordsNp = np.array(coords)
 
 filename = sys.argv[1]
 
-X, Y, truePositions, rawX, inputPositionsCheck, inputCoordsCheck = getSingleXY(filename)
+X, Y, truePositions, rawX = getSingleXY(filename)
 X = tf.constant([X], dtype=tf.float32)
 Y = tf.constant([Y], dtype=tf.float32)
 model = getModel(weights='%s/scan/models/weights/finetune_positions/weights' % dirpath)
@@ -22,13 +22,10 @@ preds = model.predict(X, steps=1)
 
 print('Loss: %s' % loss(Y, tf.convert_to_tensor(preds)).numpy())
 
-inputCoords = np.clip(coordsNp + np.reshape(Y.numpy(), (-1, 2)), 0, 1)
-predsCoords = coordsNp + np.reshape((Y - preds).numpy(), (-1, 2))
+inputCoords = np.clip(coordsNp - np.reshape(Y.numpy(), (-1, 2)), 0, 1)
+predsCoords = coordsNp - np.reshape((Y - preds).numpy(), (-1, 2))
 inputPositions = griddata(coordsNp, truePositions, inputCoords, method='cubic')
 predsPositions = griddata(coordsNp, truePositions, np.clip(predsCoords, 0, 1), method='cubic')
-
-assert np.sum((inputCoords - inputCoordsCheck) ** 2) < 1e-7
-assert np.sum((inputPositions - inputPositionsCheck) ** 2) < 1e-7
 
 fig, axs = plt.subplots(1, 2, figsize=(50, 50))
 axs[0].imshow(X.numpy()[0])
