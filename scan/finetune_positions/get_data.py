@@ -23,8 +23,8 @@ def getSingleXY(filename, folder='training'):
 
 def getXY(filenames, folder='training'):
   XY = [getSingleXY(filename, folder) for filename in filenames]
-  X = tf.constant([x for (x, _, _, _) in XY], dtype=tf.float32)
-  Y = tf.constant([y for (_, y, _, _) in XY], dtype=tf.float32)
+  X = tf.convert_to_tensor([x for (x, _, _, _) in XY], dtype=tf.float32)
+  Y = tf.convert_to_tensor([y for (_, y, _, _) in XY], dtype=tf.float32)
   return X, Y
 
 def getValidationData():
