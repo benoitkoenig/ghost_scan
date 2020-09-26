@@ -8,7 +8,6 @@ from ghost_scan.constants import coords, dirpath
 from ghost_scan.scan.get_a4.get_a4 import getA4
 from .constants import h, w
 from .get_data import getSingleXY
-from .loss import loss
 from .model import getModel
 
 coordsNp = np.array(coords)
@@ -22,8 +21,8 @@ model = getModel(weights='%s/scan/models/weights/finetune_positions/weights' % d
 preds = model.predict(X, steps=1)
 
 truePicture = getA4(rawX.numpy(), truePositions, h, w)
-coordsPlusY = coordsNp + (np.reshape(Y, (-1, 2)) - 0.5) * 0.1
-coordsPlusPreds = coordsNp + (np.reshape(preds, (-1, 2)) - 0.5) * 0.1
+coordsPlusY = coordsNp - (np.reshape(Y, (-1, 2)) - 0.5) * 0.1
+coordsPlusPreds = coordsNp - (np.reshape(preds, (-1, 2)) - 0.5) * 0.1
 
 fig, axs = plt.subplots(1, 3, figsize=(50, 50))
 

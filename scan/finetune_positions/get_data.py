@@ -18,7 +18,7 @@ def getSingleXY(filename, folder='training'):
   deviatedCoords = np.clip(coordsNp + 0.1 * (deviations - 0.5), 0, 1)
   deviatedPositions = griddata(coordsNp, positions, deviatedCoords, method='linear')
   X = getA4(rawX.numpy(), deviatedPositions, h, w)
-  Y = np.reshape(-deviations, -1)
+  Y = np.reshape(deviations, -1)
   return X, Y, rawX, deviatedPositions, positions, deviatedCoords
 
 def getXY(filenames, folder='training'):
