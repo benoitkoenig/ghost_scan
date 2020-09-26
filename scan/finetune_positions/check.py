@@ -15,8 +15,8 @@ coordsNp = np.array(coords)
 filename = sys.argv[1]
 
 X, Y, rawX, deviatedPositions = getSingleXY(filename)
-X = tf.constant([X], dtype=tf.float32)
-Y = tf.constant([Y], dtype=tf.float32)
+X = tf.convert_to_tensor([X], dtype=tf.float32)
+Y = tf.convert_to_tensor([Y], dtype=tf.float32)
 model = getModel(weights='%s/scan/models/weights/finetune_positions/weights' % dirpath)
 preds = model.predict(X, steps=1)
 
