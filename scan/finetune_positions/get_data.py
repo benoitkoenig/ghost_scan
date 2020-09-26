@@ -16,15 +16,15 @@ def getSingleXY(filename, folder='training'):
   positions = np.array(getPositions(filename, folder))
   deviations = np.random.uniform(-.05, .05, coordsNp.shape)
   deviatedCoords = np.clip(coordsNp + deviations, 0, 1)
-  deviatedPositions = griddata(coordsNp, positions, deviatedCoords, method='cubic')
+  deviatedPositions = griddata(coordsNp, positions, deviatedCoords, method='linear')
   X = getA4(rawX.numpy(), deviatedPositions, h, w)
   Y = np.reshape(-deviations, -1)
-  return X, Y, rawX, deviatedPositions, positions
+  return X, Y, rawX, deviatedPositions, positions, deviatedCoords
 
 def getXY(filenames, folder='training'):
   XY = [getSingleXY(filename, folder) for filename in filenames]
-  X = tf.convert_to_tensor([x for (x, _, _, _, _) in XY], dtype=tf.float32)
-  Y = tf.convert_to_tensor([y for (_, y, _, _, _) in XY], dtype=tf.float32)
+  X = tf.convert_to_tensor([x for (x, _, _, _, _, _) in XY], dtype=tf.float32)
+  Y = tf.convert_to_tensor([y for (_, y, _, _, _, _) in XY], dtype=tf.float32)
   return X, Y
 
 def getValidationData():

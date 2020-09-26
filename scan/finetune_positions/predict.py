@@ -16,5 +16,5 @@ class FinetunePositions:
     preds = self.model.predict(np.array([X]), steps=1)
     preds = np.reshape(preds[0], (-1, 2))
     newCoords = np.clip(coords - preds, 0, 1)
-    outputPositions = griddata(coords, inputPositions, newCoords, method='cubic')
+    outputPositions = griddata(coords, inputPositions, newCoords, method='linear')
     return outputPositions
