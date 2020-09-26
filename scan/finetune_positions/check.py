@@ -24,25 +24,28 @@ preds = model.predict(X, steps=1)
 print('Loss: %s' % loss(Y, tf.convert_to_tensor(preds)).numpy())
 
 truePicture = getA4(rawX.numpy(), truePositions, h, w)
-coordsPredicted = coordsNp + (np.reshape(preds, (-1, 2)) - 0.5) * 0.1
-groundTruthInDeformedCoords = coordsNp + np.reshape(Y, (-1, 2))
+coordsPlusY = coordsNp + np.reshape(Y, (-1, 2))
+coordsPlusPreds = coordsNp + (np.reshape(preds, (-1, 2)) - 0.5) * 0.1
 
 fig, axs = plt.subplots(1, 3, figsize=(50, 50))
 
+axs[0].set_title('Scanned document from true positions')
 axs[0].imshow(truePicture)
 axs[0].plot(w * coordsNp[:, 1], h * coordsNp[:, 0], marker='^', label='Ground truth')
 axs[0].plot(w * deviatedCoords[:, 1], h * deviatedCoords[:, 0], marker='o', label='Given coords')
 axs[0].legend()
 
+axs[1].set_title('Printed document picture')
 axs[1].imshow(rawX.numpy())
 axs[1].plot(truePositions[:, 1], truePositions[:, 0], marker='^', label='Ground truth')
 axs[1].plot(deviatedPositions[:, 1], deviatedPositions[:, 0], marker='o', label='Given positions')
 axs[1].legend()
 
+axs[2].set_title('Input picture')
 axs[2].imshow(X.numpy()[0])
-axs[2].plot(w * groundTruthInDeformedCoords[:, 1], h * groundTruthInDeformedCoords[:, 0], marker='^', label='Ground truth')
-axs[2].plot(w * coordsNp[:, 1], h * coordsNp[:, 0], marker='o', label='Given coords')
-axs[2].plot(w * coordsPredicted[:, 1], h * coordsPredicted[:, 0], marker='x', label='Preds')
+axs[2].plot(w * coordsPlusY[:, 1], h * coordsPlusY[:, 0], marker='^', label='Ground truth (Coords + Y)')
+axs[2].plot(w * coordsNp[:, 1], h * coordsNp[:, 0], marker='o', label='Coords')
+axs[2].plot(w * coordsPlusPreds[:, 1], h * coordsPlusPreds[:, 0], marker='x', label='Coords + Preds')
 axs[2].legend()
 
 plt.show()
