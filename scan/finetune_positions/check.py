@@ -21,10 +21,8 @@ Y = tf.convert_to_tensor([Y], dtype=tf.float32)
 model = getModel(weights='%s/scan/models/weights/finetune_positions/weights' % dirpath)
 preds = model.predict(X, steps=1)
 
-print('Loss: %s' % loss(Y, tf.convert_to_tensor(preds)).numpy())
-
 truePicture = getA4(rawX.numpy(), truePositions, h, w)
-coordsPlusY = coordsNp + np.reshape(Y, (-1, 2))
+coordsPlusY = coordsNp + (np.reshape(Y, (-1, 2)) - 0.5) * 0.1
 coordsPlusPreds = coordsNp + (np.reshape(preds, (-1, 2)) - 0.5) * 0.1
 
 fig, axs = plt.subplots(1, 3, figsize=(50, 50))

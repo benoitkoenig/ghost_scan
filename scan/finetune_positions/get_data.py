@@ -14,8 +14,8 @@ coordsNp = np.array(coords)
 def getSingleXY(filename, folder='training'):
   rawX = loadSingleUnresizedPngTensor('%s/data/%s/printed_document/%s' % (dirpath, folder, filename))[0, :, :, 0:3]
   positions = np.array(getPositions(filename, folder))
-  deviations = np.random.uniform(-.05, .05, coordsNp.shape)
-  deviatedCoords = np.clip(coordsNp + deviations, 0, 1)
+  deviations = np.random.random(coordsNp.shape)
+  deviatedCoords = np.clip(coordsNp + 0.1 * (deviations - 0.5), 0, 1)
   deviatedPositions = griddata(coordsNp, positions, deviatedCoords, method='linear')
   X = getA4(rawX.numpy(), deviatedPositions, h, w)
   Y = np.reshape(-deviations, -1)
@@ -37,5 +37,5 @@ def getDataGenerator():
   while len(filesLeft) != 0:
     batch = filesLeft[:batchSize]
     filesLeft = filesLeft[batchSize:]
-    X, Y = getXY(batch)
+    X, Y = getXY(['TheseADudezert-001.png'])
     yield X, Y
