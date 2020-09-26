@@ -14,7 +14,7 @@ coordsNp = np.array(coords)
 
 filename = sys.argv[1]
 
-X, Y, rawX, deviatedPositions = getSingleXY(filename)
+X, Y, rawX, deviatedPositions, truePositions = getSingleXY(filename)
 X = tf.convert_to_tensor([X], dtype=tf.float32)
 Y = tf.convert_to_tensor([Y], dtype=tf.float32)
 model = getModel(weights='%s/scan/models/weights/finetune_positions/weights' % dirpath)
@@ -31,10 +31,13 @@ positionsPredicted = griddata(coordsNp, deviatedPositions, np.clip(coordsPredict
 fig, axs = plt.subplots(1, 2, figsize=(50, 50))
 
 axs[0].imshow(X.numpy()[0])
-axs[0].plot((coordsToPredict * w)[:, 1], (coordsToPredict * h)[:, 0], marker='o')
-axs[0].plot((coordsPredicted * w)[:, 1], (coordsPredicted * h)[:, 0], marker='x')
+axs[0].plot((coordsToPredict * w)[:, 1], (coordsToPredict * h)[:, 0], marker='^', label='ground truth')
+axs[0].plot((coordsNp * w)[:, 1], (coordsNp * h)[:, 0], marker='o', label='deviated coords')
+axs[0].plot((coordsPredicted * w)[:, 1], (coordsPredicted * h)[:, 0], marker='x', label='preds')
 axs[1].imshow(rawX.numpy())
-axs[1].plot(positionsToPredict[:, 1], positionsToPredict[:, 0], marker='o')
-axs[1].plot(positionsPredicted[:, 1], positionsPredicted[:, 0], marker='x')
+axs[1].plot(truePositions[:, 1], truePositions[:, 0], marker='^', label='groundTruth')
+axs[1].plot(positionsToPredict[:, 1], positionsToPredict[:, 0], marker='o', label='deviated positions')
+axs[1].plot(positionsPredicted[:, 1], positionsPredicted[:, 0], marker='x', label='preds')
 
+axs[0].legend()
 plt.show()
