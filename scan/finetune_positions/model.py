@@ -3,6 +3,7 @@ from tensorflow.keras.layers import Conv2D, Dense, Flatten, Input
 
 from ghost_scan.constants import numberOfPoints
 from .constants import h, w
+from .metrics import relativeMse
 
 def getModel(weights=None):
   model = tf.keras.Sequential()
@@ -15,7 +16,7 @@ def getModel(weights=None):
   model.add(Dense(2 * numberOfPoints, activation='sigmoid'))
 
   optimizer = tf.keras.optimizers.Adam(learning_rate=1e-5)
-  model.compile(optimizer=optimizer, loss='mse')
+  model.compile(optimizer=optimizer, loss='mse', metrics=[relativeMse])
   if (weights != None):
     model.load_weights(weights)
   return model
