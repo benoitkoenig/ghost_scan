@@ -11,6 +11,19 @@ from .constants import h, w
 
 coordsNp = np.array(coords)
 
+def getGradient(deviations):
+  deviationsY = deviations[:, :, 0:1]
+  deviationsY = np.pad(deviationsY, [(0, 1), (0, 0), (0, 0)]) - np.pad(deviationsY, [(1, 0), (0, 0), (0, 0)])
+  deviationsY = np.pad(deviationsY[1:5, :, :], [(0, 1), (0, 0), (0, 0)])
+
+  deviationsX = deviations[:, :, 1:2]
+  deviationsX = np.pad(deviationsX, [(0, 0), (0, 1), (0, 0)]) - np.pad(deviationsX, [(0, 0), (1, 0), (0, 0)])
+  deviationsX = np.pad(deviationsX[:, 1:5, :], [(0, 0), (0, 1), (0, 0)])
+
+  gradDeviations = np.concatenate([deviationsY, deviationsX], axis=-1)
+
+  return gradDeviations
+
 def getSingleXY(filename, folder='training'):
   rawX = loadSingleUnresizedPngTensor('%s/data/%s/printed_document/%s' % (dirpath, folder, filename))[0, :, :, 0:3]
   positions = np.array(getPositions(filename, folder))
@@ -18,7 +31,8 @@ def getSingleXY(filename, folder='training'):
   deviatedCoords = np.clip(coordsNp + 0.1 * (deviations - 0.5), 0, 1)
   deviatedPositions = griddata(coordsNp, positions, deviatedCoords, method='linear')
   X = getA4(rawX.numpy(), deviatedPositions, h, w)
-  Y = np.reshape(deviations, -1)
+  gradientDeviations = getGradient(np.reshape(deviations, (5, 5, 2))) # TODO: The shape shouldnt be defined here
+  Y = np.reshape(gradientDeviations, -1)
   return X, Y, rawX, deviatedPositions, positions, deviatedCoords
 
 def getXY(filenames, folder='training'):
