@@ -28,6 +28,7 @@ def getSingleXY(filename, folder='training'):
   rawX = loadPngTensors(['%s/data/%s/png/%s' % (dirpath, folder, filename)], h, w)[0, :, :, 0:3]
   deviations = np.random.random(coordsNp.shape)
   deviatedCoords = np.clip(coordsNp + 0.1 * (deviations - 0.5), 0, 1)
+  deviations = 10 * (deviatedCoords - coordsNp) + 0.5 # Include the np.clip
   X = getA4(rawX.numpy(), deviatedCoords * [h, w], h, w)
   gradientDeviations = 0.5 + 0.5 * getGradient(np.reshape(deviations, (5, 5, 2))) # TODO: The shape shouldnt be defined here
   Y = np.reshape(gradientDeviations, -1)
