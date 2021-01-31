@@ -15,11 +15,11 @@ coordsNp = np.array(coords)
 def getSingleXY(filename, folder='training'):
   # rawX = loadPngTensors(['%s/data/%s/png/%s' % (dirpath, folder, filename)], h, w)[0, :, :, 0:3]
   rawX = loadPngTensors(['%s/data/training/png/03M31-01.png' % (dirpath)], h, w)[0, :, :, 0:3]
-  deviations = np.reshape(generateDeviations(), coordsNp.shape)
+  deviations = generateDeviations()
   deviatedCoords = coordsNp + 0.1 * deviations
   X = getA4(rawX.numpy(), deviatedCoords * [h, w], h, w)
-  gradientDeviations = getGradientFromDeviations(np.reshape(deviations, (5, 5, 2))) # TODO: The shape shouldnt be defined here
-  Y = np.reshape(gradientDeviations * 0.5 + 0.5, -1)
+  gradientDeviations = getGradientFromDeviations(deviations)
+  Y = np.reshape(0.5 + 0.5 * gradientDeviations, -1)
   return X, Y, rawX, deviatedCoords
 
 def getXY(filenames, folder='training'):
