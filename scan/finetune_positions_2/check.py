@@ -21,9 +21,9 @@ Y = tf.convert_to_tensor([Y], dtype=tf.float32)
 model = getModel(weights='%s/scan/models/weights/finetune_positions/weights' % dirpath)
 preds = model.predict(X, steps=1)
 
-coordsPredicted = coordsNp - 0.1 * getDeviationsFromGradients(2 * preds - 1)
+coordsPredicted = coordsNp + 0.1 * getDeviationsFromGradients(2 * preds - 1)
 originalCoordsInDeviatedPicture = 2 * coordsNp - deviatedCoords
-coordsPredictedInOriginalPicture = deviatedCoords - 0.1 * getDeviationsFromGradients(2 * preds - 1)
+coordsPredictedInOriginalPicture = deviatedCoords + 0.1 * getDeviationsFromGradients(2 * preds - 1)
 
 fig, axs = plt.subplots(1, 2, figsize=(50, 50))
 
