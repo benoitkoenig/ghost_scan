@@ -5,9 +5,12 @@ from ghost_scan.constants import coords
 coordsNp = np.array(coords)
 
 def generateDeviations():
-  rawDeviations = np.random.random(coordsNp.shape)
-  deviatedCoords = np.clip(coordsNp + 0.1 * (rawDeviations - 0.5), 0, 1)
-  deviations = 10 * (deviatedCoords - coordsNp) + 0.5 # Include the np.clip
+  deviations = np.random.random((5, 5, 2)) - 0.5
+  deviations[0, :, 0] = 0
+  deviations[4, :, 0] = 0
+  deviations[:, 0, 1] = 0
+  deviations[:, 4, 1] = 0
+  deviations = np.reshape(deviations, coordsNp.shape)
   return deviations
 
 def getGradientFromDeviations(deviations):
