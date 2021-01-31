@@ -10,7 +10,6 @@ def generateDeviations():
   deviations[4, :, 0] = 0
   deviations[:, 0, 1] = 0
   deviations[:, 4, 1] = 0
-  deviations = np.reshape(deviations, coordsNp.shape)
   return deviations
 
 def getGradientFromDeviations(deviations):
