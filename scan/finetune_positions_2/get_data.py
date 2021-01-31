@@ -25,7 +25,8 @@ def getGradient(deviations):
   return gradDeviations
 
 def getSingleXY(filename, folder='training'):
-  rawX = loadPngTensors(['%s/data/%s/png/%s' % (dirpath, folder, filename)], h, w)[0, :, :, 0:3]
+  # rawX = loadPngTensors(['%s/data/%s/png/%s' % (dirpath, folder, filename)], h, w)[0, :, :, 0:3]
+  rawX = loadPngTensors(['%s/data/training/png/03M31-01.png' % (dirpath)], h, w)[0, :, :, 0:3]
   deviations = np.random.random(coordsNp.shape)
   deviatedCoords = np.clip(coordsNp + 0.1 * (deviations - 0.5), 0, 1)
   deviations = 10 * (deviatedCoords - coordsNp) + 0.5 # Include the np.clip
