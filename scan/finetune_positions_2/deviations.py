@@ -40,3 +40,13 @@ def getDeviationsFromGradients(gradientsInput):
   deviations = np.concatenate([deviationsY, deviationsX], axis=-1)
   deviations = np.reshape(deviations, (coordsNp.shape))
   return deviations
+
+if (__name__ == '__main__'):
+  deviations = generateDeviations()
+  gradients = getGradientFromDeviations(deviations)
+  reconstructedDeviations = getDeviationsFromGradients(gradients)
+
+  if np.all(deviations - reconstructedDeviations == 0):
+    print('Correct: getDeviationsFromGradients of getGradientFromDeviations is the identity function')
+  else:
+    print('Error: getDeviationsFromGradients of getGradientFromDeviations is not the identity function')
