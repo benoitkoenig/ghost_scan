@@ -15,11 +15,11 @@ def generateDeviations():
 def getGradientFromDeviations(deviations):
   deviationsY = deviations[:, :, 0:1]
   gradientsY = np.pad(deviationsY, [(0, 1), (0, 0), (0, 0)]) - np.pad(deviationsY, [(1, 0), (0, 0), (0, 0)])
-  gradientsY = np.pad(gradientsY[1:5, :, :], [(0, 1), (0, 0), (0, 0)])
+  gradientsY = gradientsY[1:, :, :]
 
   deviationsX = deviations[:, :, 1:2]
   gradientsX = np.pad(deviationsX, [(0, 0), (0, 1), (0, 0)]) - np.pad(deviationsX, [(0, 0), (1, 0), (0, 0)])
-  gradientsX = np.pad(gradientsX[:, 1:5, :], [(0, 0), (0, 1), (0, 0)])
+  gradientsX = gradientsX[:, 1:, :]
 
   gradients = np.concatenate([gradientsY, gradientsX], axis=-1)
 
