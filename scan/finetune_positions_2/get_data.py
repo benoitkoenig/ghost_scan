@@ -13,8 +13,7 @@ from .constants import h, w
 coordsNp = np.array(coords)
 
 def getSingleXY(filename, folder='training'):
-  # rawX = loadPngTensors(['%s/data/%s/png/%s' % (dirpath, folder, filename)], h, w)[0, :, :, 0:3]
-  rawX = loadPngTensors(['%s/data/training/png/03M31-01.png' % (dirpath)], h, w)[0, :, :, 0:3]
+  rawX = loadPngTensors(['%s/data/%s/png/%s' % (dirpath, folder, filename)], h, w)[0, :, :, 0:3]
   deviations = generateDeviations()
   deviatedCoords = coordsNp - 0.1 * deviations
   X = getA4(rawX.numpy(), deviatedCoords * [h, w], h, w)
