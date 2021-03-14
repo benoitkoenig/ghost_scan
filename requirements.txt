@@ -1,3 +1,4 @@
+boto3
 opencv-python
 matplotlib
 numpy
@@ -7,3 +8,4 @@ segmentation_models
 tensorflow
 tensorflowjs
 tensorflow_addons
+tqdm
