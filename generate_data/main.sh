@@ -2,10 +2,11 @@ dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
 $dir/download_backgrounds/main.sh
 
-$dir/generate_a4_png.sh --training
+python3 $dir/generate_a4_png/generate_training_png.py
+python3 $dir/generate_a4_png/generate_validation_png.py
+
 $dir/regenerate_data.sh --training
 
-$dir/generate_a4_png.sh --validation
 $dir/regenerate_data.sh --validation
 
 python3 $dir/remove_corrupt_data.py
