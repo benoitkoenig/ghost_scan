@@ -4,11 +4,13 @@ import os
 
 from ghost_scan.constants import dirpath, filenames, validationFilenames
 
-def checkPicture(filepath):
+def checkPicture(filepath, check_format=False):
   data = np.array(cv2.imread(filepath, cv2.IMREAD_UNCHANGED))
   assert len(data.shape) == 3
   assert data.shape[0] > 5
   assert data.shape[1] > 5
+  if (check_format):
+    assert abs(data.shape[0]/ data.shape[1] - 297 / 210) < 0.05 # Check that the format is roughly a4
   assert (data.shape[2] == 3 or data.shape[2] == 4)
 
 def removeCorruptData(folder='training'):
@@ -18,7 +20,7 @@ def removeCorruptData(folder='training'):
     allFiles = validationFilenames
   for (i, filename) in enumerate(allFiles):
     try:
-      checkPicture('%s/data/%s/png/%s' % (dirpath, folder, filename))
+      checkPicture('%s/data/%s/png/%s' % (dirpath, folder, filename), check_format=True)
       checkPicture('%s/data/%s/printed_document/%s' % (dirpath, folder, filename))
       checkPicture('%s/data/%s/printed_gradient_map/%s' % (dirpath, folder, filename))
       print('%s/%s' % (i, len(allFiles)), end='\r')
